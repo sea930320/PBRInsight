@@ -1,0 +1,22 @@
+.sidebar-header {
+    text-shadow: 2px 2px 10px #4744e8;
+    font-weight: 600;
+    .logo-img {
+        img {
+        }
+    }
+}
+
+.sidebar-content {
+    .nav-container {
+        ul.navigation {
+            li {
+                text-shadow: 2px 2px 10px #4744e8;
+                .menu-title {
+                    font-size: 12px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

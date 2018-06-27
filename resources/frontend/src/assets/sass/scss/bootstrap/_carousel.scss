@@ -1,0 +1,16 @@
+.carousel-inner>.carousel-item>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    line-height: 1;
+}
+
+@media (max-width: 640px) {
+    .carousel-inner {
+        overflow: visible !important;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        height: calc(100% - 300px) !important;
+    }
+}

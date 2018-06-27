@@ -1,0 +1,50 @@
+@media (min-width: 992px) {
+    .cover {
+        width: 100%;
+        height: 700px !important;
+        object-fit: cover;
+    }
+
+    .carousel-caption {
+        top: 100px !important;
+    }
+
+    .ff-serif {
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+
+    .carousel-text {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 640px) {
+    .carousel-caption {
+        position: relative;
+        background: grey;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        height: 300px;
+        padding-left: 10px;
+        padding-right: 10px;
+        .ff-serif {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+    }
+}
+
+// .devider:after,
+// .devider:before {
+//     content: "_________________________";
+//     position: relative;
+//     bottom: 6px;
+//     font-weight: 600;
+// }
+
+// .devider {
+//     margin-bottom: 30px;
+// }
