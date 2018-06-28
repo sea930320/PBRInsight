@@ -4,7 +4,7 @@ namespace App\Http\Requests\DiseasePrevalence;
 
 use App\Http\Requests\BaseRequest;
 
-class IndividualDiseaseIndex extends BaseRequest
+class CategoryIndex extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

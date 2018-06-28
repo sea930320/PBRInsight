@@ -4,7 +4,7 @@ namespace App\Http\Requests\DiseasePrevalence;
 
 use App\Http\Requests\BaseRequest;
 
-class IndividualDiseaseIndex extends BaseRequest
+class DiseaseByCategoryIndex extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class IndividualDiseaseIndex extends BaseRequest
     public function rules()
     {
         return [
+            'therapy_area_id' => 'required|exists:therapy_areas,id',
             'start_year' => 'nullable|integer',
             'start_quarater' => 'nullable|integer',
             'end_year' => 'nullable|integer',

@@ -19,6 +19,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "assets/css/prism.min.css",
+        "../node_modules/sweetalert2/dist/sweetalert2.min.css",
+        "assets/css/wizard.css",
+        "assets/css/quill.snow.css",
+        "assets/css/quill.bubble.css",
+        "assets/css/hopscotch.css",
+        "../node_modules/@swimlane/ngx-datatable/release/index.css",
+        "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
         "assets/css/demo.css",
         "assets/sass/app.scss",
         "styles.css"

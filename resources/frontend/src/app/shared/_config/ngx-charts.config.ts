@@ -1,43 +1,40 @@
 import * as shape from 'd3-shape';
+
 //Bar Chart
-
 export var barChartView: any[] = [550, 400];
-
 // options
-export var barChartShowXAxis = true;
-export var barChartShowYAxis = true;
-export var barChartGradient = false;
-export var barChartShowLegend = true;
-export var barChartShowXAxisLabel = true;
-export var barChartXAxisLabel = 'Disease';
-export var barChartShowYAxisLabel = true;
-export var barChartYAxisLabel = '%';
-export var barChartDisplayCount = 10;
+export var barChartSettings = {
+    barChartShowXAxis : true,
+    barChartShowYAxis : true,
+    barChartGradient : false,
+    barChartShowLegend : true,
+    barChartShowXAxisLabel : true,
+    barChartXAxisLabel : 'Disease',
+    barChartShowYAxisLabel : true,
+    barChartYAxisLabel : '%',
+    barChartDisplayCount : 10,
+    barChartColorScheme : {
+        domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
+    }
+}
 
-export var barChartColorScheme = {
-    domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
-};
 
 //Pie CHart
-
 export var pieChartView: any[] = [550, 400];
-
 // options
-export var pieChartShowLegend = false;
-
-export var pieChartColorScheme = {
-    domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
-};
-
-// pie
-export var pieChartShowLabels = true;
-export var pieChartExplodeSlices = false;
-export var pieChartDoughnut = true;
-export var pieChartGradient = false;
-
-export var pieChart1ExplodeSlices = true;
-export var pieChart1Doughnut = false;
-
+export var pieChartSettings = {
+    pieChartShowLegend : true,
+    pieChartColorScheme : {
+        domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
+    },
+    pieChartShowLabels : true,
+    pieChartExplodeSlices : true,
+    pieChartDoughnut : true,
+    pieChartGradient : false,    
+    pieChart1ExplodeSlices : true,
+    pieChart1Doughnut : false,
+    pieChartDisplayCount : 5,
+}
 //Line Charts
 
 export var lineChartView: any[] = [550, 400];

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+
 import { DiseasePrevalenceService } from '../../../../shared/_api/disease_prevalence.service';
+import { ClinicTypeService } from '../../../../shared/_api/clinic_type.service';
 import * as chartsData from '../../../../shared/_config/ngx-charts.config'
+import * as settings from './_settings.config'
 
 @Component({
   selector: 'app-analytics',
@@ -8,91 +12,250 @@ import * as chartsData from '../../../../shared/_config/ngx-charts.config'
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
+  // global Settings
+  years = null
+  clinicTypes = []
+  // Bar Charts
+  barChartSettings = chartsData.barChartSettings;
+  barChartView: any[] = chartsData.barChartView;
+  // Pie Charts
+  pieChartSettings = chartsData.pieChartSettings;
+  pieChartView: any[] = chartsData.pieChartView;
+  // dataTable Settings
+  categorySettings = settings.categorySettings;
+  individualSettings = settings.individualSettings;
+
+  // Individual Chart
+  individualSource: LocalDataSource;
   individual = {
     prevalences: null,
     diseases: null,
     totalOccurence: null,
     initialChart: [],
-    liveChart: [],
+    liveChart: []
   }
-
-  //Bar Charts
-  barChartView: any[] = chartsData.barChartView;
-
-  // options
-  barChartShowYAxis = chartsData.barChartShowYAxis;
-  barChartShowXAxis = chartsData.barChartShowXAxis;
-  barChartGradient = chartsData.barChartGradient;
-  barChartShowLegend = chartsData.barChartShowLegend;
-  barChartShowXAxisLabel = chartsData.barChartShowXAxisLabel;
-  barChartXAxisLabel = chartsData.barChartXAxisLabel;
-  barChartShowYAxisLabel = chartsData.barChartShowYAxisLabel;
-  barChartYAxisLabel = chartsData.barChartYAxisLabel;
-  barChartColorScheme = chartsData.barChartColorScheme;
-  barChartDisplayVisible = 0
-  barChartDisplayCount = chartsData.barChartDisplayCount;
-
-  settings = {
-    columns: {
-      name: {
-        title: 'Disease Name',
-        filter: false,
-      },
-      value: {
-        title: 'Percentage',
-        filter: false,
-      }
-    },
-    attr: {
-      class: "table table-responsive"
-    },
-    edit: {
-      editButtonContent: '<i class="ft-edit-2 info font-medium-1 mr-2"></i>'
-    },
-    delete: {
-      deleteButtonContent: '<i class="ft-x danger font-medium-1 mr-2"></i>'
-    }
-  };
-
-  loadingIndicator: boolean = true;
-  reorderable: boolean = true;
-
-  constructor(private diseasePrevalenceService: DiseasePrevalenceService) {
-    setTimeout(() => { this.loadingIndicator = false; }, 1500);
+  individualFilter = {
+    start_year: "",
+    start_quarater: "",
+    end_year: "",
+    end_quarater: "",
+    clinic_type_id: ""
   }
+  individualTimer = null
+  individualDrawChartStop = false
+  individualDrawChartStart = 0
+
+  // Disease Category(Therapy Area) Chart
+  categorySource: LocalDataSource;
+  category = {
+    prevalences: null,
+    therapyAreas: null,
+    totalOccurence: null,
+    initialChart: [],
+    liveChart: []
+  }
+  categoryFilter = {
+    start_year: "",
+    start_quarater: "",
+    end_year: "",
+    end_quarater: "",
+    clinic_type_id: ""
+  }
+  categoryTimer = null
+  categoryDrawChartStop = false
+  categoryDrawChartStart = 0
+
+  // Individual Disease By Category(Therapy Area) Chart
+  therapyArea = {
+    id: null,
+    name: ""
+  }
+  diseaseByCategorySource: LocalDataSource;
+  diseaseByCategory = {
+    prevalences: null,
+    diseases: null,
+    totalOccurence: null,
+    initialChart: [],
+    liveChart: []
+  }
+  diseaseByCategoryFilter = {
+    therapy_area_id: null,
+    start_year: "",
+    start_quarater: "",
+    end_year: "",
+    end_quarater: "",
+    clinic_type_id: ""
+  }
+  diseaseByCategoryTimer = null
+  diseaseByCategoryDrawChartStop = false
+  diseaseByCategoryDrawChartStart = 0
+  // constructor
+  constructor(private diseasePrevalenceService: DiseasePrevalenceService, private clinicTypeService: ClinicTypeService) { }
 
   ngOnInit() {
-    this.diseasePrevalenceService.individualDisease({})
+    this.years = this.getYears(2016)
+    this.fetchClinicType()
+    this.fetchIndividualData()
+    this.fetchCategoryData()
+  }
+
+  getYears(startYear) {
+    var currentYear = new Date().getFullYear(), years = [];
+    startYear = startYear || 1980;
+    while (startYear <= currentYear) {
+      years.push(currentYear--);
+    }
+    return years;
+  }
+
+  fetchClinicType() {
+    this.clinicTypes = []
+    this.clinicTypeService.index()
       .subscribe((res: any) => {
-        this.individual.initialChart = []
-        this.individual.liveChart = []
-        this.individual.diseases = res.individualDiseases
-        this.individual.prevalences = res.individualPrevalences
-        this.individual.totalOccurence = res.total
-        for (var disease_id in this.individual.diseases) {
-          if (!this.individual.diseases.hasOwnProperty(disease_id)) continue;
-          var diseaseChart = {
-            'name': this.individual.diseases[disease_id],
-            'value': this.individual.prevalences[disease_id] ? this.individual.prevalences[disease_id] / this.individual.totalOccurence * 100 : 0,
-            'occurence': this.individual.prevalences[disease_id] ? this.individual.prevalences[disease_id] : 0,
-            'disease_id': disease_id
-          }
-          this.individual.initialChart.push(diseaseChart)
-        }
-        this.individual.liveChart = this.individual.initialChart.slice(this.barChartDisplayVisible, this.barChartDisplayCount);
-        setInterval(this.updateData.bind(this), 2000);
+        this.clinicTypes = res.clinic_types
       });
   }
 
-  updateData() {
-    this.barChartDisplayVisible++;
-    this.individual.liveChart = this.individual.initialChart.slice(this.barChartDisplayVisible, this.barChartDisplayVisible + this.barChartDisplayCount);
-    if (this.barChartDisplayVisible > this.individual.initialChart.length) {
-      this.barChartDisplayVisible = 0;
-    }
+  fetchIndividualData() {
+    this.individual.liveChart = []
+    this.individualDrawChartStop = true;
+    if (this.individualTimer) clearInterval(this.individualTimer);
+    this.diseasePrevalenceService.individualDisease(this.individualFilter)
+      .subscribe((res: any) => {
+        this.individual = {
+          initialChart: [],
+          liveChart: [],
+          diseases: res.individualDiseases,
+          prevalences: res.individualPrevalences,
+          totalOccurence: res.total || 1
+        }
+        for (var disease_id in this.individual.diseases) {
+          if (!this.individual.diseases.hasOwnProperty(disease_id)) continue;
+          var percentage = {
+            'name': this.individual.diseases[disease_id],
+            'value': this.individual.prevalences[disease_id] ? (parseFloat(this.individual.prevalences[disease_id]) / this.individual.totalOccurence * 100).toFixed(2) : 0,
+            'occurence': this.individual.prevalences[disease_id] ? this.individual.prevalences[disease_id] : 0,
+            'disease_id': disease_id
+          }
+          this.individual.initialChart.push(percentage)
+        }
+        // datatable redraw
+        this.individualSource = new LocalDataSource(this.individual.initialChart)
+        this.individualSource.load(this.individual.initialChart)
+        // datachart redraw
+        this.individualDrawChartStart = 0;
+        this.individualDrawChartStop = false;
+        this.drawIndividualLiveChart();
+        this.individualTimer = setInterval(this.drawIndividualLiveChart.bind(this), 2000);
+      });
   }
 
+  fetchCategoryData() {
+    this.category.liveChart = []
+    this.categoryDrawChartStop = true;
+    if (this.categoryTimer) clearInterval(this.categoryTimer);
+    this.diseasePrevalenceService.category(this.categoryFilter)
+      .subscribe((res: any) => {
+        this.category = {
+          initialChart: [],
+          liveChart: [],
+          therapyAreas: res.therapyAreas,
+          prevalences: res.therapyAreaPrevalences,
+          totalOccurence: res.total || 1
+        }
+        for (var therapy_area_id in this.category.therapyAreas) {
+          if (!this.category.therapyAreas.hasOwnProperty(therapy_area_id)) continue;
+          var percentage = {
+            'name': this.category.therapyAreas[therapy_area_id],
+            'value': this.category.prevalences[therapy_area_id] ? (parseFloat(this.category.prevalences[therapy_area_id]) / this.category.totalOccurence * 100).toFixed(2) : 0,
+            'occurence': this.category.prevalences[therapy_area_id] ? this.category.prevalences[therapy_area_id] : 0,
+            'therapy_area_id': therapy_area_id
+          }
+          this.category.initialChart.push(percentage)
+        }
+        // datatable redraw
+        this.categorySource = new LocalDataSource(this.category.initialChart)
+        this.categorySource.load(this.category.initialChart)
+        // datachart redraw
+        this.categoryDrawChartStart = 0;
+        this.categoryDrawChartStop = false;
+        this.drawCategoryLiveChart();
+        this.categoryTimer = setInterval(this.drawCategoryLiveChart.bind(this), 2000);
+      });
+  }
+
+  fetchIndividualByCategoryData() {
+    this.diseaseByCategoryFilter.therapy_area_id = this.therapyArea.id
+    this.diseaseByCategory.liveChart = []
+    this.diseaseByCategoryDrawChartStop = true;
+    if (this.diseaseByCategoryTimer) clearInterval(this.diseaseByCategoryTimer);
+    this.diseasePrevalenceService.diseaseByCategory(this.diseaseByCategoryFilter)
+      .subscribe((res: any) => {
+        this.diseaseByCategory = {
+          initialChart: [],
+          liveChart: [],
+          diseases: res.individualDiseasesByCategory,
+          prevalences: res.individualPrevalencesByCategory,
+          totalOccurence: res.total || 1
+        }
+        for (var disease_id in this.diseaseByCategory.diseases) {
+          if (!this.diseaseByCategory.diseases.hasOwnProperty(disease_id)) continue;
+          if (!this.diseaseByCategory.prevalences[disease_id]) continue;
+          var percentage = {
+            'name': this.diseaseByCategory.diseases[disease_id],
+            'value': this.diseaseByCategory.prevalences[disease_id] ? (parseFloat(this.diseaseByCategory.prevalences[disease_id]) / this.diseaseByCategory.totalOccurence * 100).toFixed(2) : 0,
+            'occurence': this.diseaseByCategory.prevalences[disease_id] ? this.diseaseByCategory.prevalences[disease_id] : 0,
+            'disease_id': disease_id
+          }
+          this.diseaseByCategory.initialChart.push(percentage)
+        }
+        // datatable redraw
+        this.diseaseByCategorySource = new LocalDataSource(this.diseaseByCategory.initialChart)
+        this.diseaseByCategorySource.load(this.diseaseByCategory.initialChart)
+        // datachart redraw
+        this.diseaseByCategoryDrawChartStart = 0;        
+        this.diseaseByCategoryDrawChartStop = false;
+        this.drawdiseaseByCategoryLiveChart();
+        this.diseaseByCategoryTimer = setInterval(this.drawdiseaseByCategoryLiveChart.bind(this), 2000);
+      });
+  }
+
+  drawIndividualLiveChart() {
+    if (this.individualDrawChartStop) return;
+    if (this.individualDrawChartStart > this.individual.initialChart.length) {
+      this.individualDrawChartStart = 0;
+    }
+    this.individual.liveChart = this.individual.initialChart.slice(this.individualDrawChartStart, this.individualDrawChartStart + this.barChartSettings.barChartDisplayCount);
+    this.individualDrawChartStart++;
+  }
+
+  drawCategoryLiveChart() {
+    if (this.categoryDrawChartStop) return;
+    let displayCount = this.category.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.category.initialChart.length / 2)
+    if (this.categoryDrawChartStart > this.category.initialChart.length - displayCount) {
+      this.categoryDrawChartStart = 0;
+    }
+    this.category.liveChart = this.category.initialChart.slice(this.categoryDrawChartStart, this.categoryDrawChartStart + displayCount);
+    this.categoryDrawChartStart++;
+  }
+
+  drawdiseaseByCategoryLiveChart() {
+    if (this.diseaseByCategoryDrawChartStop) return;
+    if (this.diseaseByCategoryDrawChartStart > this.diseaseByCategory.initialChart.length - this.pieChartSettings.pieChartDisplayCount) {
+      this.diseaseByCategoryDrawChartStart = 0;
+    }
+    this.diseaseByCategory.liveChart = this.diseaseByCategory.initialChart.slice(this.diseaseByCategoryDrawChartStart, this.diseaseByCategoryDrawChartStart + this.pieChartSettings.pieChartDisplayCount);
+    this.diseaseByCategoryDrawChartStart++;
+  }
   onSelect(event) {
     //your code here
+  }
+
+  onSelectCategory(event) {
+    this.therapyArea = {
+      id: event.data.therapy_area_id,
+      name: event.data.name
+    }
+    this.fetchIndividualByCategoryData()
   }
 }

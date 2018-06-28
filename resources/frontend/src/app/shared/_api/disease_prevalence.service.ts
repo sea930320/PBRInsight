@@ -12,6 +12,16 @@ export class DiseasePrevalenceService {
 
   individualDisease(data) {
     const URL = this.diseasePrevalenceRoute + 'individual-disease';
-    return this.http.get<any>(URL, data);
+    return this.http.post<any>(URL, data);
+  }
+
+  category(data) {
+    const URL = this.diseasePrevalenceRoute + 'category';
+    return this.http.post<any>(URL, data);
+  }
+
+  diseaseByCategory(data) {
+    const URL = this.diseasePrevalenceRoute + 'disease-by-category';
+    return this.http.post<any>(URL, data);
   }
 }

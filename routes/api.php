@@ -21,5 +21,8 @@ Route::group(['middleware' => ['api', 'cors']], function ($router) {
 });
 
 Route::namespace('Api')->middleware(['jwt.auth', 'cors'])->group(function($router) {
-    $router->get('disease-prevalence/individual-disease', 'DiseasePrevalenceController@getIndividualDisease');
+    $router->resource('clinic-type', 'ClinicTypeController');
+    $router->post('disease-prevalence/individual-disease', 'DiseasePrevalenceController@individualDisease');
+    $router->post('disease-prevalence/category', 'DiseasePrevalenceController@category');
+    $router->post('disease-prevalence/disease-by-category', 'DiseasePrevalenceController@diseaseByCategory');
 });

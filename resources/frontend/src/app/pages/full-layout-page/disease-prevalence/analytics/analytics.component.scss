@@ -1,3 +1,19 @@
-@import '~@swimlane/ngx-datatable/release/index.css';
-@import '~@swimlane/ngx-datatable/release/themes/material.css';
-@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+#disease-prevalence-analytics {
+    .ng2-smart-pagination {
+        &.pagination {
+            .page-link {
+                line-height: 1rem;
+            }
+        }
+    }
+
+    .ng-star-inserted {
+        text-align: center !important;
+    }
+
+    .input-group {
+        margin-top: 16px;
+        .input-group-text {
+        }
+    }
+}

@@ -47,6 +47,7 @@
     "resize-observer-polyfill": "^1.4.2",
     "rxjs": "^5.5.7",
     "screenfull": "^3.3.1",
+    "sweetalert2": "^7.17.0",
     "web-animations-js": "^2.2.5",
     "zone.js": "^0.8.17"
   },
