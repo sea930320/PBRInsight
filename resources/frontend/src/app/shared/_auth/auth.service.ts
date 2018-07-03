@@ -29,7 +29,7 @@ export class AuthService {
       });
   }
 
-  logout(redirectUrl: string = '/full-layout') {
+  logout(redirectUrl: string = '') {
     localStorage.removeItem('token');
     this.router.navigate(['login'], {
       queryParams: {

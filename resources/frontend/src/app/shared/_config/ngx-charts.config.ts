@@ -9,7 +9,6 @@ export var barChartSettings = {
     barChartGradient : false,
     barChartShowLegend : true,
     barChartShowXAxisLabel : true,
-    barChartXAxisLabel : 'Disease',
     barChartShowYAxisLabel : true,
     barChartYAxisLabel : '%',
     barChartDisplayCount : 10,
@@ -40,22 +39,23 @@ export var pieChartSettings = {
 export var lineChartView: any[] = [550, 400];
 
 // options
-export var lineChartShowXAxis = true;
-export var lineChartShowYAxis = true;
-export var lineChartGradient = false;
-export var lineChartShowLegend = false;
-export var lineChartShowXAxisLabel = true;
-export var lineChartXAxisLabel = 'Country';
-export var lineChartShowYAxisLabel = true;
-export var lineChartYAxisLabel = 'Population';
-
-export var lineChartColorScheme = {
-    domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
-};
-
-// line, area
-export var lineChartAutoScale = true;
-export var lineChartLineInterpolation = shape.curveBasis;
+export var lineChartSettings = {
+    lineChartShowXAxis : true,
+    lineChartShowYAxis : true,
+    lineChartGradient : false,
+    lineChartShowLegend : false,
+    lineChartShowXAxisLabel : true,
+    lineChartShowYAxisLabel : true,
+    lineChartAutoScale : true,
+    lineChartLineInterpolation : shape.curveBasis,
+    lineChartColorScheme1 : {
+        domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA'],
+    },
+    lineChartColorScheme2 : {
+        domain: ['#FF8D60', '#009DA0', '#FF586B', '#AAAAAA'],
+    },
+    lineChartDisplayCount : 5,
+}
 
 //Area Charts
 export var areaChartView: any[] = [550, 400];

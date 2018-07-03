@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.logout();
+    localStorage.removeItem('token');
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/full-layout';
   }
 

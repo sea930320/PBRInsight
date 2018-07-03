@@ -7,14 +7,14 @@ import {
     HttpErrorResponse,
     HttpInterceptor
 } from '@angular/common/http';
-import { RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../_auth/auth.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(public authService: AuthService) { }
+    constructor(public authService: AuthService, private router: Router) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         request = request.clone({
             setHeaders: {
@@ -23,7 +23,6 @@ export class JwtInterceptor implements HttpInterceptor {
             }
         })
         if (this.authService.getToken()) {
-            let token = this.authService.getToken();
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${this.authService.getToken()}`
@@ -34,9 +33,9 @@ export class JwtInterceptor implements HttpInterceptor {
             if (event instanceof HttpResponse) {
             }
         }, (err: any) => {
-            if (err instanceof HttpErrorResponse) {
+            if (err instanceof HttpErrorResponse && this.router.url.indexOf('login') < 0) {
                 if (err.status === 401) {
-                    this.authService.logout()
+                    this.authService.logout(this.router.url)
                 }
             }
         });

@@ -20,7 +20,6 @@ import { JwtInterceptor } from './shared/_helpers/jwt.interceptor';
 //------------------plugins----------------------//
 import * as $ from 'jquery';
 
-
 @NgModule({
     declarations: [
         AppComponent,

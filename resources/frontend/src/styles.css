@@ -16,20 +16,19 @@
 @import url("../src/assets/css/data-table/icons.css");
 @import url("../src/assets/css/demo.css"); */
 
-#disease-prevalence-analytics .ng2-smart-pagination.pagination .page-link {
+.ng2-smart-pagination.pagination .page-link {
     line-height: 1rem;
 }
 
-
-#disease-prevalence-analytics ng2-smart-table-pager {
+ng2-smart-table-pager {
     justify-content: center !important;
 }
 
-#disease-prevalence-analytics ng2-smart-table-pager .page-link-next,
-#disease-prevalence-analytics ng2-smart-table-pager .page-link-prev {
+ng2-smart-table-pager .page-link-next,
+ng2-smart-table-pager .page-link-prev {
     font-size: 14px !important;
 }
 
-#disease-prevalence-analytics td.ng-star-inserted:last-child {
+td.ng-star-inserted:last-child {
     text-align: center !important;
 }

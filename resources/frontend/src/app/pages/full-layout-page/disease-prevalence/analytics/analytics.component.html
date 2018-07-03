@@ -63,7 +63,7 @@
                     <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="individual.liveChart" [gradient]="barChartSettings.barChartGradient"
                       [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
                       [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
-                      [xAxisLabel]="barChartSettings.barChartXAxisLabel" [yAxisLabel]="barChartSettings.barChartYAxisLabel"
+                      [xAxisLabel]="'Disease'" [yAxisLabel]="barChartSettings.barChartYAxisLabel"
                       (select)="onSelect($event)">
                     </ngx-charts-bar-vertical>
                   </div>
@@ -139,7 +139,7 @@
                     <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="category.liveChart" [gradient]="barChartSettings.barChartGradient"
                       [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
                       [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
-                      [xAxisLabel]="barChartSettings.barChartXAxisLabel" [yAxisLabel]="barChartSettings.barChartYAxisLabel"
+                      [xAxisLabel]="'Therapy Area'" [yAxisLabel]="barChartSettings.barChartYAxisLabel"
                       (select)="onSelectCategory($event)">
                     </ngx-charts-bar-vertical>
                   </div>

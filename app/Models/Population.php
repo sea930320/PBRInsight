@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Atc4 extends Model
+class Population extends Model
 {
     /**
      * @var string
      */
-    public $table = 'atc4s';
+    public $table = 'populations';
     
     /**
      * @var array
      */
-    public $fillable = ['name'];
+    public $fillable = ['year', 'total_population', 'annual_growth_rate'];
 
     
     /**
@@ -22,6 +22,8 @@ class Atc4 extends Model
      */
     public $visible = [
         'id',
-        'name'
+        'year',
+        'total_population',
+        'annual_growth_rate'
     ];
 }

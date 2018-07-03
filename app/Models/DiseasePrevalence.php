@@ -46,7 +46,11 @@ class DiseasePrevalence extends Model
 
         'disease',
         'clinic_type',
-        'therapy_area'
+        'therapy_area',
+        'atc5',
+        'atc4',
+        'atc3',
+        'atc2'
     ];
 
     /**
@@ -71,5 +75,45 @@ class DiseasePrevalence extends Model
     public function therapy_area()
     {
         return $this->belongsTo(TherapyArea::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function atc5()
+    {
+        return $this->belongsTo(Atc5::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function atc4()
+    {
+        return $this->belongsTo(Atc4::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function atc3()
+    {
+        return $this->belongsTo(Atc3::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function atc2()
+    {
+        return $this->belongsTo(Atc2::class);
     }
 }

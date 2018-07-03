@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Atc4 extends Model
+class AgeGroup extends Model
 {
     /**
      * @var string
      */
-    public $table = 'atc4s';
+    public $table = 'age_groups';
     
     /**
      * @var array
      */
-    public $fillable = ['name'];
+    public $fillable = ['range'];
 
     
     /**
@@ -22,6 +22,6 @@ class Atc4 extends Model
      */
     public $visible = [
         'id',
-        'name'
+        'range'
     ];
 }

@@ -24,9 +24,10 @@ export class AnalyticsComponent implements OnInit {
   // dataTable Settings
   categorySettings = settings.categorySettings;
   individualSettings = settings.individualSettings;
-
-  // Individual Chart
   individualSource: LocalDataSource;
+  categorySource: LocalDataSource;
+  
+  // Individual Chart  
   individual = {
     prevalences: null,
     diseases: null,
@@ -45,8 +46,7 @@ export class AnalyticsComponent implements OnInit {
   individualDrawChartStop = false
   individualDrawChartStart = 0
 
-  // Disease Category(Therapy Area) Chart
-  categorySource: LocalDataSource;
+  // Disease Category(Therapy Area) Chart  
   category = {
     prevalences: null,
     therapyAreas: null,
