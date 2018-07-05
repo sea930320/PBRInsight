@@ -9,7 +9,7 @@ export class GlobalConstants {
     constructor() {
         if (this.getMode() !== true) {
             console.log("production");
-            this.APIURL = 'https://www.PBRInsight.com/api';
+            this.APIURL = 'http://198.57.229.201/api';
         }
         else {
             console.log("development");

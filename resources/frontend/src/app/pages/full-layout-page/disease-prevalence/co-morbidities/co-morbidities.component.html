@@ -1,3 +1,97 @@
-<p>
-  co-morbidities works!
-</p>
+<section id="disease-prevalence-analytics">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">% of 2, 3, ... (N) Co-Morbidities</h3>
+            <select class="custom-select form-control" [(ngModel)]="filter.therapy_area_id" (change)="fetchData()">
+              <option value="">----Select----</option>
+              <option *ngFor="let therapyArea of therapyAreas" [ngValue]="therapyArea.id">{{therapyArea.name}}</option>
+            </select>
+            <hr>
+            <div class="filter-chart row m-0">
+              <div class="col-md-8">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">From</span>
+                  </div>
+                  <select class="custom-select form-control" [(ngModel)]="filter.start_year" (change)="fetchData()">
+                    <option value="">Year</option>
+                    <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+                  </select>
+                  <select class="custom-select form-control" [(ngModel)]="filter.start_quarater" [disabled]="!filter.start_year" (change)="fetchData()">
+                    <option value="">Quarater</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                  </select>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">To</span>
+                  </div>
+                  <select class="custom-select form-control" [(ngModel)]="filter.end_year" [disabled]="!filter.start_year" (change)="fetchData()">
+                    <option value="">Year</option>
+                    <option *ngFor="let year of getYears(filter.start_year)" [ngValue]="year">{{year}}</option>
+                  </select>
+                  <select class="custom-select form-control" [(ngModel)]="filter.end_quarater" [disabled]="!filter.start_year || !filter.end_year"
+                    (change)="fetchData()">
+                    <option value="">Quarater</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="3">4</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Clinic Type</span>
+                  </div>
+                  <select class="custom-select form-control" [(ngModel)]="filter.clinic_type_id" (change)="fetchData()">
+                    <option value="">----Select----</option>
+                    <option *ngFor="let clinicType of clinicTypes" [ngValue]="clinicType.id">{{clinicType.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div id="advanced-pie-chart" class="height-300" *ngIf="coMorbidities.liveChart.length > 0">
+                    <ngx-charts-advanced-pie-chart class="chart-container" [scheme]="pieChartSettings.pieChartColorScheme" [results]="coMorbidities.liveChart"
+                      (legendLabelClick)="selectLegend($event)" [gradient]="pieChartSettings.pieChartGradient" [tooltipText]="pieTooltipText"
+                      (select)="selectLegend($event)">
+                    </ngx-charts-advanced-pie-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12" *ngIf="diagonsisSets.length > 0">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Diagnosis Set</h3>
+            <hr class="m-0">
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <ul class="list-group mb-2" *ngFor="let patients of diagonsisSets">
+                <li *ngFor="let patient of patients" class="list-group-item">
+                  {{patient.disease.name}} (
+                  <b>Active constituent: </b> {{patient.active_constituent}})
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

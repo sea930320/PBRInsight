@@ -22,6 +22,7 @@ Route::group(['middleware' => ['api']], function ($router) {
 
 Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->resource('clinic-type', 'ClinicTypeController');
+    $router->resource('therapy-area', 'TherapyAreaController');
     $router->resource('population', 'PopulationController');
     $router->resource('age-group-report', 'AgeGroupReportController');
     $router->post('disease-prevalence/individual-disease', 'DiseasePrevalenceController@individualDisease');
@@ -29,4 +30,5 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->post('disease-prevalence/disease-by-category', 'DiseasePrevalenceController@diseaseByCategory');
     $router->post('patient-flow-metrics/disease-by-brand', 'PatientFlowMetricsController@diseaseByBrand');
     $router->post('patient-flow-metrics/disease-by-atc', 'PatientFlowMetricsController@diseaseByAtc');
+    $router->post('co-morbidities', 'CoMorbiditiesController@index');
 });

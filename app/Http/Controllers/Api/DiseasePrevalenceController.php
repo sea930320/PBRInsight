@@ -57,17 +57,21 @@ class DiseasePrevalenceController extends ApiController
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
-            ->setQueryParams($queryParams);
+            ->setQueryParams($queryParams)
+            ->select('disease_id', DB::raw("count(disease_id) as total"))
+            ->groupBy(['disease_id', 'patient'])
+            ->get();
         $individualDiseases = $this->disease
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $individualPrevalences->count(),
+            'total' => count($individualPrevalences),
             'individualPrevalences' => $individualPrevalences
-                ->select(['disease_id', DB::raw('count(*) as total')])
-                ->groupBy('disease_id')
-                ->pluck('total','disease_id')->all(),
+                ->groupBy(['disease_id'])
+                ->map(function($item, $key) {
+                    return collect($item)->count();
+                }),
             'individualDiseases' => $individualDiseases
         ]);
     }
@@ -83,12 +87,17 @@ class DiseasePrevalenceController extends ApiController
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
-            ->setQueryParams($queryParams);
-        $total = $individualPrevalences->count();
+            ->setQueryParams($queryParams)
+            ->select('disease_id', DB::raw("count(disease_id) as total"))
+            ->groupBy(['disease_id', 'patient'])
+            ->get();
+        $total = count($individualPrevalences);
         $individualPrevalences = $individualPrevalences
-            ->select(['disease_id', DB::raw('count(*) as total')])
-            ->groupBy('disease_id')
-            ->pluck('total','disease_id')->all();
+            ->groupBy(['disease_id'])
+            ->map(function($item, $key) {
+                return collect($item)->count();
+            })
+            ->toArray();
         $therapyAreas = $this->therapyArea->with(['diseases'])->get()->toArray();
         $therapyAreaPrevalences = [];
         foreach ($therapyAreas as $key => $therapyArea) {
@@ -114,22 +123,43 @@ class DiseasePrevalenceController extends ApiController
      */
     public function diseaseByCategory(DiseaseByCategoryIndex $request): JsonResponse
     {
+        // $queryParams = $request->validatedOnly();
+        // $queryBuilder = new IndividualDiseaseQueryBuilder();
+        // $individualPrevalences = $queryBuilder
+        //     ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
+        //     ->setQueryParams($queryParams);
+        // $individualDiseases = $this->disease
+        //     ->where('therapy_area_id', $queryParams['therapy_area_id'])
+        //     ->select(['id', 'name'])
+        //     ->pluck('name','id')->all();
+        // return $this->respond([
+        //     'total' => $individualPrevalences->count(),
+        //     'individualPrevalencesByCategory' => $individualPrevalences
+        //         ->select(['disease_id', DB::raw('count(*) as total')])
+        //         ->groupBy('disease_id')
+        //         ->pluck('total','disease_id')->all(),
+        //     'individualDiseasesByCategory' => $individualDiseases
+        // ]);
+
         $queryParams = $request->validatedOnly();
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
-            ->setQueryParams($queryParams);
+            ->setQueryParams($queryParams)
+            ->select('disease_id', DB::raw("count(disease_id) as total"))
+            ->groupBy(['disease_id', 'patient'])
+            ->get();
         $individualDiseases = $this->disease
             ->where('therapy_area_id', $queryParams['therapy_area_id'])
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
-        $total = $individualPrevalences->count();
         return $this->respond([
-            'total' => $individualPrevalences->count(),
+            'total' => count($individualPrevalences),
             'individualPrevalencesByCategory' => $individualPrevalences
-                ->select(['disease_id', DB::raw('count(*) as total')])
-                ->groupBy('disease_id')
-                ->pluck('total','disease_id')->all(),
+                ->groupBy(['disease_id'])
+                ->map(function($item, $key) {
+                    return collect($item)->count();
+                }),
             'individualDiseasesByCategory' => $individualDiseases
         ]);
     }

@@ -8,10 +8,12 @@ import { FullPagesRoutingModule } from "./full-pages-routing.module";
 
 //-----------------service-----------------------//
 import { ClinicTypeService } from '../../shared/_api/clinic_type.service';
+import { TherapyAreaService } from '../../shared/_api/therapy_area.service';
 import { DiseasePrevalenceService } from '../../shared/_api/disease_prevalence.service';
 import { PopulationService } from '../../shared/_api/population.service';
 import { AgeGroupReportService } from '../../shared/_api/age_group_report.service';
 import { PatientFlowMetricsService } from '../../shared/_api/patient-flow-metrics.service';
+import { CoMorbiditiesService } from '../../shared/_api/co_morbidities.service';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -43,7 +45,9 @@ import { CoMorbiditiesComponent } from './disease-prevalence/co-morbidities/co-m
         DiseasePrevalenceService,
         PopulationService,
         AgeGroupReportService,
-        PatientFlowMetricsService
+        PatientFlowMetricsService,
+        CoMorbiditiesService,
+        TherapyAreaService
     ]
 })
 export class FullPagesModule { }

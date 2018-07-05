@@ -32,3 +32,7 @@ ng2-smart-table-pager .page-link-prev {
 td.ng-star-inserted:last-child {
     text-align: center !important;
 }
+
+.advanced-pie-legend {
+    line-height: 2rem !important;
+}
