@@ -33,7 +33,9 @@ class PopulationController extends ApiController
     public function index(Request $request): JsonResponse
     {
         return $this->respond([
-            'populations' => $this->population->get()
+            'populations' => $this->population
+                ->orderBy('year')
+                ->get()
         ]);
     }
 }

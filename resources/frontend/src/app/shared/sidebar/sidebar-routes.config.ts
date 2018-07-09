@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'Treatment Mapping', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
         submenu: [
-            { path: '/treatment-mapping/therapy-area', title: 'Therapy Area', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
+            { path: '/treatment-mapping/therapy-area-level', title: 'Therapy Area Level', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
             { path: '/treatment-mapping/brand-molecule', title: 'Brand and Molecule(INN)', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
         ]
     },

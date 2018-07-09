@@ -5,6 +5,7 @@ import { FullLayoutPageComponent } from 'app/pages/full-layout-page/full-layout-
 import { AnalyticsComponent } from './disease-prevalence/analytics/analytics.component';
 import { PatientFlowMetricsComponent } from './disease-prevalence/patient-flow-metrics/patient-flow-metrics.component';
 import { CoMorbiditiesComponent } from './disease-prevalence/co-morbidities/co-morbidities.component';
+import { TherapyAreaLevelComponent } from './treatment-mapping/therapy-area-level/therapy-area-level.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,18 @@ const routes: Routes = [
         component: CoMorbiditiesComponent,
         data: {
           title: 'Disease Prevalence-Co-Morbidities'
+        }
+      }
+    ]
+  },
+  {
+    path: 'treatment-mapping',
+    children: [
+      {
+        path: 'therapy-area-level',
+        component: TherapyAreaLevelComponent,
+        data: {
+          title: 'Treatment Mapping-Therapy Area Level'
         }
       }
     ]

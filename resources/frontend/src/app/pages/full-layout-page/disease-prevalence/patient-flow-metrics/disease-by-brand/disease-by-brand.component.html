@@ -12,8 +12,7 @@
             <option value="">Year</option>
             <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
           </select>
-          <select class="custom-select form-control" [(ngModel)]="filter.start_quarater" [disabled]="!filter.start_year"
-            (change)="fetchData()">
+          <select class="custom-select form-control" [(ngModel)]="filter.start_quarater" [disabled]="!filter.start_year" (change)="fetchData()">
             <option value="">Quarater</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -23,8 +22,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">To</span>
           </div>
-          <select class="custom-select form-control" [(ngModel)]="filter.end_year" [disabled]="!filter.start_year"
-            (change)="fetchData()">
+          <select class="custom-select form-control" [(ngModel)]="filter.end_year" [disabled]="!filter.start_year" (change)="fetchData()">
             <option value="">Year</option>
             <option *ngFor="let year of getYears(filter.start_year)" [ngValue]="year">{{year}}</option>
           </select>
@@ -61,6 +59,22 @@
               [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
               [xAxisLabel]="'Brand'" [yAxisLabel]="barChartSettings.barChartYAxisLabel">
             </ngx-charts-bar-vertical>
+          </div>
+          <div class="row mt-3" *ngIf="brand.initialChart.length>0">
+            <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+              <label class="mr-2">Live Chart: </label>
+              <div class="mr-2">
+                <input type="radio" [(ngModel)]="brand.liveChartActivate" [value]="false" name="brandLiveChart">
+                <label>Yes</label>
+              </div>
+              <div class="">
+                <input type="radio" [(ngModel)]="brand.liveChartActivate" [value]="true" name="brandLiveChart">
+                <label>No</label>
+              </div>
+            </div>
+            <div class="form-group col-md-9 col-sm-12">
+              <nouislider #brandNS [(ngModel)]="this.brand.drawChartStartPos" (change)="drawLiveChart(true)" [config]="brandConfig"></nouislider>
+            </div>
           </div>
         </div>
         <div class="col-md-4 col-sm-12">

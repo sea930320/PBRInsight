@@ -33,7 +33,9 @@ class AgeGroupReportController extends ApiController
     public function index(Request $request): JsonResponse
     {
         return $this->respond([
-            'ageGroupReports' => $this->ageGroupReport->with(['age_group'])->get()
+            'ageGroupReports' => $this->ageGroupReport
+                ->with(['age_group'])
+                ->get()
         ]);
     }
 }

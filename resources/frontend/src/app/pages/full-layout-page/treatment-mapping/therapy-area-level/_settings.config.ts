@@ -4,7 +4,7 @@ export var atcSettings = {
         name: {
             title: 'ATC Level',
             filter: true,
-            width: '60%'
+            width: '80%'
         },
         value: {
             title: 'Percentage',
@@ -13,11 +13,6 @@ export var atcSettings = {
             valuePrepareFunction: function (value) {
                 return `${value} %`
             }
-        },
-        population: {
-            title: 'Population',
-            filter: true,
-            width: '20%'
         }
     },
     hideSubHeader: false,

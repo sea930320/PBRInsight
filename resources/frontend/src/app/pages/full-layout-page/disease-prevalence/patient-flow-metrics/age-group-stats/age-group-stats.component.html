@@ -1,0 +1,76 @@
+<div class="card" id="age-group-stats">
+  <div class="card-header">
+    <h3 class="card-title"> % Population by Age Group and Actual Population Size </h3>
+    <hr>
+  </div>
+  <div class="card-body">
+    <div class="card-block">
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <div id="line-chart" class="height-300" *ngIf="populationChart.initialPopulationSeries.length > 0">
+            <ngx-charts-line-chart [scheme]="lineChartSettings.lineChartColorScheme1" [results]="populationChart.liveTotalChart" [gradient]="lineChartSettings.lineChartGradient"
+              [xAxis]="lineChartSettings.lineChartShowXAxis" [yAxis]="lineChartSettings.lineChartShowYAxis" [legend]="lineChartSettings.lineChartShowLegend"
+              [showXAxisLabel]="lineChartSettings.lineChartShowXAxisLabel" [showYAxisLabel]="lineChartSettings.lineChartShowYAxisLabel"
+              xAxisLabel="Year" yAxisLabel="Population" [autoScale]="lineChartSettings.lineChartAutoScale" [curve]="lineChartSettings.lineChartLineInterpolation"
+              (select)="onSelectPopulationChart($event)" [xAxisTickFormatting]="convertToString">
+            </ngx-charts-line-chart>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div id="line-chart" class="height-300" *ngIf="populationChart.initialGrowthRateSeries.length > 0">
+            <ngx-charts-line-chart [scheme]="lineChartSettings.lineChartColorScheme2" [results]="populationChart.liveGrowthChart" [gradient]="lineChartSettings.lineChartGradient"
+              [xAxis]="lineChartSettings.lineChartShowXAxis" [yAxis]="lineChartSettings.lineChartShowYAxis" [legend]="lineChartSettings.lineChartShowLegend"
+              [showXAxisLabel]="lineChartSettings.lineChartShowXAxisLabel" [showYAxisLabel]="lineChartSettings.lineChartShowYAxisLabel"
+              roundDomains=true xAxisLabel="Year" yAxisLabel="Annual Growth Rate (%)" [autoScale]="lineChartSettings.lineChartAutoScale"
+              (select)="onSelectPopulationChart($event)" [curve]="lineChartSettings.lineChartLineInterpolation" [xAxisTickFormatting]="convertToString">
+            </ngx-charts-line-chart>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12 text-center">
+          <ng2-smart-table [settings]="populationSettings" [source]="populationDTSource" (rowSelect)="onSelectPopulation($event)"></ng2-smart-table>
+        </div>
+        <div class="col-md-6 row m-0" *ngIf="populationChart.initialPopulationSeries.length > 0">
+          <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+            <label class="mr-2">Live Chart: </label>
+            <div class="mr-2">
+              <input type="radio" [(ngModel)]="populationChart.liveChartActivate" [value]="false" name="populationLiveChart">
+              <label>Yes</label>
+            </div>
+            <div class="">
+              <input type="radio" [(ngModel)]="populationChart.liveChartActivate" [value]="true" name="populationLiveChart">
+              <label>No</label>
+            </div>
+          </div>
+          <div class="form-group col-md-9 col-sm-12">
+            <nouislider #populationNS [(ngModel)]="populationChart.drawChartStartPos" (change)="drawPopulationLiveChart(true)" [config]="populationConfig"></nouislider>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <hr>
+          <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+              <span class="input-group-text">From</span>
+            </div>
+            <select class="custom-select form-control" [(ngModel)]="filter.start_year" (change)="changeFilter()">
+              <option value="">Year</option>
+              <option *ngFor="let population of this.initialData.populations" [ngValue]="population.year">{{population.year}}</option>
+            </select>
+            <div class="input-group-prepend">
+              <span class="input-group-text">To</span>
+            </div>
+            <select class="custom-select form-control" [(ngModel)]="filter.end_year" (change)="changeFilter()">
+              <option value="">Year</option>
+              <option *ngFor="let year of getYears(filter.start_year)" [ngValue]="year">{{year}}</option>
+            </select>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Total Population: {{selectedYears.total_population}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 text-center" *ngIf="selectedYears.years.length>0 && initialData.ageGroup">
+          <ng2-smart-table [settings]="ageGroupSettings" [source]="ageGroupDTSource"></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

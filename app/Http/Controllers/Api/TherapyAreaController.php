@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 
 class TherapyAreaController extends ApiController
 {
-/**
+    /**
      * @var TherapyArea
      */
     private $therapyArea;
@@ -34,6 +34,21 @@ class TherapyAreaController extends ApiController
     {
         return $this->respond([
             'therapy_areas' => $this->therapyArea->get()
+        ]);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
+    {
+        $therapyArea = $this->therapyArea->with(['diseases'])
+            ->findOrFail($id);
+
+        return $this->respond([
+            'therapy_area' => $therapyArea
         ]);
     }
 }

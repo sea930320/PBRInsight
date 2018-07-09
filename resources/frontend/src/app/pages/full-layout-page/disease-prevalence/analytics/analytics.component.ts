@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { NouisliderComponent } from 'ng2-nouislider/src/ng2-nouislider';
 
 import { DiseasePrevalenceService } from '../../../../shared/_api/disease_prevalence.service';
 import { ClinicTypeService } from '../../../../shared/_api/clinic_type.service';
@@ -15,6 +16,9 @@ export class AnalyticsComponent implements OnInit {
   // global Settings
   years = null
   clinicTypes = []
+  @ViewChild('individualNS') individualNS: NouisliderComponent
+  @ViewChild('categoryNS') categoryNS: NouisliderComponent
+  @ViewChild('diseaesByCategoryNS') diseaesByCategoryNS: NouisliderComponent
   // Bar Charts
   barChartSettings = chartsData.barChartSettings;
   barChartView: any[] = chartsData.barChartView;
@@ -26,7 +30,7 @@ export class AnalyticsComponent implements OnInit {
   individualSettings = settings.individualSettings;
   individualSource: LocalDataSource;
   categorySource: LocalDataSource;
-  
+
   // Individual Chart  
   individual = {
     prevalences: null,
@@ -44,8 +48,23 @@ export class AnalyticsComponent implements OnInit {
   }
   individualTimer = null
   individualDrawChartStop = false
-  individualDrawChartStart = 0
-
+  individualDrawChartStart = -1
+  // nouislider config
+  individualConfig: any = {
+    range: {
+      min: 0,
+      max: 0
+    },
+    padding: 0,
+    step: 1,
+    connect: true,
+    tooltips: true,
+    pips: {
+      mode: 'positions',
+      values: [0, 25, 50, 75, 100],
+      density: 4
+    }
+  }
   // Disease Category(Therapy Area) Chart  
   category = {
     prevalences: null,
@@ -63,8 +82,23 @@ export class AnalyticsComponent implements OnInit {
   }
   categoryTimer = null
   categoryDrawChartStop = false
-  categoryDrawChartStart = 0
-
+  categoryDrawChartStart = -1
+  // nouislider config
+  categoryConfig: any = {
+    range: {
+      min: 0,
+      max: 0
+    },
+    padding: 0,
+    step: 1,
+    connect: true,
+    tooltips: true,
+    pips: {
+      mode: 'positions',
+      values: [0, 100],
+      density: 1
+    }
+  }
   // Individual Disease By Category(Therapy Area) Chart
   therapyArea = {
     id: null,
@@ -88,7 +122,23 @@ export class AnalyticsComponent implements OnInit {
   }
   diseaseByCategoryTimer = null
   diseaseByCategoryDrawChartStop = false
-  diseaseByCategoryDrawChartStart = 0
+  diseaseByCategoryDrawChartStart = -1
+  // nouislider config
+  diseaseByCategoryConfig: any = {
+    range: {
+      min: 0,
+      max: 0
+    },
+    padding: 0,
+    step: 1,
+    connect: true,
+    tooltips: true,
+    pips: {
+      mode: 'positions',
+      values: [0, 100],
+      density: 1
+    }
+  }
   // constructor
   constructor(private diseasePrevalenceService: DiseasePrevalenceService, private clinicTypeService: ClinicTypeService) { }
 
@@ -139,14 +189,24 @@ export class AnalyticsComponent implements OnInit {
           }
           this.individual.initialChart.push(percentage)
         }
+        // nouislider draw
+        this.individualConfig.range.max = this.individual.initialChart.length
+        if (this.individualNS) {
+          this.individualNS.slider.updateOptions({
+            range: {
+              min: 0,
+              max: this.individual.initialChart.length
+            }
+          });
+        }
         // datatable redraw
         this.individualSource = new LocalDataSource(this.individual.initialChart)
         this.individualSource.load(this.individual.initialChart)
         // datachart redraw
-        this.individualDrawChartStart = 0;
+        this.individualDrawChartStart = -1;
         this.individualDrawChartStop = false;
         this.drawIndividualLiveChart();
-        this.individualTimer = setInterval(this.drawIndividualLiveChart.bind(this), 2000);
+        this.individualTimer = setInterval(this.drawIndividualLiveChart.bind(this), 5000);
       });
   }
 
@@ -173,14 +233,24 @@ export class AnalyticsComponent implements OnInit {
           }
           this.category.initialChart.push(percentage)
         }
+        // nouislider draw
+        this.categoryConfig.range.max = this.category.initialChart.length
+        if (this.categoryNS) {
+          this.categoryNS.slider.updateOptions({
+            range: {
+              min: 0,
+              max: this.category.initialChart.length
+            }
+          });
+        }
         // datatable redraw
         this.categorySource = new LocalDataSource(this.category.initialChart)
         this.categorySource.load(this.category.initialChart)
         // datachart redraw
-        this.categoryDrawChartStart = 0;
+        this.categoryDrawChartStart = -1;
         this.categoryDrawChartStop = false;
         this.drawCategoryLiveChart();
-        this.categoryTimer = setInterval(this.drawCategoryLiveChart.bind(this), 2000);
+        this.categoryTimer = setInterval(this.drawCategoryLiveChart.bind(this), 5000);
       });
   }
 
@@ -209,43 +279,59 @@ export class AnalyticsComponent implements OnInit {
           }
           this.diseaseByCategory.initialChart.push(percentage)
         }
+        // nouislider draw
+        this.diseaseByCategoryConfig.range.max = this.diseaseByCategory.initialChart.length
+        if (this.diseaesByCategoryNS) {
+          this.diseaesByCategoryNS.slider.updateOptions({
+            range: {
+              min: 0,
+              max: this.diseaseByCategory.initialChart.length
+            }
+          });
+        }
         // datatable redraw
         this.diseaseByCategorySource = new LocalDataSource(this.diseaseByCategory.initialChart)
         this.diseaseByCategorySource.load(this.diseaseByCategory.initialChart)
         // datachart redraw
-        this.diseaseByCategoryDrawChartStart = 0;        
+        this.diseaseByCategoryDrawChartStart = -1;
         this.diseaseByCategoryDrawChartStop = false;
         this.drawdiseaseByCategoryLiveChart();
-        this.diseaseByCategoryTimer = setInterval(this.drawdiseaseByCategoryLiveChart.bind(this), 2000);
+        this.diseaseByCategoryTimer = setInterval(this.drawdiseaseByCategoryLiveChart.bind(this), 5000);
       });
   }
 
-  drawIndividualLiveChart() {
-    if (this.individualDrawChartStop) return;
-    if (this.individualDrawChartStart > this.individual.initialChart.length) {
+  drawIndividualLiveChart(force = false) {
+    if (!force && this.individualDrawChartStop) return;
+    if (!force) {
+      this.individualDrawChartStart++;
+    }
+    if (this.individualDrawChartStart > this.individual.initialChart.length - this.barChartSettings.barChartDisplayCount) {
       this.individualDrawChartStart = 0;
     }
     this.individual.liveChart = this.individual.initialChart.slice(this.individualDrawChartStart, this.individualDrawChartStart + this.barChartSettings.barChartDisplayCount);
-    this.individualDrawChartStart++;
   }
 
-  drawCategoryLiveChart() {
-    if (this.categoryDrawChartStop) return;
+  drawCategoryLiveChart(force = false) {
+    if (!force && this.categoryDrawChartStop) return;
+    if (!force) {
+      this.categoryDrawChartStart++;
+    }
     let displayCount = this.category.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.category.initialChart.length / 2)
     if (this.categoryDrawChartStart > this.category.initialChart.length - displayCount) {
       this.categoryDrawChartStart = 0;
     }
     this.category.liveChart = this.category.initialChart.slice(this.categoryDrawChartStart, this.categoryDrawChartStart + displayCount);
-    this.categoryDrawChartStart++;
   }
 
-  drawdiseaseByCategoryLiveChart() {
-    if (this.diseaseByCategoryDrawChartStop) return;
+  drawdiseaseByCategoryLiveChart(force = false) {
+    if (!force && this.diseaseByCategoryDrawChartStop) return;
+    if (!force) {
+      this.diseaseByCategoryDrawChartStart++;
+    }
     if (this.diseaseByCategoryDrawChartStart > this.diseaseByCategory.initialChart.length - this.pieChartSettings.pieChartDisplayCount) {
       this.diseaseByCategoryDrawChartStart = 0;
     }
     this.diseaseByCategory.liveChart = this.diseaseByCategory.initialChart.slice(this.diseaseByCategoryDrawChartStart, this.diseaseByCategoryDrawChartStart + this.pieChartSettings.pieChartDisplayCount);
-    this.diseaseByCategoryDrawChartStart++;
   }
   onSelect(event) {
     //your code here

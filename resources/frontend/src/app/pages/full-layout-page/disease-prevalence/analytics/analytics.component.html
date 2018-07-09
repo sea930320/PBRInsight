@@ -63,9 +63,24 @@
                     <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="individual.liveChart" [gradient]="barChartSettings.barChartGradient"
                       [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
                       [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
-                      [xAxisLabel]="'Disease'" [yAxisLabel]="barChartSettings.barChartYAxisLabel"
-                      (select)="onSelect($event)">
+                      [xAxisLabel]="'Disease'" [yAxisLabel]="barChartSettings.barChartYAxisLabel" (select)="onSelect($event)">
                     </ngx-charts-bar-vertical>
+                  </div>
+                  <div class="row mt-3" *ngIf="individual.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="individualDrawChartStop" [value]="false" name="individualLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="individualDrawChartStop" [value]="true" name="individualLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #individualNS [(ngModel)]="individualDrawChartStart" (change)="drawIndividualLiveChart(true)" [config]="individualConfig"></nouislider>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
@@ -139,9 +154,24 @@
                     <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="category.liveChart" [gradient]="barChartSettings.barChartGradient"
                       [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
                       [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
-                      [xAxisLabel]="'Therapy Area'" [yAxisLabel]="barChartSettings.barChartYAxisLabel"
-                      (select)="onSelectCategory($event)">
+                      [xAxisLabel]="'Therapy Area'" [yAxisLabel]="barChartSettings.barChartYAxisLabel" (select)="onSelectCategory($event)">
                     </ngx-charts-bar-vertical>
+                  </div>
+                  <div class="row mt-3" *ngIf="category.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="categoryDrawChartStop" [value]="false" name="categoryLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="categoryDrawChartStop" [value]="true" name="categoryLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #categoryNS [(ngModel)]="categoryDrawChartStart" (change)="drawCategoryLiveChart(true)" [config]="categoryConfig"></nouislider>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
@@ -212,9 +242,26 @@
               <div class="row">
                 <div class="col-md-8 col-sm-12">
                   <div id="pie-chart" class="height-400">
-                      <ngx-charts-pie-chart [scheme]="pieChartSettings.pieChartColorScheme" [results]="diseaseByCategory.liveChart" [legend]="pieChartSettings.pieChartShowLegend" [explodeSlices]="pieChartSettings.pieChartExplodeSlices"
-                          [labels]="pieChartSettings.pieChartShowLabels" [doughnut]="pieChartSettings.pieChartDoughnut" [gradient]="pieChartSettings.pieChartGradient">
-                      </ngx-charts-pie-chart>
+                    <ngx-charts-pie-chart [scheme]="pieChartSettings.pieChartColorScheme" [results]="diseaseByCategory.liveChart" [legend]="pieChartSettings.pieChartShowLegend"
+                      [explodeSlices]="pieChartSettings.pieChartExplodeSlices" [labels]="pieChartSettings.pieChartShowLabels"
+                      [doughnut]="pieChartSettings.pieChartDoughnut" [gradient]="pieChartSettings.pieChartGradient">
+                    </ngx-charts-pie-chart>
+                  </div>
+                  <div class="row mt-3" *ngIf="diseaseByCategory.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="diseaseByCategoryDrawChartStop" [value]="false" name="diseaseByCategoryLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="diseaseByCategoryDrawChartStop" [value]="true" name="diseaseByCategoryLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #diseaesByCategoryNS [(ngModel)]="diseaseByCategoryDrawChartStart" (change)="drawdiseaseByCategoryLiveChart(true)" [(config)]="diseaseByCategoryConfig"></nouislider>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-12">

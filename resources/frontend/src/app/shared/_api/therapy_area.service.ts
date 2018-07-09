@@ -13,4 +13,8 @@ export class TherapyAreaService {
     index() {
         return this.http.get<any>(this.therapyAreaRoute);
     }
+
+    show(id) {
+        return this.http.get<any>(this.therapyAreaRoute + '/' + id);
+    }
 }

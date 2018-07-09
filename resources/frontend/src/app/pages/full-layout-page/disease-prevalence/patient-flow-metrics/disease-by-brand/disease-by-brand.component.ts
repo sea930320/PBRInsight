@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { NouisliderComponent } from 'ng2-nouislider/src/ng2-nouislider';
 
 import { PatientFlowMetricsService } from '../../../../../shared/_api/patient-flow-metrics.service';
 
@@ -14,6 +15,7 @@ import * as settings from './_settings.config'
 export class DiseaseByBrandComponent implements OnInit {
   // global Settings
   @Input() clinicTypes: any[];
+  @ViewChild('brandNS') brandNS: NouisliderComponent
   years = null
 
   // Bar Charts
@@ -27,7 +29,7 @@ export class DiseaseByBrandComponent implements OnInit {
   // Disease By Brand Chart  
   brand = {
     timer: null,
-    drawChartStartPos: 0,
+    drawChartStartPos: -1,
     liveChartActivate: false,
     prevalences: null,
     brands: null,
@@ -41,6 +43,22 @@ export class DiseaseByBrandComponent implements OnInit {
     end_year: "",
     end_quarater: "",
     clinic_type_id: ""
+  }
+
+  // nouislider config
+  brandConfig: any = {
+    range: {
+      min: 0,
+      max: 0
+    },
+    step: 1,
+    connect: true,
+    tooltips: true,
+    pips: {
+      mode: 'positions',
+      values: [0, 100],
+      density: 1
+    }
   }
 
   constructor(private patientFlowMetricsService: PatientFlowMetricsService) { }
@@ -86,25 +104,37 @@ export class DiseaseByBrandComponent implements OnInit {
           }
           this.brand.initialChart.push(percentage)
         }
+        // nouislider draw
+        this.brandConfig.range.max = this.brand.initialChart.length
+        if (this.brandNS) {
+          this.brandNS.slider.updateOptions({
+            range: {
+              min: 0,
+              max: this.brand.initialChart.length
+            }
+          });
+        }
         // datatable redraw
         this.dataTableSource = new LocalDataSource(this.brand.initialChart)
         this.dataTableSource.load(this.brand.initialChart)
         // datachart redraw
-        this.brand.drawChartStartPos = 0;
+        this.brand.drawChartStartPos = -1;
         this.brand.liveChartActivate = false;
         this.drawLiveChart();
-        this.brand.timer = setInterval(this.drawLiveChart.bind(this), 2000);
+        this.brand.timer = setInterval(this.drawLiveChart.bind(this), 5000);
       });
   }
 
-  drawLiveChart() {
-    if (this.brand.liveChartActivate) return;
-    let displayCount = this.brand.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.brand.initialChart.length / 2)
+  drawLiveChart(force = false) {
+    if (!force && this.brand.liveChartActivate) return;
+    if (!force) {
+      this.brand.drawChartStartPos++;
+    }
 
+    let displayCount = this.brand.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.brand.initialChart.length / 2)
     if (this.brand.drawChartStartPos > this.brand.initialChart.length - displayCount) {
       this.brand.drawChartStartPos = 0;
     }
     this.brand.liveChart = this.brand.initialChart.slice(this.brand.drawChartStartPos, this.brand.drawChartStartPos + displayCount);
-    this.brand.drawChartStartPos++;
   }
 }
