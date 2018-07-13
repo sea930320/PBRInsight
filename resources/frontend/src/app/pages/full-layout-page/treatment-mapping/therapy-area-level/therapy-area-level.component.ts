@@ -91,6 +91,7 @@ export class TherapyAreaLevelComponent implements OnInit {
       this.isLoaded = true
       this.clinicTypes = res.first.clinic_types
       this.therapyAreas = res.second.therapy_areas
+      this.fetchData();
     });
   }
 
@@ -134,7 +135,7 @@ export class TherapyAreaLevelComponent implements OnInit {
     this.atc.liveChartActivate = true;
 
     if (this.atc.timer) clearInterval(this.atc.timer);
-    if (!this.filter.therapy_area_id && !this.filter.disease_id) return;
+    // if (!this.filter.therapy_area_id && !this.filter.disease_id) return;
     let obsv = this.filter.disease_id ? this.therapyAreaLevelService.byDisease(this.filter) : this.therapyAreaLevelService.byTherapyArea(this.filter);
     obsv
       .subscribe((res: any) => {
