@@ -31,6 +31,7 @@ import { TherapyAreaLevelComponent } from './treatment-mapping/therapy-area-leve
 import { DiseaseByAcComponent } from './disease-prevalence/patient-flow-metrics/disease-by-ac/disease-by-ac.component';
 import { BrandMoleculeComponent } from './treatment-mapping/brand-molecule/brand-molecule.component';
 import { BrandShareComponent } from './treatment-mapping/brand-molecule/brand-share/brand-share.component';
+import { AcShareComponent } from './treatment-mapping/brand-molecule/ac-share/ac-share.component';
 
 @NgModule({
     imports: [
@@ -53,7 +54,8 @@ import { BrandShareComponent } from './treatment-mapping/brand-molecule/brand-sh
         TherapyAreaLevelComponent,
         DiseaseByAcComponent,
         BrandMoleculeComponent,
-        BrandShareComponent
+        BrandShareComponent,
+        AcShareComponent
     ],
     providers: [
         DiseaseService,

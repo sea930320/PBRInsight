@@ -15,4 +15,9 @@ export class BrandMoleculeService {
     const URL = this.brandMoleculeRoute + 'brand-share';
     return this.http.post<any>(URL, data);
   }
+
+  acShare(data) {
+    const URL = this.brandMoleculeRoute + 'ac-share';
+    return this.http.post<any>(URL, data);
+  }
 }

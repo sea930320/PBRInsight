@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\BrandMolecule\BrandShareIndex;
+use App\Http\Requests\BrandMolecule\AcShareIndex;
 
 use App\Models\Disease;
 use App\Models\DiseasePrevalence;
@@ -12,6 +13,7 @@ use App\Models\Brand;
 use Illuminate\Http\JsonResponse;
 use DB;
 use App\Services\QueryBuilders\BrandMolecule\BrandShareQueryBuilder;
+use App\Services\QueryBuilders\BrandMolecule\AcShareQueryBuilder;
 
 class BrandMoleculeController extends ApiController
 {
@@ -68,5 +70,37 @@ class BrandMoleculeController extends ApiController
                 ->pluck('total','brand_id')->all(),
             'brands' => $brands
         ]);
-    }    
+    }
+
+    /**
+     * @param AcShareIndex $request
+     *
+     * @return JsonResponse
+     */
+    public function acShare(AcShareIndex $request): JsonResponse
+    {
+        $queryParams = $request->validatedOnly();
+        $queryBuilder = new AcShareQueryBuilder();
+        $acPrevalences = $queryBuilder
+            ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
+            ->setQueryParams($queryParams);
+        $totalTb = $acPrevalences->count();
+        if (isset($queryParams['disease_id'])) {
+            $acPrevalences = $acPrevalences->where('disease_id', $queryParams['disease_id']);
+        }
+        if (isset($queryParams['therapy_area_id'])) {
+            $acPrevalences = $acPrevalences->whereHas('disease.therapy_area', function ($query) use ($queryParams) {
+                $query->where('id', $queryParams['therapy_area_id']);
+            });
+        }
+        return $this->respond([
+            'total' => $acPrevalences->count(),
+            'acPrevalences' => $acPrevalences
+                ->select(['active_constituent', DB::raw('count(*) as total')])
+                ->groupBy('active_constituent')
+                ->orderBy('active_constituent')
+                ->pluck('total','active_constituent')->all(),
+            'total_tb' => $totalTb
+        ]);
+    }
 }

@@ -36,4 +36,5 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->post('therapy-area-level-share/by-disease', 'TherapyAreaLevelShareController@byDisease');
     $router->post('therapy-area-level-share/by-therapy-area', 'TherapyAreaLevelShareController@byTherapyArea');
     $router->post('brand-molecule/brand-share', 'BrandMoleculeController@brandShare');
+    $router->post('brand-molecule/ac-share', 'BrandMoleculeController@acShare');
 });

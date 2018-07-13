@@ -6,7 +6,6 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 import { PatientFlowMetricsService } from '../../../../../shared/_api/patient-flow-metrics.service';
 import { DiseaseService } from '../../../../../shared/_api/disease.service';
 import { PopulationService } from '../../../../../shared/_api/population.service';
-import { GlobalConstants } from '../../../../../shared/_constants/global.constants';
 import { _getYears } from '../../../../../shared/_helpers/common'
 
 import * as chartsData from '../../../../../shared/_config/ngx-charts.config'
@@ -73,7 +72,7 @@ export class DiseaseByAcComponent implements OnInit {
     }
   }
 
-  constructor(private populationService: PopulationService, private constants: GlobalConstants, private patientFlowMetricsService: PatientFlowMetricsService, private diseaseService: DiseaseService) { }
+  constructor(private populationService: PopulationService, private patientFlowMetricsService: PatientFlowMetricsService, private diseaseService: DiseaseService) { }
 
   ngOnInit() {
     this.fetchGlobalValues()
