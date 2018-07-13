@@ -4,7 +4,7 @@ namespace App\Http\Requests\PatientFlowMetrics;
 
 use App\Http\Requests\BaseRequest;
 
-class DiseaseByAtcIndex extends BaseRequest
+class DiseaseByAcIndex extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class DiseaseByAtcIndex extends BaseRequest
     public function rules()
     {
         return [
-            'atc_level' => 'required|integer',
             'start_year' => 'nullable|integer',
             'start_quarater' => 'nullable|integer',
             'end_year' => 'nullable|integer',

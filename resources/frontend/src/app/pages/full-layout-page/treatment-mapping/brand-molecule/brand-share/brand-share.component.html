@@ -1,6 +1,20 @@
-<div class="card" id="disease-by-brand">
+<div class="card" id="brand-share">
   <div class="card-header">
-    <h3 class="card-title"> Respective Disease Treatment by Brand and INN (Generic) </h3>
+    <h3 class="card-title"> % Brand shares </h3>
+    <div class="row m-0">
+      <div class="col-md-6">
+        <select class="custom-select form-control-sm" [(ngModel)]="filter.therapy_area_id" (change)="therapyAreaChange()">
+          <option value>----Select Therapy Area----</option>
+          <option *ngFor="let therapyArea of therapyAreas" [ngValue]="therapyArea.id">{{therapyArea.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <select class="custom-select form-control-sm" [(ngModel)]="filter.disease_id" [disabled]="!filter.therapy_area_id" (change)="fetchData()">
+          <option value>----Select Disease----</option>
+          <option *ngFor="let disease of diseases" [ngValue]="disease.id">{{disease.name}}</option>
+        </select>
+      </div>
+    </div>
     <hr>
     <div class="filter-chart row m-0">
       <div class="col-md-8">
@@ -8,7 +22,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text">From</span>
           </div>
-          <select class="custom-select form-control" [(ngModel)]="filter.start_year" (change)="fetchData()">
+          <select class="custom-select form-control" [(ngModel)]="filter.start_year" [disabled]="!filter.therapy_area_id && !filter.disease_id"
+            (change)="fetchData()">
             <option value="">Year</option>
             <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
           </select>

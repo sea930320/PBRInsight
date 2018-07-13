@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\QueryBuilders\PatientFlowMetrics;
+namespace App\Services\QueryBuilders\BrandMolecule;
 
 use App\Services\QueryBuilders\BaseBuilder;
 use Illuminate\Database\Eloquent\Builder;
 
-class DiseaseByAtcQueryBuilder extends BaseBuilder
+class BrandShareQueryBuilder extends BaseBuilder
 {
     /**
      * @param array $params
@@ -17,9 +17,17 @@ class DiseaseByAtcQueryBuilder extends BaseBuilder
         if (isset($params['disease_id'])) {
             $this->query->where('disease_id', $params['disease_id']);
         }
+        
+        if (isset($params['therapy_area_id'])) {
+            $this->query->whereHas('disease.therapy_area', function ($query) use ($params) {
+                $query->where('id', $params['therapy_area_id']);
+            });
+        }
+
         if (isset($params['clinic_type_id'])) {
             $this->query->where('clinic_type_id', $params['clinic_type_id']);
         }
+        
         if (isset($params['start_year'])) {
             $this->query->where(function($query) use ($params) {
                 $query->where('period', 'like', "%{$params['start_year']}%");

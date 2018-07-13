@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { NouisliderComponent } from 'ng2-nouislider';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
@@ -17,12 +18,23 @@ import * as settings from './_settings.config'
 })
 export class TherapyAreaLevelComponent implements OnInit {
   // global Settings
+  @ViewChild('atcNS') atcNS: NouisliderComponent
   years = null
   clinicTypes = []
   therapyAreas = []
   diseases = []
   atcLevels = [2, 3, 4, 5]
   isLoaded = false
+  filter = {
+    atc_level: 2,
+    therapy_area_id: "",
+    disease_id: "",
+    start_year: "",
+    start_quarater: "",
+    end_year: "",
+    end_quarater: "",
+    clinic_type_id: ""
+  }
 
   // Bar Charts
   barChartSettings = chartsData.barChartSettings;
@@ -35,7 +47,7 @@ export class TherapyAreaLevelComponent implements OnInit {
   // Disease By Atc Chart  
   atc = {
     timer: null,
-    drawChartStartPos: 0,
+    drawChartStartPos: -1,
     liveChartActivate: false,
     shares: null,
     atcs: null,
@@ -43,55 +55,26 @@ export class TherapyAreaLevelComponent implements OnInit {
     initialChart: [],
     liveChart: []
   }
-  filter = {
-    atc_level: 2,
-    therapy_area_id: "",
-    disease_id: "",
-    start_year: "",
-    start_quarater: "",
-    end_year: "",
-    end_quarater: "",
-    clinic_type_id: ""
+  // nouislider config
+  atcConfig: any = {
+    range: {
+      min: 0,
+      max: 0
+    },
+    step: 1,
+    connect: true,
+    tooltips: true,
+    pips: {
+      mode: 'positions',
+      values: [0, 100],
+      density: 1
+    }
   }
 
   constructor(private clinicTypeService: ClinicTypeService, private therapyAreaService: TherapyAreaService, private therapyAreaLevelService: TherapyAreaLevelService) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.fetchGlobalValues()
-  }
-
-  public beforeChange($event: NgbTabChangeEvent) {
-    let id = $event.nextId.replace('ATC-', '');
-    this.filter.atc_level = parseInt(id);
-    this.fetchData();
-  }
-
-  therapyAreaChange() {
-    this.filter = {
-      atc_level: this.filter.atc_level,
-      therapy_area_id: this.filter.therapy_area_id,
-      disease_id: "",
-      start_year: "",
-      start_quarater: "",
-      end_year: "",
-      end_quarater: "",
-      clinic_type_id: ""
-    }
-    this.fetchData();
-    this.therapyAreaService
-      .show(this.filter.therapy_area_id)
-      .subscribe((res: any) => {
-        this.diseases = res.therapy_area.diseases
-      });
-  }
-
-  getYears(startYear) {
-    var currentYear = new Date().getFullYear(), years = [];
-    startYear = startYear || 1980;
-    while (startYear <= currentYear) {
-      years.push(currentYear--);
-    }
-    return years;
   }
 
   fetchGlobalValues() {
@@ -111,6 +94,40 @@ export class TherapyAreaLevelComponent implements OnInit {
     });
   }
 
+  getYears(startYear) {
+    var currentYear = new Date().getFullYear(), years = [];
+    startYear = startYear || 1980;
+    while (startYear <= currentYear) {
+      years.push(currentYear--);
+    }
+    return years;
+  }
+
+  public beforeChange($event: NgbTabChangeEvent) {
+    let id = $event.nextId.replace('ATC-', '');
+    this.filter.atc_level = parseInt(id);
+    this.fetchData();
+  }
+
+  therapyAreaChange() {
+    this.filter = {
+      atc_level: this.filter.atc_level,
+      therapy_area_id: this.filter.therapy_area_id,
+      disease_id: "",
+      start_year: "",
+      start_quarater: "",
+      end_year: "",
+      end_quarater: "",
+      clinic_type_id: ""
+    }
+    this.therapyAreaService
+      .show(this.filter.therapy_area_id)
+      .subscribe((res: any) => {
+        this.diseases = res.therapy_area.diseases
+      });
+    this.fetchData();
+  }
+
   fetchData() {
     this.atc.liveChart = []
     this.atc.initialChart = []
@@ -127,6 +144,7 @@ export class TherapyAreaLevelComponent implements OnInit {
 
         for (var atc_id in this.atc.atcs) {
           if (!this.atc.atcs.hasOwnProperty(atc_id)) continue;
+          if (!this.atc.shares[atc_id]) continue;
           var percentage = {
             'name': this.atc.atcs[atc_id],
             'value': this.atc.shares[atc_id] ? (parseFloat(this.atc.shares[atc_id]) / this.atc.totalOccurence * 100).toFixed(2) : 0,
@@ -143,17 +161,28 @@ export class TherapyAreaLevelComponent implements OnInit {
         this.atc.liveChartActivate = false;
         this.drawLiveChart();
         this.atc.timer = setInterval(this.drawLiveChart.bind(this), 2000);
+        // nouislider draw
+        this.atcConfig.range.max = this.atc.initialChart.length - 1 || 1
+        if (this.atcNS) {
+          this.atcNS.slider.updateOptions({
+            range: {
+              min: 0,
+              max: this.atc.initialChart.length - 1 || 1
+            }
+          });
+        }
       });
   }
 
-  drawLiveChart() {
-    if (this.atc.liveChartActivate) return;
-    let displayCount = this.atc.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.atc.initialChart.length / 2)
+  drawLiveChart(force = false) {
+    if (!force && this.atc.liveChartActivate) return;
+    if (!force) {
+      this.atc.drawChartStartPos++;
+    }
 
-    if (this.atc.drawChartStartPos > this.atc.initialChart.length - displayCount) {
+    if (this.atc.drawChartStartPos > this.atc.initialChart.length - this.barChartSettings.barChartDisplayCount) {
       this.atc.drawChartStartPos = 0;
     }
-    this.atc.liveChart = this.atc.initialChart.slice(this.atc.drawChartStartPos, this.atc.drawChartStartPos + displayCount);
-    this.atc.drawChartStartPos++;
+    this.atc.liveChart = this.atc.initialChart.slice(this.atc.drawChartStartPos, this.atc.drawChartStartPos + this.barChartSettings.barChartDisplayCount);
   }
 }

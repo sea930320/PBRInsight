@@ -33,7 +33,7 @@ class DiseaseController extends ApiController
     public function index(Request $request): JsonResponse
     {
         return $this->respond([
-            'disease' => $this->disease->with(['therapy_area'])->get()
+            'diseases' => $this->disease->with(['therapy_area'])->get()
         ]);
     }
 }

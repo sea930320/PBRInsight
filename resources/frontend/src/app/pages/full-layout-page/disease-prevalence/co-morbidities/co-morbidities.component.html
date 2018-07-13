@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <div class="col-sm-12" *ngIf="diagonsisSets.length > 0">
+      <div class="col-sm-12" *ngIf="diagonsisSets">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Diagnosis Set</h3>
@@ -82,12 +82,21 @@
           </div>
           <div class="card-body">
             <div class="card-block">
-              <ul class="list-group mb-2" *ngFor="let patients of diagonsisSets">
-                <li *ngFor="let patient of patients" class="list-group-item">
-                  {{patient.disease.name}} (
-                  <b>Active constituent: </b> {{patient.active_constituent}})
-                </li>
-              </ul>
+              <div *ngFor="let bundlePair of diagonsisSets.bundles">
+                <span class="badge badge-pill badge-danger">{{calcPercentage(bundlePair.count / diagonsisSets.count * 100)}} % - Count({{ bundlePair.count}})</span>
+                <ul class="list-group mb-2">
+                  <li *ngFor="let patient of bundlePair.bundle" class="list-group-item pt-1 pb-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <b>Active constituent: </b> {{patient.active_constituent}}
+                      </div>
+                      <div class="col-md-4">
+                        <b>Disease: </b> {{patient.disease.name}}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

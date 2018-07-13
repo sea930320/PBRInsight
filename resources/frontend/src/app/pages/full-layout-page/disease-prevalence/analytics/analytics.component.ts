@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NouisliderComponent } from 'ng2-nouislider/src/ng2-nouislider';
+import { NouisliderComponent } from 'ng2-nouislider';
 
 import { DiseasePrevalenceService } from '../../../../shared/_api/disease_prevalence.service';
 import { ClinicTypeService } from '../../../../shared/_api/clinic_type.service';
@@ -181,6 +181,7 @@ export class AnalyticsComponent implements OnInit {
         }
         for (var disease_id in this.individual.diseases) {
           if (!this.individual.diseases.hasOwnProperty(disease_id)) continue;
+          if (!this.individual.prevalences[disease_id]) continue;
           var percentage = {
             'name': this.individual.diseases[disease_id],
             'value': this.individual.prevalences[disease_id] ? (parseFloat(this.individual.prevalences[disease_id]) / this.individual.totalOccurence * 100).toFixed(2) : 0,
@@ -190,12 +191,12 @@ export class AnalyticsComponent implements OnInit {
           this.individual.initialChart.push(percentage)
         }
         // nouislider draw
-        this.individualConfig.range.max = this.individual.initialChart.length
+        this.individualConfig.range.max = this.individual.initialChart.length - 1 || 1
         if (this.individualNS) {
           this.individualNS.slider.updateOptions({
             range: {
               min: 0,
-              max: this.individual.initialChart.length
+              max: this.individual.initialChart.length - 1 || 1
             }
           });
         }
@@ -225,6 +226,8 @@ export class AnalyticsComponent implements OnInit {
         }
         for (var therapy_area_id in this.category.therapyAreas) {
           if (!this.category.therapyAreas.hasOwnProperty(therapy_area_id)) continue;
+          if (!this.category.prevalences[therapy_area_id]) continue;
+
           var percentage = {
             'name': this.category.therapyAreas[therapy_area_id],
             'value': this.category.prevalences[therapy_area_id] ? (parseFloat(this.category.prevalences[therapy_area_id]) / this.category.totalOccurence * 100).toFixed(2) : 0,
@@ -234,12 +237,12 @@ export class AnalyticsComponent implements OnInit {
           this.category.initialChart.push(percentage)
         }
         // nouislider draw
-        this.categoryConfig.range.max = this.category.initialChart.length
+        this.categoryConfig.range.max = this.category.initialChart.length - 1 || 1
         if (this.categoryNS) {
           this.categoryNS.slider.updateOptions({
             range: {
               min: 0,
-              max: this.category.initialChart.length
+              max: this.category.initialChart.length - 1 || 1
             }
           });
         }
@@ -280,12 +283,12 @@ export class AnalyticsComponent implements OnInit {
           this.diseaseByCategory.initialChart.push(percentage)
         }
         // nouislider draw
-        this.diseaseByCategoryConfig.range.max = this.diseaseByCategory.initialChart.length
+        this.diseaseByCategoryConfig.range.max = this.diseaseByCategory.initialChart.length - 1 || 1
         if (this.diseaesByCategoryNS) {
           this.diseaesByCategoryNS.slider.updateOptions({
             range: {
               min: 0,
-              max: this.diseaseByCategory.initialChart.length
+              max: this.diseaseByCategory.initialChart.length - 1 || 1
             }
           });
         }
@@ -316,11 +319,10 @@ export class AnalyticsComponent implements OnInit {
     if (!force) {
       this.categoryDrawChartStart++;
     }
-    let displayCount = this.category.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.category.initialChart.length / 2)
-    if (this.categoryDrawChartStart > this.category.initialChart.length - displayCount) {
+    if (this.categoryDrawChartStart > this.category.initialChart.length - this.barChartSettings.barChartDisplayCount) {
       this.categoryDrawChartStart = 0;
     }
-    this.category.liveChart = this.category.initialChart.slice(this.categoryDrawChartStart, this.categoryDrawChartStart + displayCount);
+    this.category.liveChart = this.category.initialChart.slice(this.categoryDrawChartStart, this.categoryDrawChartStart + this.barChartSettings.barChartDisplayCount);
   }
 
   drawdiseaseByCategoryLiveChart(force = false) {

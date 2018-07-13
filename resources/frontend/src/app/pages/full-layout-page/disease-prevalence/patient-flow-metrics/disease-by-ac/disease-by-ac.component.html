@@ -1,0 +1,69 @@
+<div class="card" id="disease-by-ac" *ngIf="isLoaded">
+  <div class="card-header">
+    <h3 class="card-title"> Respective Disease Treatment</h3>
+    <hr>
+    <div class="filter-chart row m-0">
+      <div class="col-md-12">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text">From</span>
+          </div>
+          <select class="custom-select form-control" [(ngModel)]="filter.start_year" (ngModelChange)="changeFilter()">
+            <option *ngFor="let population of this.populations" [ngValue]="population.year">{{population.year}}</option>
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text">To</span>
+          </div>
+          <select class="custom-select form-control" [(ngModel)]="filter.end_year" [disabled]="filter.start_year==0" (ngModelChange)="changeFilter()">
+            <option *ngFor="let year of getYears(filter.start_year, populations[populations.length - 1].year, populations[0].year)" [ngValue]="year">{{year}}</option>
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Disease</span>
+          </div>
+          <select class="custom-select form-control" [(ngModel)]="filter.disease_id" (ngModelChange)="changeFilter()">
+            <option value="">----Select----</option>
+            <option *ngFor="let disease of diseases" [ngValue]="disease.id">{{disease.name}}</option>
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text">Total Population: {{populationByDisease}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-block">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div id="vartical-bar-chart" class="height-400" *ngIf="ac.liveChart.length > 0">
+            <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="ac.liveChart" [gradient]="barChartSettings.barChartGradient"
+              [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+              [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+              [xAxisLabel]="'Active Constituent'" [yAxisLabel]="barChartSettings.barChartYAxisLabel">
+            </ngx-charts-bar-vertical>
+          </div>
+          <div class="row mt-3" *ngIf="ac.initialChart.length>0">
+            <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+              <label class="mr-2">Live Chart: </label>
+              <div class="mr-2">
+                <input type="radio" [(ngModel)]="ac.liveChartActivate" [value]="false" name="acLiveChart">
+                <label>Yes</label>
+              </div>
+              <div class="">
+                <input type="radio" [(ngModel)]="ac.liveChartActivate" [value]="true" name="acLiveChart">
+                <label>No</label>
+              </div>
+            </div>
+            <div class="form-group col-md-9 col-sm-12">
+              <nouislider #acNS [(ngModel)]="this.ac.drawChartStartPos" (change)="drawLiveChart(true)" [config]="acConfig"></nouislider>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+        </div>
+      </div>
+      <disease-by-atc [parentFilter]="filter" [population]="populationByDisease"></disease-by-atc>
+    </div>
+  </div>
+</div>

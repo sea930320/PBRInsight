@@ -5,7 +5,7 @@ namespace App\Services\QueryBuilders\PatientFlowMetrics;
 use App\Services\QueryBuilders\BaseBuilder;
 use Illuminate\Database\Eloquent\Builder;
 
-class DiseaseByAtcQueryBuilder extends BaseBuilder
+class DiseaseByAcQueryBuilder extends BaseBuilder
 {
     /**
      * @param array $params
@@ -13,20 +13,14 @@ class DiseaseByAtcQueryBuilder extends BaseBuilder
      * @return Builder
      */
     public function setQueryParams(array $params): Builder
-    {   
-        if (isset($params['disease_id'])) {
-            $this->query->where('disease_id', $params['disease_id']);
-        }
-        if (isset($params['clinic_type_id'])) {
-            $this->query->where('clinic_type_id', $params['clinic_type_id']);
-        }
+    {
         if (isset($params['start_year'])) {
             $this->query->where(function($query) use ($params) {
                 $query->where('period', 'like', "%{$params['start_year']}%");
                 if (isset($params['start_quarater'])) {
                     $query->where('period', '>=', "Q{$params['start_quarater']} {$params['start_year']}");
                 }
-                if (isset($params['end_year'])) {
+                if (isset($params['end_year']) && $params['end_year']) {
                     if ($params['end_year'] == $params['start_year']) {
                         if (isset($params['end_quarater'])) {
                             $endPeriod = 'Q'. $params['end_quarater']. " ". $params['end_year'];

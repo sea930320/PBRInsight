@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientFlowMetrics\DiseaseByBrandIndex;
 use App\Http\Requests\PatientFlowMetrics\DiseaseByAtcIndex;
+use App\Http\Requests\PatientFlowMetrics\DiseaseByAcIndex;
 
 use App\Models\Disease;
 use App\Models\DiseasePrevalence;
@@ -16,6 +17,7 @@ use App\Models\Atc2;
 
 use Illuminate\Http\JsonResponse;
 use DB;
+use App\Services\QueryBuilders\PatientFlowMetrics\DiseaseByAcQueryBuilder;
 use App\Services\QueryBuilders\PatientFlowMetrics\DiseaseByBrandQueryBuilder;
 use App\Services\QueryBuilders\PatientFlowMetrics\DiseaseByAtcQueryBuilder;
 
@@ -101,6 +103,33 @@ class PatientFlowMetricsController extends ApiController
                 ->groupBy('brand_id')
                 ->pluck('total','brand_id')->all(),
             'brands' => $brands
+        ]);
+    }
+
+    /**
+     * @param DiseaseByAcIndex $request
+     *
+     * @return JsonResponse
+     */
+    public function diseaseByAc(DiseaseByAcIndex $request): JsonResponse
+    {
+        $queryParams = $request->validatedOnly();
+        $queryBuilder = new DiseaseByAcQueryBuilder();
+        $acPrevalences = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams);
+        $totalTb = $acPrevalences->count();
+        if (isset($queryParams['disease_id'])) {
+            $acPrevalences = $acPrevalences->where('disease_id', $queryParams['disease_id']);
+        }
+        return $this->respond([
+            'total' => $acPrevalences->count(),
+            'acPrevalences' => $acPrevalences
+                ->select(['active_constituent', DB::raw('count(*) as total')])
+                ->groupBy('active_constituent')
+                ->orderBy('active_constituent')
+                ->pluck('total','active_constituent')->all(),
+            'total_tb' => $totalTb
         ]);
     }
 

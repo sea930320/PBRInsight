@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\PatientFlowMetrics;
+namespace App\Http\Requests\BrandMolecule;
 
 use App\Http\Requests\BaseRequest;
 
-class DiseaseByAtcIndex extends BaseRequest
+class BrandShareIndex extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,13 @@ class DiseaseByAtcIndex extends BaseRequest
     public function rules()
     {
         return [
-            'atc_level' => 'required|integer',
+            'disease_id' => 'nullable|exists:diseases,id',
+            'therapy_area_id' => 'nullable|exists:therapy_areas,id',
             'start_year' => 'nullable|integer',
             'start_quarater' => 'nullable|integer',
             'end_year' => 'nullable|integer',
             'end_quarater' => 'nullable|integer',
-            'disease_id' => 'nullable|exists:diseases,id'
+            'clinic_type_id' => 'nullable|exists:clinic_types,id'
         ];
     }
 }

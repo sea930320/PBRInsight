@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NouisliderComponent } from 'ng2-nouislider/src/ng2-nouislider';
+import { NouisliderComponent } from 'ng2-nouislider';
 
 import { PatientFlowMetricsService } from '../../../../../shared/_api/patient-flow-metrics.service';
 
@@ -13,16 +13,18 @@ import * as settings from './_settings.config'
   templateUrl: './disease-by-atc.component.html',
   styleUrls: ['./disease-by-atc.component.scss']
 })
-export class DiseaseByAtcComponent implements OnInit {
+export class DiseaseByAtcComponent implements OnChanges {
   // global Settings
-  @Input() populations: any[];
-  @Input() clinicTypes: any[];
+  @Input() population: any;
+  @Input() parentFilter: any;
   @ViewChild('atcNS') atcNS: NouisliderComponent
-  years = null;
+
   atcLevels = [2, 3, 4, 5]
-  selectedYears = {
-    years: [],
-    total_population: 0
+  filter = {
+    atc_level: 2,
+    start_year: 0,
+    end_year: 0,
+    disease_id: ""
   }
 
   // Bar Charts
@@ -44,11 +46,6 @@ export class DiseaseByAtcComponent implements OnInit {
     initialChart: [],
     liveChart: []
   }
-  filter = {
-    atc_level: 2,
-    start_year: 0,
-    end_year: 0
-  }
 
   // nouislider config
   atcConfig: any = {
@@ -68,30 +65,18 @@ export class DiseaseByAtcComponent implements OnInit {
 
   constructor(private patientFlowMetricsService: PatientFlowMetricsService) { }
 
-  ngOnInit() {
-    this.selectedYears = {
-      years: [this.populations[0].year],
-      total_population: this.populations[0].total_population
-    }
-    this.filter.start_year = this.populations[0].year
-    this.filter.end_year = this.populations[0].year
-
-    this.fetchData()
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.hasOwnProperty('parentFilter') || changes.parentFilter.firstChange) return;
+    this.filter.start_year = this.parentFilter.start_year
+    this.filter.end_year = this.parentFilter.end_year
+    this.filter.disease_id = this.parentFilter.disease_id
+    this.fetchData();
   }
 
   public beforeChange($event: NgbTabChangeEvent) {
     let id = $event.nextId.replace('ATC-', '');
     this.filter.atc_level = parseInt(id);
     this.fetchData();
-  }
-
-  getYears(startYear) {
-    var endYear = this.populations[this.populations.length - 1].year, years = [];
-    startYear = startYear != 0 ? startYear : this.populations[0].year;
-    while (startYear <= endYear) {
-      years.push(startYear++);
-    }
-    return years;
   }
 
   fetchData() {
@@ -107,22 +92,23 @@ export class DiseaseByAtcComponent implements OnInit {
         this.atc.totalOccurence = res.total || 1
         for (var atc_id in this.atc.atcs) {
           if (!this.atc.atcs.hasOwnProperty(atc_id)) continue;
+          if (!this.atc.prevalences[atc_id]) continue;
           var percentage = {
             'name': this.atc.atcs[atc_id],
             'value': this.atc.prevalences[atc_id] ? (parseFloat(this.atc.prevalences[atc_id]) / this.atc.totalOccurence * 100).toFixed(2) : 0,
             'occurence': this.atc.prevalences[atc_id] ? this.atc.prevalences[atc_id] : 0,
             'brand_id': atc_id,
-            'population': Math.floor(parseFloat(this.atc.prevalences[atc_id]) / this.atc.totalOccurence * this.selectedYears.total_population)
+            'population': Math.floor(parseFloat(this.atc.prevalences[atc_id]) / this.atc.totalOccurence * this.population)
           }
           this.atc.initialChart.push(percentage)
         }
         // nouislider draw
-        this.atcConfig.range.max = this.atc.initialChart.length
+        this.atcConfig.range.max = this.atc.initialChart.length - 1 || 1
         if (this.atcNS) {
           this.atcNS.slider.updateOptions({
             range: {
               min: 0,
-              max: this.atc.initialChart.length
+              max: this.atc.initialChart.length - 1 || 1
             }
           });
         }
@@ -142,34 +128,10 @@ export class DiseaseByAtcComponent implements OnInit {
     if (!force) {
       this.atc.drawChartStartPos++;
     }
-    let displayCount = this.atc.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.atc.initialChart.length / 2)
 
-    if (this.atc.drawChartStartPos > this.atc.initialChart.length - displayCount) {
+    if (this.atc.drawChartStartPos > this.atc.initialChart.length - this.barChartSettings.barChartSMDisplayCount) {
       this.atc.drawChartStartPos = 0;
     }
-    this.atc.liveChart = this.atc.initialChart.slice(this.atc.drawChartStartPos, this.atc.drawChartStartPos + displayCount);
-  }
-
-  changeFilter() {
-    debugger
-    this.selectedYears = {
-      years: [],
-      total_population: 0
-    }
-    let startYear = (this.filter.start_year != 0) ? this.filter.start_year : this.populations[0].year;
-    let endYear = (this.filter.end_year != 0) ? this.filter.end_year : this.populations[this.populations.length - 1].year;
-    if (endYear < startYear) {
-      endYear = startYear
-      this.filter.end_year = endYear
-    }
-    while (startYear <= endYear) {
-      this.selectedYears.years.push(startYear);
-      let ele = this.populations.filter((e) => {
-        return e.year === startYear
-      })
-      this.selectedYears.total_population += ele[0].total_population
-      startYear++;
-    }
-    this.fetchData();
+    this.atc.liveChart = this.atc.initialChart.slice(this.atc.drawChartStartPos, this.atc.drawChartStartPos + this.barChartSettings.barChartSMDisplayCount);
   }
 }

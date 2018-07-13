@@ -1,10 +1,10 @@
-// Atc DataTable Settings
-export var atcSettings = {
+// Active Constituent DataTable Settings
+export var acSettings = {
     columns: {
         name: {
-            title: 'ATC Level',
+            title: 'Active Constituent',
             filter: true,
-            width: '60%'
+            width: '80%'
         },
         value: {
             title: 'Percentage',
@@ -12,14 +12,6 @@ export var atcSettings = {
             width: '20%',
             valuePrepareFunction: function (value) {
                 return `${value} %`
-            }
-        },
-        population: {
-            title: 'Population',
-            filter: true,
-            width: '20%',
-            valuePrepareFunction: function (value) {
-                return `${Number(value).toLocaleString('en-GB')}`
             }
         }
     },

@@ -19,4 +19,9 @@ export class PatientFlowMetricsService {
     const URL = this.patientFlowMetricsRoute + 'disease-by-atc';
     return this.http.post<any>(URL, data);
   }
+
+  diseaseByAc(data) {
+    const URL = this.patientFlowMetricsRoute + 'disease-by-ac';
+    return this.http.post<any>(URL, data);
+  }
 }

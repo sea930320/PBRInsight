@@ -4,12 +4,15 @@
       <div class="col-sm-12" *ngIf="populations.length>0">
         <age-group-stats [populations]="populations"></age-group-stats>
       </div>
-      <div class="col-sm-12" *ngIf="clinicTypes.length>0">
+      <div class="col-sm-12">
+        <disease-by-ac></disease-by-ac>
+      </div>
+      <!-- <div class="col-sm-12" *ngIf="clinicTypes.length>0">
         <disease-by-brand [clinicTypes]="clinicTypes"></disease-by-brand>
-      </div>
-      <div class="col-sm-12" *ngIf="populations.length>0 && clinicTypes.length>0">
+      </div> -->
+      <!-- <div class="col-sm-12" *ngIf="populations.length>0 && clinicTypes.length>0">
         <disease-by-atc [populations]="populations" [clinicTypes]="clinicTypes"></disease-by-atc>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>

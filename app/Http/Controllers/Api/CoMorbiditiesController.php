@@ -90,18 +90,29 @@ class CoMorbiditiesController extends ApiController
         $total = 0;
         foreach ($diseasesByPatient as $key => $diseaseCountByPatient) {
             if ($diseaseCountByPatient == 1) continue;
-            $patient = (new CoMorbiditiesQueryBuilder())
-                ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
-                ->setQueryParams($queryParams)
-                ->where('patient', $key)
-                ->get(['patient', 'active_constituent', 'disease_id']);
+            $patient = $this->getPatientFromDiseasePrevalences($queryParams, $key);
+
             if (isset($coMorbidities->{"${diseaseCountByPatient}"})) {
                 $coMorbidities->{"$diseaseCountByPatient"}->count ++;
-                $coMorbidities->{"$diseaseCountByPatient"}->patients[] = $patient;
+                // $coMorbidities->{"$diseaseCountByPatient"}->patients[] = $patient;
+                $bundles = $coMorbidities->{"$diseaseCountByPatient"}->bundles;
+                $bundleIndex = $this->getBundleIndexFromBundles($bundles, $patient);
+                if ($bundleIndex === -1) {
+                    $coMorbidities->{"$diseaseCountByPatient"}->bundles[] = [
+                        'bundle' => $patient,
+                        'count' => 1
+                    ];
+                } else {
+                    $coMorbidities->{"$diseaseCountByPatient"}->bundles[$bundleIndex]->count++;
+                }
             } else {
                 $coMorbidities->{"$diseaseCountByPatient"} = new StdClass();
                 $coMorbidities->{"$diseaseCountByPatient"}->count = 1;
-                $coMorbidities->{"$diseaseCountByPatient"}->patients = [$patient];
+                // $coMorbidities->{"$diseaseCountByPatient"}->patients = [$patient];
+                $coMorbidities->{"$diseaseCountByPatient"}->bundles = [(object) [
+                    'bundle' => $patient,
+                    'count' => 1
+                ]];
             }
             $total ++;
         }
@@ -109,5 +120,40 @@ class CoMorbiditiesController extends ApiController
             'coMorbidities' => $coMorbidities,
             'total' => $total
         ]);
+    }
+
+    /**
+     * check if disease_id && active_constituent bundle exists in {disease_id, ac} bundles
+     * return bundle Index
+     * @param Array $bundles
+     * @param Array $bundle
+     *
+     * @return Integer
+     */
+    private function getBundleIndexFromBundles($bundles, $bundle)
+    {
+        foreach ($bundles as $key => $bundlePair) {
+            $exBundle = $bundlePair->bundle;
+            if (serialize($exBundle) == serialize($bundle)) return $key;
+        }
+        return -1;
+    }
+
+    /**
+     * @param Array $queryParams
+     * @param String $patientName
+     *
+     * @return Object
+     */
+    private function getPatientFromDiseasePrevalences($queryParams, $patientName) {
+        $patient = (new CoMorbiditiesQueryBuilder())
+            ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
+            ->setQueryParams($queryParams)
+            ->where('patient', $patientName)
+            ->orderBy('disease_id')
+            ->orderBy('active_constituent')
+            ->get(['active_constituent', 'disease_id'])
+            ->toArray();
+        return $patient;
     }
 }

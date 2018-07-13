@@ -29,9 +29,11 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->post('disease-prevalence/individual-disease', 'DiseasePrevalenceController@individualDisease');
     $router->post('disease-prevalence/category', 'DiseasePrevalenceController@category');
     $router->post('disease-prevalence/disease-by-category', 'DiseasePrevalenceController@diseaseByCategory');
+    $router->post('patient-flow-metrics/disease-by-ac', 'PatientFlowMetricsController@diseaseByAc');
     $router->post('patient-flow-metrics/disease-by-brand', 'PatientFlowMetricsController@diseaseByBrand');
     $router->post('patient-flow-metrics/disease-by-atc', 'PatientFlowMetricsController@diseaseByAtc');
     $router->post('co-morbidities', 'CoMorbiditiesController@index');
     $router->post('therapy-area-level-share/by-disease', 'TherapyAreaLevelShareController@byDisease');
     $router->post('therapy-area-level-share/by-therapy-area', 'TherapyAreaLevelShareController@byTherapyArea');
+    $router->post('brand-molecule/brand-share', 'BrandMoleculeController@brandShare');
 });

@@ -18,7 +18,7 @@ export var AgeGroupSettings = {
             width: '15%',
             type: 'html',
             valuePrepareFunction: function (value) {
-                return `<div class="text-center">${value} </div>`
+                return `<div class="text-center">${Number(value).toLocaleString('en-GB')} </div>`
             }
         },
         male_percentage: {
@@ -38,7 +38,7 @@ export var AgeGroupSettings = {
             width: '15%',
             type: 'html',
             valuePrepareFunction: function (value) {
-                return `<div class="text-center">${value} </div>`
+                return `<div class="text-center">${Number(value).toLocaleString('en-GB')} </div>`
             }
         },
         female_percentage: {
@@ -58,7 +58,7 @@ export var AgeGroupSettings = {
             width: '15%',
             type: 'html',
             valuePrepareFunction: function (value) {
-                return `<div class="text-center">${value} </div>`
+                return `<div class="text-center">${Number(value).toLocaleString('en-GB')} </div>`
             }
         },
         total_percentage: {
@@ -96,7 +96,10 @@ export var PopulationSettings = {
             title: 'Total Population',
             filter: true,
             class: 'text-center',
-            width: '40%'
+            width: '40%',
+            valuePrepareFunction: function (value) {
+                return Number(value).toLocaleString('en-GB')
+            }
         },
         annual_growth_rate: {
             title: 'Annual Growth Rate',

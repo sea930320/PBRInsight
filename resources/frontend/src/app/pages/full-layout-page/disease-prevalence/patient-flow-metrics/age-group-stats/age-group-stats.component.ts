@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NouisliderComponent } from 'ng2-nouislider/src/ng2-nouislider';
+import { NouisliderComponent } from 'ng2-nouislider';
 
 import { AgeGroupReportService } from '../../../../../shared/_api/age_group_report.service';
 
@@ -100,12 +100,12 @@ export class AgeGroupStatsComponent implements OnInit {
       this.populationChart.initialGrowthRateSeries.push(growthRateSerie);
     })
     // nouislider draw
-    this.populationConfig.range.max = this.populationChart.initialPopulationSeries.length
+    this.populationConfig.range.max = this.populationChart.initialPopulationSeries.length - 1 || 1
     if (this.populationNS) {
       this.populationNS.slider.updateOptions({
         range: {
           min: 0,
-          max: this.populationChart.initialPopulationSeries.length
+          max: this.populationChart.initialPopulationSeries.length - 1 || 1
         }
       });
     }
@@ -132,13 +132,13 @@ export class AgeGroupStatsComponent implements OnInit {
     if (!force) {
       this.populationChart.drawChartStartPos++;
     }
-    let displayCount = this.initialData.populations.length > this.lineChartSettings.lineChartDisplayCount * 2 ? this.lineChartSettings.lineChartDisplayCount : Math.floor(this.initialData.populations.length / 2)
-    if (this.populationChart.drawChartStartPos > this.initialData.populations.length - displayCount) {
+
+    if (this.populationChart.drawChartStartPos > this.initialData.populations.length - this.lineChartSettings.lineChartDisplayCount) {
       this.populationChart.drawChartStartPos = 0;
     }
-    this.populationChart.liveTotalChart[0].series = this.populationChart.initialPopulationSeries.slice(this.populationChart.drawChartStartPos, this.populationChart.drawChartStartPos + displayCount);
+    this.populationChart.liveTotalChart[0].series = this.populationChart.initialPopulationSeries.slice(this.populationChart.drawChartStartPos, this.populationChart.drawChartStartPos + this.lineChartSettings.lineChartDisplayCount);
     this.populationChart.liveTotalChart = [...this.populationChart.liveTotalChart];
-    this.populationChart.liveGrowthChart[0].series = this.populationChart.initialGrowthRateSeries.slice(this.populationChart.drawChartStartPos, this.populationChart.drawChartStartPos + displayCount);
+    this.populationChart.liveGrowthChart[0].series = this.populationChart.initialGrowthRateSeries.slice(this.populationChart.drawChartStartPos, this.populationChart.drawChartStartPos + this.lineChartSettings.lineChartDisplayCount);
     this.populationChart.liveGrowthChart = [...this.populationChart.liveGrowthChart];
   }
 

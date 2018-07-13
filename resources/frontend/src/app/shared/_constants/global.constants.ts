@@ -4,6 +4,7 @@ import { isDevMode } from '@angular/core';
 @Injectable()
 export class GlobalConstants {
     readonly APIURL: string;
+    readonly START_YEAR: number = 2016;
     isLocal: boolean;
 
     constructor() {

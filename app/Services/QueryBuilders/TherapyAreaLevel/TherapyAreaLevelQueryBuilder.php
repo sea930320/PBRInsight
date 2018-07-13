@@ -14,14 +14,14 @@ class TherapyAreaLevelQueryBuilder extends BaseBuilder
      */
     public function setQueryParams(array $params): Builder
     {  
+        if (isset($params['disease_id'])) {
+            $this->query->where('disease_id', $params['disease_id']);
+        }
+        
         if (isset($params['therapy_area_id'])) {
             $this->query->whereHas('disease.therapy_area', function ($query) use ($params) {
                 $query->where('id', $params['therapy_area_id']);
             });
-        } else {
-            if (isset($params['disease_id'])) {
-                $this->query->where('disease_id', $params['disease_id']);
-            }
         }
 
         if (isset($params['clinic_type_id'])) {

@@ -5,7 +5,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FullPagesRoutingModule } from "./full-pages-routing.module";
-import { NouisliderModule } from 'ng2-nouislider/src/ng2-nouislider';
+import { NouisliderModule } from 'ng2-nouislider';
 
 //-----------------service-----------------------//
 import { ClinicTypeService } from '../../shared/_api/clinic_type.service';
@@ -16,6 +16,8 @@ import { AgeGroupReportService } from '../../shared/_api/age_group_report.servic
 import { PatientFlowMetricsService } from '../../shared/_api/patient-flow-metrics.service';
 import { CoMorbiditiesService } from '../../shared/_api/co_morbidities.service';
 import { TherapyAreaLevelService } from '../../shared/_api/therapy-area-level.service';
+import { DiseaseService } from '../../shared/_api/disease.service';
+import { BrandMoleculeService } from '../../shared/_api/brand-molecule.service';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -26,6 +28,9 @@ import { DiseaseByBrandComponent } from './disease-prevalence/patient-flow-metri
 import { DiseaseByAtcComponent } from './disease-prevalence/patient-flow-metrics/disease-by-atc/disease-by-atc.component';
 import { CoMorbiditiesComponent } from './disease-prevalence/co-morbidities/co-morbidities.component';
 import { TherapyAreaLevelComponent } from './treatment-mapping/therapy-area-level/therapy-area-level.component';
+import { DiseaseByAcComponent } from './disease-prevalence/patient-flow-metrics/disease-by-ac/disease-by-ac.component';
+import { BrandMoleculeComponent } from './treatment-mapping/brand-molecule/brand-molecule.component';
+import { BrandShareComponent } from './treatment-mapping/brand-molecule/brand-share/brand-share.component';
 
 @NgModule({
     imports: [
@@ -45,17 +50,22 @@ import { TherapyAreaLevelComponent } from './treatment-mapping/therapy-area-leve
         DiseaseByBrandComponent,
         DiseaseByAtcComponent,
         CoMorbiditiesComponent,
-        TherapyAreaLevelComponent
+        TherapyAreaLevelComponent,
+        DiseaseByAcComponent,
+        BrandMoleculeComponent,
+        BrandShareComponent
     ],
     providers: [
+        DiseaseService,
+        TherapyAreaService,
         ClinicTypeService,
         DiseasePrevalenceService,
         PopulationService,
         AgeGroupReportService,
         PatientFlowMetricsService,
         CoMorbiditiesService,
-        TherapyAreaService,
-        TherapyAreaLevelService
+        TherapyAreaLevelService,
+        BrandMoleculeService
     ]
 })
 export class FullPagesModule { }

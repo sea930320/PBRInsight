@@ -12,6 +12,7 @@ export var barChartSettings = {
     barChartShowYAxisLabel : true,
     barChartYAxisLabel : '%',
     barChartDisplayCount : 10,
+    barChartSMDisplayCount : 6,
     barChartColorScheme : {
         domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
     }
@@ -32,7 +33,7 @@ export var pieChartSettings = {
     pieChartGradient : false,    
     pieChart1ExplodeSlices : true,
     pieChart1Doughnut : false,
-    pieChartDisplayCount : 5,
+    pieChartDisplayCount : 4,
 }
 //Line Charts
 

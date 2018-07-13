@@ -2,21 +2,34 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NouisliderComponent } from 'ng2-nouislider';
 
-import { PatientFlowMetricsService } from '../../../../../shared/_api/patient-flow-metrics.service';
+import { BrandMoleculeService } from '../../../../../shared/_api/brand-molecule.service';
+import { TherapyAreaService } from '../../../../../shared/_api/therapy_area.service';
 
 import * as chartsData from '../../../../../shared/_config/ngx-charts.config'
 import * as settings from './_settings.config'
 
 @Component({
-  selector: 'disease-by-brand',
-  templateUrl: './disease-by-brand.component.html',
-  styleUrls: ['./disease-by-brand.component.scss']
+  selector: 'brand-share',
+  templateUrl: './brand-share.component.html',
+  styleUrls: ['./brand-share.component.scss']
 })
-export class DiseaseByBrandComponent implements OnInit {
+export class BrandShareComponent implements OnInit {
   // global Settings
   @Input() clinicTypes: any[];
   @ViewChild('brandNS') brandNS: NouisliderComponent
   years = null
+  therapyAreas = []
+  diseases = []
+  isLoaded = false
+  filter = {
+    therapy_area_id: "",
+    disease_id: "",
+    start_year: "",
+    start_quarater: "",
+    end_year: "",
+    end_quarater: "",
+    clinic_type_id: ""
+  }
 
   // Bar Charts
   barChartSettings = chartsData.barChartSettings;
@@ -37,13 +50,6 @@ export class DiseaseByBrandComponent implements OnInit {
     initialChart: [],
     liveChart: []
   }
-  filter = {
-    start_year: "",
-    start_quarater: "",
-    end_year: "",
-    end_quarater: "",
-    clinic_type_id: ""
-  }
 
   // nouislider config
   brandConfig: any = {
@@ -61,11 +67,18 @@ export class DiseaseByBrandComponent implements OnInit {
     }
   }
 
-  constructor(private patientFlowMetricsService: PatientFlowMetricsService) { }
+  constructor(private therapyAreaService: TherapyAreaService, private brandMoleculeService: BrandMoleculeService) { }
 
   ngOnInit() {
+    this.fetchGlobalValues()
+  }
+
+  fetchGlobalValues() {
     this.years = this.getYears(2016)
-    this.fetchData()
+    this.therapyAreaService.index().subscribe((res: any) => {
+      this.isLoaded = true
+      this.therapyAreas = res.therapy_areas
+    });
   }
 
   getYears(startYear) {
@@ -77,25 +90,48 @@ export class DiseaseByBrandComponent implements OnInit {
     return years;
   }
 
+  therapyAreaChange() {
+    this.filter = {
+      therapy_area_id: this.filter.therapy_area_id,
+      disease_id: "",
+      start_year: "",
+      start_quarater: "",
+      end_year: "",
+      end_quarater: "",
+      clinic_type_id: ""
+    }
+    this.therapyAreaService
+      .show(this.filter.therapy_area_id)
+      .subscribe((res: any) => {
+        this.diseases = res.therapy_area.diseases
+      });
+    this.fetchData();
+  }
+
   fetchData() {
     this.brand.liveChart = []
     this.brand.initialChart = []
     this.brand.liveChartActivate = true;
 
     if (this.brand.timer) clearInterval(this.brand.timer);
-    this.patientFlowMetricsService.diseaseByBrand(this.filter)
+    if (!this.filter.therapy_area_id && !this.filter.disease_id) return;
+
+    this.brandMoleculeService.brandShare(this.filter)
       .subscribe((res: any) => {
         this.brand.brands = res.brands
         this.brand.prevalences = res.brandPrevalences
         this.brand.totalOccurence = res.total || 1
-        this.brand.initialChart.push({
-          'name': 'Unbranded',
-          'value': this.brand.prevalences[''] ? (parseFloat(this.brand.prevalences['']) / this.brand.totalOccurence * 100).toFixed(2) : 0,
-          'occurence': this.brand.prevalences[''] ? this.brand.prevalences[''] : 0,
-          'brand_id': 'NaN'
-        })
+        if (this.brand.prevalences['']) {
+          this.brand.initialChart.push({
+            'name': 'Unbranded',
+            'value': this.brand.prevalences[''] ? (parseFloat(this.brand.prevalences['']) / this.brand.totalOccurence * 100).toFixed(2) : 0,
+            'occurence': this.brand.prevalences[''] ? this.brand.prevalences[''] : 0,
+            'brand_id': 'NaN'
+          })
+        }
         for (var brand_id in this.brand.brands) {
           if (!this.brand.brands.hasOwnProperty(brand_id)) continue;
+          if (!this.brand.prevalences[brand_id]) continue;
           var percentage = {
             'name': this.brand.brands[brand_id],
             'value': this.brand.prevalences[brand_id] ? (parseFloat(this.brand.prevalences[brand_id]) / this.brand.totalOccurence * 100).toFixed(2) : 0,
@@ -130,11 +166,9 @@ export class DiseaseByBrandComponent implements OnInit {
     if (!force) {
       this.brand.drawChartStartPos++;
     }
-
-    let displayCount = this.brand.initialChart.length > this.barChartSettings.barChartDisplayCount * 2 ? this.barChartSettings.barChartDisplayCount : Math.floor(this.brand.initialChart.length / 2)
-    if (this.brand.drawChartStartPos > this.brand.initialChart.length - displayCount) {
+    if (this.brand.drawChartStartPos > this.brand.initialChart.length - this.barChartSettings.barChartDisplayCount) {
       this.brand.drawChartStartPos = 0;
     }
-    this.brand.liveChart = this.brand.initialChart.slice(this.brand.drawChartStartPos, this.brand.drawChartStartPos + displayCount);
+    this.brand.liveChart = this.brand.initialChart.slice(this.brand.drawChartStartPos, this.brand.drawChartStartPos + this.barChartSettings.barChartDisplayCount);
   }
 }

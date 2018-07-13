@@ -35,7 +35,8 @@ export class CoMorbiditiesComponent implements OnInit {
     clinic_type_id: ""
   }
   //Diagnosis Set
-  diagonsisSets = []
+  diagonsisSets = null
+
   constructor(private coMorbiditiesService: CoMorbiditiesService, private clinicTypeService: ClinicTypeService, private therapyAreaService: TherapyAreaService) { }
 
   ngOnInit() {
@@ -56,7 +57,7 @@ export class CoMorbiditiesComponent implements OnInit {
 
   fetchData() {
     this.coMorbidities.liveChart = []
-    this.diagonsisSets = []
+    this.diagonsisSets = null
     this.coMorbiditiesService.index(this.filter)
       .subscribe((res: any) => {
         this.coMorbidities.data = res.coMorbidities
@@ -89,7 +90,7 @@ export class CoMorbiditiesComponent implements OnInit {
 
   selectLegend(event) {
     let id = event.name.replace(' co-morbidities', '');
-    this.diagonsisSets = this.coMorbidities.data[id].patients
+    this.diagonsisSets = this.coMorbidities.data[id]
   }
 
   pieTooltipText({ data }) {
@@ -100,5 +101,9 @@ export class CoMorbiditiesComponent implements OnInit {
       <span class="tooltip-label">${label}</span>
       <span class="tooltip-val">${val}</span>
     `;
+  }
+
+  calcPercentage(value) {
+    return parseFloat(value).toFixed(2)
   }
 }

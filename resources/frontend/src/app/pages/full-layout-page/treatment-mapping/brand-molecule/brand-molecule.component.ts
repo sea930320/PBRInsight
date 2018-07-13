@@ -4,12 +4,12 @@ import { PopulationService } from '../../../../shared/_api/population.service';
 import { ClinicTypeService } from '../../../../shared/_api/clinic_type.service';
 
 @Component({
-  selector: 'app-patient-flow-metrics',
-  templateUrl: './patient-flow-metrics.component.html',
-  styleUrls: ['./patient-flow-metrics.component.scss']
+  selector: 'app-brand-molecule',
+  templateUrl: './brand-molecule.component.html',
+  styleUrls: ['./brand-molecule.component.scss']
 })
-export class PatientFlowMetricsComponent implements OnInit {
-  
+export class BrandMoleculeComponent implements OnInit {
+
   // global Settings
   clinicTypes = []
   populations = []
