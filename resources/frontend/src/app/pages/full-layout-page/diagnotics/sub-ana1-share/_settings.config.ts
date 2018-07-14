@@ -1,8 +1,8 @@
-// Brand DataTable Settings
-export var brandSettings = {
+// SubAna1 DataTable Settings
+export var subAna1Settings = {
     columns: {
         name: {
-            title: 'Brand',
+            title: 'Test Category',
             filter: true,
             width: '80%'
         },

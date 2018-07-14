@@ -1,8 +1,8 @@
-// Brand DataTable Settings
-export var brandSettings = {
+// Clinic DataTable Settings
+export var clinicSettings = {
     columns: {
         name: {
-            title: 'Brand',
+            title: 'Clinic Type',
             filter: true,
             width: '80%'
         },

@@ -1,8 +1,8 @@
-// Brand DataTable Settings
-export var brandSettings = {
+// Classification DataTable Settings
+export var classificationSettings = {
     columns: {
         name: {
-            title: 'Brand',
+            title: 'Classification',
             filter: true,
             width: '80%'
         },

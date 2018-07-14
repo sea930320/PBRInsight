@@ -1,0 +1,40 @@
+<div id="sub-ana1-share">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <h3 class="card-title"> % Contribution by respective Clinic Type {{filter.sub_analysis_1 ? "(" + filter.sub_analysis_1 + ")" : ""}} </h3>
+      <h6 *ngIf="isFiltered"> Clinic test source of
+        <b style="font-weight: 600">{{filter.classification}}</b> for {{filter.start_quarater ? "Q" + filter.start_quarater:""}} {{filter.start_year
+        ? filter.start_year : "2016"}} - {{filter.end_quarater ? "Q" + filter.end_quarater:""}} {{filter.end_year ? filter.end_year
+        : currentYear}} {{filter.sub_analysis_1 ? "(" + filter.sub_analysis_1 + ")" : ""}}</h6>
+      <hr>
+    </div>
+    <div class="col-md-12 col-sm-12" *ngIf="isFiltered">
+      <div id="horizontal-bar-chart" class="height-250" *ngIf="clinic.liveChart.length > 0">
+        <ngx-charts-bar-horizontal [scheme]="barChartSettings.barChartColorScheme" [results]="clinic.liveChart" [gradient]="barChartSettings.barChartGradient"
+          [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+          [showDataLabel]="true" [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+          [xAxisLabel]="'%'" [yAxisLabel]="'Clinic Type'">
+        </ngx-charts-bar-horizontal>
+      </div>
+      <div class="row mt-3 mb-3" *ngIf="clinic.initialChart.length>0">
+        <div class="col-md-4 col-sm-12 mt-2" style="display:inline-flex">
+          <label class="mr-2">Live Chart: </label>
+          <div class="mr-2">
+            <input type="radio" [(ngModel)]="clinic.liveChartActivate" [value]="false" name="clinicLiveChart">
+            <label>Yes</label>
+          </div>
+          <div class="">
+            <input type="radio" [(ngModel)]="clinic.liveChartActivate" [value]="true" name="clinicLiveChart">
+            <label>No</label>
+          </div>
+        </div>
+        <div class="form-group col-md-8 col-sm-12">
+          <nouislider #clinicNS [(ngModel)]="clinic.drawChartStartPos" (change)="drawLiveChart(true)" [config]="clinicConfig"></nouislider>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12" *ngIf="isFiltered">
+      <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+    </div>
+  </div>
+</div>

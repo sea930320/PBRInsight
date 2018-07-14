@@ -18,6 +18,8 @@ import { CoMorbiditiesService } from '../../shared/_api/co_morbidities.service';
 import { TherapyAreaLevelService } from '../../shared/_api/therapy-area-level.service';
 import { DiseaseService } from '../../shared/_api/disease.service';
 import { BrandMoleculeService } from '../../shared/_api/brand-molecule.service';
+import { DiagnoticsService } from '../../shared/_api/diagnotics.service';
+import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -32,6 +34,12 @@ import { DiseaseByAcComponent } from './disease-prevalence/patient-flow-metrics/
 import { BrandMoleculeComponent } from './treatment-mapping/brand-molecule/brand-molecule.component';
 import { BrandShareComponent } from './treatment-mapping/brand-molecule/brand-share/brand-share.component';
 import { AcShareComponent } from './treatment-mapping/brand-molecule/ac-share/ac-share.component';
+import { DiagnoticsComponent } from './diagnotics/diagnotics.component';
+import { ClassificationShareComponent } from './diagnotics/classification-share/classification-share.component';
+import { SubAna1ShareComponent } from './diagnotics/sub-ana1-share/sub-ana1-share.component';
+import { SubAna2ShareComponent } from './diagnotics/sub-ana2-share/sub-ana2-share.component';
+import { ClinicShareComponent } from './diagnotics/clinic-share/clinic-share.component';
+import { FacilityShareComponent } from './diagnotics/facility-share/facility-share.component';
 
 @NgModule({
     imports: [
@@ -55,7 +63,13 @@ import { AcShareComponent } from './treatment-mapping/brand-molecule/ac-share/ac
         DiseaseByAcComponent,
         BrandMoleculeComponent,
         BrandShareComponent,
-        AcShareComponent
+        AcShareComponent,
+        DiagnoticsComponent,
+        ClassificationShareComponent,
+        SubAna1ShareComponent,
+        SubAna2ShareComponent,
+        ClinicShareComponent,
+        FacilityShareComponent
     ],
     providers: [
         DiseaseService,
@@ -67,7 +81,9 @@ import { AcShareComponent } from './treatment-mapping/brand-molecule/ac-share/ac
         PatientFlowMetricsService,
         CoMorbiditiesService,
         TherapyAreaLevelService,
-        BrandMoleculeService
+        BrandMoleculeService,
+        DiagnoticsService,
+        DiagnoticsCommunicationService
     ]
 })
 export class FullPagesModule { }

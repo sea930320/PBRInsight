@@ -1,9 +1,9 @@
-<div class="card" id="disease-by-brand">
+<div class="card" id="classification-share">
   <div class="card-header">
-    <h3 class="card-title"> Respective Disease Treatment by Brand and INN (Generic) </h3>
+    <h3 class="card-title"> % Share by Clinical Laboratory Specialty </h3>
     <hr>
     <div class="filter-chart row m-0">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <div class="input-group input-group-sm">
           <div class="input-group-prepend">
             <span class="input-group-text">From</span>
@@ -36,49 +36,56 @@
           </select>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="input-group input-group-sm">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Clinic Type</span>
-          </div>
-          <select class="custom-select form-control" [(ngModel)]="filter.clinic_type_id" (change)="fetchData()">
-            <option value="">----Select----</option>
-            <option *ngFor="let clinicType of clinicTypes" [ngValue]="clinicType.id">{{clinicType.name}}</option>
-          </select>
-        </div>
-      </div>
     </div>
   </div>
   <div class="card-body">
     <div class="card-block">
       <div class="row">
-        <div class="col-md-8 col-sm-12">
-          <div id="vartical-bar-chart" class="height-400" *ngIf="brand.liveChart.length > 0">
-            <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="brand.liveChart" [gradient]="barChartSettings.barChartGradient"
+        <div class="col-md-6 col-sm-12">
+          <div id="vartical-bar-chart" class="height-400" *ngIf="classification.liveChart.length > 0">
+            <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="classification.liveChart" [gradient]="barChartSettings.barChartGradient"
               [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
               [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
-              [xAxisLabel]="'Brand'" [yAxisLabel]="barChartSettings.barChartYAxisLabel">
+              [xAxisLabel]="'classification (Laboratory Medicine)'" [yAxisLabel]="barChartSettings.barChartYAxisLabel" (select)="onSelectChart($event)">
             </ngx-charts-bar-vertical>
           </div>
-          <div class="row mt-3" *ngIf="brand.initialChart.length>0">
-            <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+          <div class="row mt-4" *ngIf="classification.initialChart.length>0">
+            <div class="col-md-4 col-sm-12 mt-2" style="display:inline-flex">
               <label class="mr-2">Live Chart: </label>
               <div class="mr-2">
-                <input type="radio" [(ngModel)]="brand.liveChartActivate" [value]="false" name="brandLiveChart">
+                <input type="radio" [(ngModel)]="classification.liveChartActivate" [value]="false" name="classificationLiveChart">
                 <label>Yes</label>
               </div>
               <div class="">
-                <input type="radio" [(ngModel)]="brand.liveChartActivate" [value]="true" name="brandLiveChart">
+                <input type="radio" [(ngModel)]="classification.liveChartActivate" [value]="true" name="classificationLiveChart">
                 <label>No</label>
               </div>
             </div>
-            <div class="form-group col-md-9 col-sm-12">
-              <nouislider #brandNS [(ngModel)]="brand.drawChartStartPos" (change)="drawLiveChart(true)" [config]="brandConfig"></nouislider>
+            <div class="form-group col-md-8 col-sm-12">
+              <nouislider #classificationNS [(ngModel)]="classification.drawChartStartPos" (change)="drawLiveChart(true)" [config]="classificationConfig"></nouislider>
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-sm-12">
-          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+        <div class="col-md-6 col-sm-12">
+          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="onSelectTable($event)"></ng2-smart-table>
+        </div>
+        <div class="col-md-12">
+          <hr>
+        </div>
+        <div class="col-sm-12 col-md-6" style="background: rgba(237, 237, 237, 0.5);">
+          <sub-ana1-share></sub-ana1-share>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <sub-ana2-share></sub-ana2-share>
+        </div>
+        <div class="col-md-12">
+          <hr>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <clinic-share></clinic-share>
+        </div>
+        <div class="col-sm-12 col-md-6" style="background: rgba(237, 237, 237, 0.5);">
+          <facility-share></facility-share>
         </div>
       </div>
     </div>

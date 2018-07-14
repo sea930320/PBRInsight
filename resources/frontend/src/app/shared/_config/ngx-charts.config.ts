@@ -4,16 +4,17 @@ import * as shape from 'd3-shape';
 export var barChartView: any[] = [550, 400];
 // options
 export var barChartSettings = {
-    barChartShowXAxis : true,
-    barChartShowYAxis : true,
-    barChartGradient : false,
-    barChartShowLegend : true,
-    barChartShowXAxisLabel : true,
-    barChartShowYAxisLabel : true,
-    barChartYAxisLabel : '%',
-    barChartDisplayCount : 10,
-    barChartSMDisplayCount : 6,
-    barChartColorScheme : {
+    barChartShowXAxis: true,
+    barChartShowYAxis: true,
+    barChartGradient: false,
+    barChartShowLegend: true,
+    barChartShowXAxisLabel: true,
+    barChartShowYAxisLabel: true,
+    barChartYAxisLabel: '%',
+    barChartDisplayCount: 10,
+    barChartSMDisplayCount: 6,
+    barChartXSDisplayCount: 5,
+    barChartColorScheme: {
         domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
     }
 }
@@ -23,17 +24,17 @@ export var barChartSettings = {
 export var pieChartView: any[] = [550, 400];
 // options
 export var pieChartSettings = {
-    pieChartShowLegend : true,
-    pieChartColorScheme : {
+    pieChartShowLegend: true,
+    pieChartColorScheme: {
         domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
     },
-    pieChartShowLabels : true,
-    pieChartExplodeSlices : true,
-    pieChartDoughnut : true,
-    pieChartGradient : false,    
-    pieChart1ExplodeSlices : true,
-    pieChart1Doughnut : false,
-    pieChartDisplayCount : 4,
+    pieChartShowLabels: true,
+    pieChartExplodeSlices: true,
+    pieChartDoughnut: true,
+    pieChartGradient: false,
+    pieChart1ExplodeSlices: true,
+    pieChart1Doughnut: false,
+    pieChartDisplayCount: 4,
 }
 //Line Charts
 
@@ -41,21 +42,21 @@ export var lineChartView: any[] = [550, 400];
 
 // options
 export var lineChartSettings = {
-    lineChartShowXAxis : true,
-    lineChartShowYAxis : true,
-    lineChartGradient : false,
-    lineChartShowLegend : false,
-    lineChartShowXAxisLabel : true,
-    lineChartShowYAxisLabel : true,
-    lineChartAutoScale : true,
-    lineChartLineInterpolation : shape.curveBasis,
-    lineChartColorScheme1 : {
+    lineChartShowXAxis: true,
+    lineChartShowYAxis: true,
+    lineChartGradient: false,
+    lineChartShowLegend: false,
+    lineChartShowXAxisLabel: true,
+    lineChartShowYAxisLabel: true,
+    lineChartAutoScale: true,
+    lineChartLineInterpolation: shape.curveBasis,
+    lineChartColorScheme1: {
         domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA'],
     },
-    lineChartColorScheme2 : {
+    lineChartColorScheme2: {
         domain: ['#FF8D60', '#009DA0', '#FF586B', '#AAAAAA'],
     },
-    lineChartDisplayCount : 5,
+    lineChartDisplayCount: 5,
 }
 
 //Area Charts

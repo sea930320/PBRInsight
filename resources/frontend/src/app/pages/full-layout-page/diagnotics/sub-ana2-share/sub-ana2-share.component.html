@@ -1,0 +1,40 @@
+<div id="sub-ana1-share">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <h3 class="card-title"> % Share by Sub-Test Category {{filter.sub_analysis_1 ? "(" + filter.sub_analysis_1 + ")" : ""}} </h3>
+      <h6 *ngIf="isFiltered"> Sub Test category of
+        <b style="font-weight: 600">{{filter.classification}}</b> for {{filter.start_quarater ? "Q" + filter.start_quarater:""}} {{filter.start_year
+        ? filter.start_year : "2016"}} - {{filter.end_quarater ? "Q" + filter.end_quarater:""}} {{filter.end_year ? filter.end_year
+        : currentYear}} {{filter.sub_analysis_1 ? "(" + filter.sub_analysis_1 + ")" : ""}}</h6>
+      <hr>
+    </div>
+    <div class="col-md-12 col-sm-12" *ngIf="isFiltered">
+      <div id="horizontal-bar-chart" class="height-250" *ngIf="subAna2.liveChart.length > 0">
+        <ngx-charts-bar-horizontal [scheme]="barChartSettings.barChartColorScheme" [results]="subAna2.liveChart" [gradient]="barChartSettings.barChartGradient"
+          [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+          [showDataLabel]="true" [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+          [xAxisLabel]="'%'" [yAxisLabel]="'Sub Test Category'">
+        </ngx-charts-bar-horizontal>
+      </div>
+      <div class="row mt-3 mb-3" *ngIf="subAna2.initialChart.length>0">
+        <div class="col-md-4 col-sm-12 mt-2" style="display:inline-flex">
+          <label class="mr-2">Live Chart: </label>
+          <div class="mr-2">
+            <input type="radio" [(ngModel)]="subAna2.liveChartActivate" [value]="false" name="subAna2LiveChart">
+            <label>Yes</label>
+          </div>
+          <div class="">
+            <input type="radio" [(ngModel)]="subAna2.liveChartActivate" [value]="true" name="subAna2LiveChart">
+            <label>No</label>
+          </div>
+        </div>
+        <div class="form-group col-md-8 col-sm-12">
+          <nouislider #subAna2NS [(ngModel)]="subAna2.drawChartStartPos" (change)="drawLiveChart(true)" [config]="subAna2Config"></nouislider>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12" *ngIf="isFiltered">
+      <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { PatientFlowMetricsComponent } from './disease-prevalence/patient-flow-m
 import { CoMorbiditiesComponent } from './disease-prevalence/co-morbidities/co-morbidities.component';
 import { TherapyAreaLevelComponent } from './treatment-mapping/therapy-area-level/therapy-area-level.component';
 import { BrandMoleculeComponent } from './treatment-mapping/brand-molecule/brand-molecule.component';
+import { DiagnoticsComponent } from './diagnotics/diagnotics.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,13 @@ const routes: Routes = [
         }
       }      
     ]
+  },
+  {
+    path: 'diagnotics',
+    component: DiagnoticsComponent,
+    data: {
+      title: 'Diagnotics'
+    }
   }
 ];
 

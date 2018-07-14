@@ -14,6 +14,7 @@ import * as settings from './_settings.config'
   styleUrls: ['./brand-share.component.scss']
 })
 export class BrandShareComponent implements OnInit {
+  
   // global Settings
   @Input() clinicTypes: any[];
   @ViewChild('brandNS') brandNS: NouisliderComponent
