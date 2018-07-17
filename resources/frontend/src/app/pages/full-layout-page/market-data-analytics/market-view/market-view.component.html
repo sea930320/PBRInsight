@@ -1,0 +1,53 @@
+<section id="market-view">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card" id="total-market-valuation">
+          <div class="card-header">
+            <h3 class="card-title"> Total Market Valuation, % Market Share by Segment (OTC & POM)</h3>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-5 col-sm-12">
+                  <div id="vartical-bar-chart" class="height-300" *ngIf="tm.liveChart.length > 0">
+                    <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="tm.liveChart" [gradient]="barChartSettings.barChartGradient"
+                      [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+                      [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+                      [xAxisLabel]="'Year'" [yAxisLabel]="barChartSettings.barChartYAxisLabel" (select)="selectChart($event)">
+                    </ngx-charts-bar-vertical>
+                  </div>
+                  <div class="row mt-3" *ngIf="tm.initialChart.length>0">
+                    <div class="col-md-4 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-1">Live Chart: </label>
+                      <div class="mr-1">
+                        <input type="radio" [(ngModel)]="tm.liveChartActivate" [value]="false" name="tmLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="tm.liveChartActivate" [value]="true" name="tmLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-8 col-sm-12">
+                      <nouislider #tmNS [(ngModel)]="tm.drawChartStartPos" (change)="drawLiveChart(true)" [config]="tmConfig"></nouislider>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="selectTable($event)"></ng2-smart-table>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <market-share-by-segment></market-share-by-segment>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12" *ngIf="drugForms.length>0">
+        <market-view-atc1-share [drugForms]="drugForms"></market-view-atc1-share>
+      </div>
+    </div>
+  </div>
+</section>

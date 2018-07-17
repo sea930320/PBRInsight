@@ -17,6 +17,13 @@ export class DiseaseByBrandComponent implements OnInit {
   @Input() clinicTypes: any[];
   @ViewChild('brandNS') brandNS: NouisliderComponent
   years = null
+  filter = {
+    start_year: "",
+    start_quarater: "",
+    end_year: "",
+    end_quarater: "",
+    clinic_type_id: ""
+  }
 
   // Bar Charts
   barChartSettings = chartsData.barChartSettings;
@@ -36,13 +43,6 @@ export class DiseaseByBrandComponent implements OnInit {
     totalOccurence: null,
     initialChart: [],
     liveChart: []
-  }
-  filter = {
-    start_year: "",
-    start_quarater: "",
-    end_year: "",
-    end_quarater: "",
-    clinic_type_id: ""
   }
 
   // nouislider config

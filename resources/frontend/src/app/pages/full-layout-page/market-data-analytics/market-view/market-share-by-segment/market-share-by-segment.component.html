@@ -1,0 +1,8 @@
+<h6 class="text-center" *ngIf="year"> % MARKET SHARE BY SEGMENT -
+  <b style="font-weight: 600">{{year}}</b>
+</h6>
+<div id="market-share-by-segment" class="height-300" *ngIf="year && drugForm.initialChart.length > 0">
+  <ngx-charts-advanced-pie-chart class="chart-container" [scheme]="pieChartSettings.pieChartColorScheme" [results]="drugForm.initialChart"
+    [gradient]="pieChartSettings.pieChartGradient" [tooltipText]="pieTooltipText">
+  </ngx-charts-advanced-pie-chart>
+</div>

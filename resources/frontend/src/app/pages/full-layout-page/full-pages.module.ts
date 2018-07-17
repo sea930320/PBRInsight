@@ -13,13 +13,16 @@ import { TherapyAreaService } from '../../shared/_api/therapy_area.service';
 import { DiseasePrevalenceService } from '../../shared/_api/disease_prevalence.service';
 import { PopulationService } from '../../shared/_api/population.service';
 import { AgeGroupReportService } from '../../shared/_api/age_group_report.service';
+import { DrugFormService } from '../../shared/_api/drug-form.service';
 import { PatientFlowMetricsService } from '../../shared/_api/patient-flow-metrics.service';
 import { CoMorbiditiesService } from '../../shared/_api/co_morbidities.service';
 import { TherapyAreaLevelService } from '../../shared/_api/therapy-area-level.service';
 import { DiseaseService } from '../../shared/_api/disease.service';
 import { BrandMoleculeService } from '../../shared/_api/brand-molecule.service';
 import { DiagnoticsService } from '../../shared/_api/diagnotics.service';
+import { MarketViewService } from '../../shared/_api/market-view.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
+import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -40,6 +43,16 @@ import { SubAna1ShareComponent } from './diagnotics/sub-ana1-share/sub-ana1-shar
 import { SubAna2ShareComponent } from './diagnotics/sub-ana2-share/sub-ana2-share.component';
 import { ClinicShareComponent } from './diagnotics/clinic-share/clinic-share.component';
 import { FacilityShareComponent } from './diagnotics/facility-share/facility-share.component';
+import { MarketViewComponent } from './market-data-analytics/market-view/market-view.component';
+import { TherapyAreaAnalyticsComponent } from './market-data-analytics/therapy-area-analytics/therapy-area-analytics.component';
+import { BrandAnalyticsComponent } from './market-data-analytics/brand-analytics/brand-analytics.component';
+import { MoleculeAnalyticsComponent } from './market-data-analytics/molecule-analytics/molecule-analytics.component';
+import { MoleculePriceAnalyticsComponent } from './pricing-analytics/molecule-price-analytics/molecule-price-analytics.component';
+import { BrandPriceAnalyticsComponent } from './pricing-analytics/brand-price-analytics/brand-price-analytics.component';
+import { CostTreatmentMetricsComponent } from './pharmaeco/cost-treatment-metrics/cost-treatment-metrics.component';
+import { MarketShareBySegmentComponent } from './market-data-analytics/market-view/market-share-by-segment/market-share-by-segment.component';
+import { Atc1ShareComponent } from './market-data-analytics/market-view/atc1-share/atc1-share.component';
+import { Atc2ShareComponent } from './market-data-analytics/market-view/atc2-share/atc2-share.component';
 
 @NgModule({
     imports: [
@@ -69,7 +82,17 @@ import { FacilityShareComponent } from './diagnotics/facility-share/facility-sha
         SubAna1ShareComponent,
         SubAna2ShareComponent,
         ClinicShareComponent,
-        FacilityShareComponent
+        FacilityShareComponent,
+        MarketViewComponent,
+        TherapyAreaAnalyticsComponent,
+        BrandAnalyticsComponent,
+        MoleculeAnalyticsComponent,
+        MoleculePriceAnalyticsComponent,
+        BrandPriceAnalyticsComponent,
+        CostTreatmentMetricsComponent,
+        MarketShareBySegmentComponent,
+        Atc1ShareComponent,
+        Atc2ShareComponent
     ],
     providers: [
         DiseaseService,
@@ -78,12 +101,15 @@ import { FacilityShareComponent } from './diagnotics/facility-share/facility-sha
         DiseasePrevalenceService,
         PopulationService,
         AgeGroupReportService,
+        DrugFormService,
         PatientFlowMetricsService,
         CoMorbiditiesService,
         TherapyAreaLevelService,
         BrandMoleculeService,
         DiagnoticsService,
-        DiagnoticsCommunicationService
+        MarketViewService,
+        DiagnoticsCommunicationService,
+        MarketViewCommunicationService
     ]
 })
 export class FullPagesModule { }

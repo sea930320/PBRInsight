@@ -1,0 +1,40 @@
+<div class="card-header" *ngIf="filter.atc1_name">
+  <h5> % Therapy Area Level 2 share and Value for Total Market -
+    <b style="font-weight: 600">{{filter.year}} ({{filter.atc1_name}}{{drugForm ? "/" + drugForm : ""}})</b>
+  </h5>
+  <hr>
+</div>
+<div class="card-body" *ngIf="filter.atc1_name">
+  <div class="card-block">
+    <div class="row">
+      <div class="col-md-8 col-sm-12">
+        <div id="vartical-bar-chart" class="height-400" *ngIf="atc2.liveChart.length > 0">
+          <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="atc2.liveChart" [gradient]="barChartSettings.barChartGradient"
+            [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+            [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+            [xAxisLabel]="'Anatomical Class'" [yAxisLabel]="barChartSettings.barChartYAxisLabel">
+          </ngx-charts-bar-vertical>
+        </div>
+        <div class="row mt-3" *ngIf="atc2.initialChart.length>0">
+          <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+            <label class="mr-2">Live Chart: </label>
+            <div class="mr-2">
+              <input type="radio" [(ngModel)]="atc2.liveChartActivate" [value]="false" name="atc2LiveChart">
+              <label>Yes</label>
+            </div>
+            <div class="">
+              <input type="radio" [(ngModel)]="atc2.liveChartActivate" [value]="true" name="atc2LiveChart">
+              <label>No</label>
+            </div>
+          </div>
+          <div class="form-group col-md-9 col-sm-12">
+            <nouislider #atc2NS [(ngModel)]="atc2.drawChartStartPos" (change)="drawLiveChart(true)" [config]="atc2Config"></nouislider>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+      </div>
+    </div>
+  </div>
+</div>

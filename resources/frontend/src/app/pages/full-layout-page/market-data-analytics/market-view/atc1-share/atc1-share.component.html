@@ -1,0 +1,57 @@
+<div class="card" id="disease-by-brand">
+  <div class="card-header">
+    <h3 class="card-title"> % Anatomical Class share for Total Market -
+      <b style="font-weight: 600">{{filter.year}}</b>
+    </h3>
+    <hr>
+    <div class="filter-chart row m-0">
+      <div class="col-md-4">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text">POM/OTC</span>
+          </div>
+          <select class="custom-select form-control" [(ngModel)]="filter.drug_form_id" (change)="fetchData()">
+            <option value="">----Select----</option>
+            <option *ngFor="let drugForm of drugForms" [ngValue]="drugForm.id">{{drugForm.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-block">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div id="vartical-bar-chart" class="height-400" *ngIf="atc1.liveChart.length > 0">
+            <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="atc1.liveChart" [gradient]="barChartSettings.barChartGradient"
+              [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+              [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+              [xAxisLabel]="'Anatomical Class'" [yAxisLabel]="barChartSettings.barChartYAxisLabel" (select)="selectChart($event)">
+            </ngx-charts-bar-vertical>
+          </div>
+          <div class="row mt-3" *ngIf="atc1.initialChart.length>0">
+            <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+              <label class="mr-2">Live Chart: </label>
+              <div class="mr-2">
+                <input type="radio" [(ngModel)]="atc1.liveChartActivate" [value]="false" name="atc1LiveChart">
+                <label>Yes</label>
+              </div>
+              <div class="">
+                <input type="radio" [(ngModel)]="atc1.liveChartActivate" [value]="true" name="atc1LiveChart">
+                <label>No</label>
+              </div>
+            </div>
+            <div class="form-group col-md-9 col-sm-12">
+              <nouislider #atc1NS [(ngModel)]="atc1.drawChartStartPos" (change)="drawLiveChart(true)" [config]="atc1Config"></nouislider>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="selectTable($event)"></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <market-view-atc2-share></market-view-atc2-share>
+</div>
