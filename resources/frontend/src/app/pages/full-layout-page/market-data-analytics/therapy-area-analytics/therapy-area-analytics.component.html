@@ -1,3 +1,15 @@
-<p>
-  therapy-area-analytics works!
-</p>
+<section id="market-view">
+  <div class="container-fluid">
+    <div class="row" *ngIf="isLoaded">
+      <div class="col-sm-12">
+        <atc2-share-ta [drugForms]="drugForms" [atc1s]="atc1s"></atc2-share-ta>
+      </div>
+      <div class="col-sm-12">
+        <atc4-share-ta [drugForms]="drugForms"></atc4-share-ta>
+      </div>
+      <div class="col-sm-12">
+        <atc5-share-ta [drugForms]="drugForms"></atc5-share-ta>
+      </div>
+    </div>
+  </div>
+</section>

@@ -25,8 +25,9 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->resource('therapy-area', 'TherapyAreaController');
     $router->resource('disease', 'DiseaseController');
     $router->resource('population', 'PopulationController');
-    $router->resource('age-group-report', 'AgeGroupReportController');    
+    $router->resource('age-group-report', 'AgeGroupReportController');
     $router->resource('drug-form', 'DrugFormController');
+    $router->resource('atc1', 'Atc1Controller');
     
     $router->post('disease-prevalence/individual-disease', 'DiseasePrevalenceController@individualDisease');
     $router->post('disease-prevalence/category', 'DiseasePrevalenceController@category');

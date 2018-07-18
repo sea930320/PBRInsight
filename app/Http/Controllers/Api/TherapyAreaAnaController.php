@@ -84,16 +84,18 @@ class TherapyAreaAnaController extends ApiController
             ->setQuery($this->marketData->query())
             ->setQueryParams($queryParams);
 
-        $total = $queryBuilder->count();
         $totalValue = $queryBuilder->sum('value');
+        $totalVolumn = $queryBuilder->sum('volumn');
+
         $valuations = $queryBuilder
             ->groupBy('atc2_id')
             ->selectRaw('sum(value) as total_price, atc2_id')
             ->pluck('total_price', 'atc2_id');
-        $atc2Shares = $queryBuilder
-            ->select('atc2_id', DB::raw("count(atc2_id) as total"))
+        $volumns = $queryBuilder
             ->groupBy('atc2_id')
-            ->pluck('total', 'atc2_id');
+            ->selectRaw('sum(volumn) as total_volumn, atc2_id')
+            ->pluck('total_volumn', 'atc2_id');
+
         $atc2s = $this->atc2
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
@@ -101,8 +103,8 @@ class TherapyAreaAnaController extends ApiController
         return $this->respond([
             'valuations' => $valuations,
             'totalValue' => $totalValue,
-            'shares' => $atc2Shares,
-            'total' => $total,
+            'volumns' => $volumns,
+            'totalVolumn' => $totalVolumn,
             'atc2s' => $atc2s
         ]);
     }
@@ -120,16 +122,18 @@ class TherapyAreaAnaController extends ApiController
             ->setQuery($this->marketData->query())
             ->setQueryParams($queryParams);
 
-        $total = $queryBuilder->count();
         $totalValue = $queryBuilder->sum('value');
+        $totalVolumn = $queryBuilder->sum('volumn');
+
         $valuations = $queryBuilder
             ->groupBy('atc4_id')
             ->selectRaw('sum(value) as total_price, atc4_id')
             ->pluck('total_price', 'atc4_id');
-        $atc4Shares = $queryBuilder
-            ->select('atc4_id', DB::raw("count(atc4_id) as total"))
+        $volumns = $queryBuilder
             ->groupBy('atc4_id')
-            ->pluck('total', 'atc4_id');
+            ->selectRaw('sum(volumn) as total_volumn, atc4_id')
+            ->pluck('total_volumn', 'atc4_id');
+
         $atc4s = $this->atc4
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
@@ -137,8 +141,8 @@ class TherapyAreaAnaController extends ApiController
         return $this->respond([
             'valuations' => $valuations,
             'totalValue' => $totalValue,
-            'shares' => $atc4Shares,
-            'total' => $total,
+            'volumns' => $volumns,
+            'totalVolumn' => $totalVolumn,
             'atc4s' => $atc4s
         ]);
     }
@@ -156,16 +160,18 @@ class TherapyAreaAnaController extends ApiController
             ->setQuery($this->marketData->query())
             ->setQueryParams($queryParams);
 
-        $total = $queryBuilder->count();
         $totalValue = $queryBuilder->sum('value');
+        $totalVolumn = $queryBuilder->sum('volumn');
+
         $valuations = $queryBuilder
             ->groupBy('atc5_id')
             ->selectRaw('sum(value) as total_price, atc5_id')
             ->pluck('total_price', 'atc5_id');
-        $atc5Shares = $queryBuilder
-            ->select('atc5_id', DB::raw("count(atc5_id) as total"))
+        $volumns = $queryBuilder
             ->groupBy('atc5_id')
-            ->pluck('total', 'atc5_id');
+            ->selectRaw('sum(volumn) as total_volumn, atc5_id')
+            ->pluck('total_volumn', 'atc5_id');
+
         $atc5s = $this->atc5
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
@@ -173,8 +179,8 @@ class TherapyAreaAnaController extends ApiController
         return $this->respond([
             'valuations' => $valuations,
             'totalValue' => $totalValue,
-            'shares' => $atc5Shares,
-            'total' => $total,
+            'volumns' => $volumns,
+            'totalVolumn' => $totalVolumn,
             'atc5s' => $atc5s
         ]);
     }

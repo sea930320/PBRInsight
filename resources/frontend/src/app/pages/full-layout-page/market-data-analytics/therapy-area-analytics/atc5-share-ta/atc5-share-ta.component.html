@@ -1,0 +1,42 @@
+<div class="card" id="atc5-share-therapy-area-analytics">
+  <div class="card-header">
+    <h3 class="card-title"> % Therapy Area Level 5 share and Value for Total Market for
+      <b style="font-weight: 600">{{filter.atc4_name}}</b>
+    </h3>
+    <hr>
+  </div>
+  <div class="card-body">
+    <div class="card-block">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div id="vartical-bar-chart" class="height-400" *ngIf="atc5.liveChart.length > 0">
+            <ngx-charts-bar-vertical-2d [scheme]="barChartSettings.barChartColorScheme" [results]="atc5.liveChart" [gradient]="barChartSettings.barChartGradient"
+              [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+              [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+              [xAxisLabel]="'ATC5'" [yAxisLabel]="barChartSettings.barChartYAxisLabel">
+            </ngx-charts-bar-vertical-2d>
+          </div>
+          <div class="row mt-3" *ngIf="atc5.initialChart.length>0">
+            <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+              <label class="mr-2">Live Chart: </label>
+              <div class="mr-2">
+                <input type="radio" [(ngModel)]="atc5.liveChartActivate" [value]="false" name="atc5LiveChart">
+                <label>Yes</label>
+              </div>
+              <div class="">
+                <input type="radio" [(ngModel)]="atc5.liveChartActivate" [value]="true" name="atc5LiveChart">
+                <label>No</label>
+              </div>
+            </div>
+            <div class="form-group col-md-9 col-sm-12">
+              <nouislider #atc5NS [(ngModel)]="atc5.drawChartStartPos" (change)="drawLiveChart(true)" [config]="atc5Config"></nouislider>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

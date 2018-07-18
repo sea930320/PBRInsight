@@ -1,0 +1,42 @@
+<div class="card" id="atc4-share-therapy-area-analytics">
+  <div class="card-header">
+    <h3 class="card-title"> % Therapy Area Level 4 share and Value for Total Market for
+      <b style="font-weight: 600">{{filter.atc2_name}}</b>
+    </h3>
+    <hr>
+  </div>
+  <div class="card-body">
+    <div class="card-block">
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          <div id="vartical-bar-chart" class="height-400" *ngIf="atc4.liveChart.length > 0">
+            <ngx-charts-bar-vertical-2d [scheme]="barChartSettings.barChartColorScheme" [results]="atc4.liveChart" [gradient]="barChartSettings.barChartGradient"
+              [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+              [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+              [xAxisLabel]="'ATC4'" [yAxisLabel]="barChartSettings.barChartYAxisLabel" (select)="selectChart($event)">
+            </ngx-charts-bar-vertical-2d>
+          </div>
+          <div class="row mt-3" *ngIf="atc4.initialChart.length>0">
+            <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+              <label class="mr-2">Live Chart: </label>
+              <div class="mr-2">
+                <input type="radio" [(ngModel)]="atc4.liveChartActivate" [value]="false" name="atc4LiveChart">
+                <label>Yes</label>
+              </div>
+              <div class="">
+                <input type="radio" [(ngModel)]="atc4.liveChartActivate" [value]="true" name="atc4LiveChart">
+                <label>No</label>
+              </div>
+            </div>
+            <div class="form-group col-md-9 col-sm-12">
+              <nouislider #atc4NS [(ngModel)]="atc4.drawChartStartPos" (change)="drawLiveChart(true)" [config]="atc4Config"></nouislider>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="selectTable($event)"></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

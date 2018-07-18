@@ -14,6 +14,7 @@ import { DiseasePrevalenceService } from '../../shared/_api/disease_prevalence.s
 import { PopulationService } from '../../shared/_api/population.service';
 import { AgeGroupReportService } from '../../shared/_api/age_group_report.service';
 import { DrugFormService } from '../../shared/_api/drug-form.service';
+import { Atc1Service } from '../../shared/_api/atc1.service';
 import { PatientFlowMetricsService } from '../../shared/_api/patient-flow-metrics.service';
 import { CoMorbiditiesService } from '../../shared/_api/co_morbidities.service';
 import { TherapyAreaLevelService } from '../../shared/_api/therapy-area-level.service';
@@ -21,8 +22,10 @@ import { DiseaseService } from '../../shared/_api/disease.service';
 import { BrandMoleculeService } from '../../shared/_api/brand-molecule.service';
 import { DiagnoticsService } from '../../shared/_api/diagnotics.service';
 import { MarketViewService } from '../../shared/_api/market-view.service';
+import { TherapyAreaAnaService } from '../../shared/_api/therapy-area-ana.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
+import { TherapyAreaAnaCommunicationService } from '../../shared/_communication/therapy-area-ana.service';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -53,6 +56,9 @@ import { CostTreatmentMetricsComponent } from './pharmaeco/cost-treatment-metric
 import { MarketShareBySegmentComponent } from './market-data-analytics/market-view/market-share-by-segment/market-share-by-segment.component';
 import { Atc1ShareComponent } from './market-data-analytics/market-view/atc1-share/atc1-share.component';
 import { Atc2ShareComponent } from './market-data-analytics/market-view/atc2-share/atc2-share.component';
+import { Atc2ShareTaComponent } from './market-data-analytics/therapy-area-analytics/atc2-share-ta/atc2-share-ta.component';
+import { Atc4ShareTaComponent } from './market-data-analytics/therapy-area-analytics/atc4-share-ta/atc4-share-ta.component';
+import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analytics/atc5-share-ta/atc5-share-ta.component';
 
 @NgModule({
     imports: [
@@ -92,7 +98,10 @@ import { Atc2ShareComponent } from './market-data-analytics/market-view/atc2-sha
         CostTreatmentMetricsComponent,
         MarketShareBySegmentComponent,
         Atc1ShareComponent,
-        Atc2ShareComponent
+        Atc2ShareComponent,
+        Atc2ShareTaComponent,
+        Atc4ShareTaComponent,
+        Atc5ShareTaComponent
     ],
     providers: [
         DiseaseService,
@@ -102,14 +111,17 @@ import { Atc2ShareComponent } from './market-data-analytics/market-view/atc2-sha
         PopulationService,
         AgeGroupReportService,
         DrugFormService,
+        Atc1Service,
         PatientFlowMetricsService,
         CoMorbiditiesService,
         TherapyAreaLevelService,
         BrandMoleculeService,
         DiagnoticsService,
         MarketViewService,
+        TherapyAreaAnaService,
         DiagnoticsCommunicationService,
-        MarketViewCommunicationService
+        MarketViewCommunicationService,
+        TherapyAreaAnaCommunicationService
     ]
 })
 export class FullPagesModule { }
