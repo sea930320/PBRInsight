@@ -23,6 +23,7 @@
     "@angular/platform-server": "^5.2.9",
     "@angular/router": "^5.2.9",
     "@ng-bootstrap/ng-bootstrap": "^1.0.2",
+    "@ng-select/ng-select": "^1.5.2",
     "@swimlane/ngx-charts": "^7.1.1",
     "@swimlane/ngx-datatable": "^11.2.0",
     "@types/chartist": "^0.9.36",

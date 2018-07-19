@@ -26,6 +26,7 @@ class BrandShareIndex extends BaseRequest
         return [
             'year' => 'nullable|string',
             'drug_form_id' => 'nullable|exists:drug_forms,id',
+            'atc1_id' => 'nullable|exists:atc1s,id',
             'atc4_id' => 'nullable|exists:atc4s,id',
             'atc5_id' => 'nullable|exists:atc5s,id',
         ];

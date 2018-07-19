@@ -25,6 +25,7 @@
         "assets/css/quill.snow.css",
         "assets/css/quill.bubble.css",
         "assets/css/hopscotch.css",
+        "../node_modules/@ng-select/ng-select/themes/default.theme.css",
         "../node_modules/nouislider/distribute/nouislider.min.css",
         "../node_modules/@swimlane/ngx-datatable/release/index.css",
         "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",

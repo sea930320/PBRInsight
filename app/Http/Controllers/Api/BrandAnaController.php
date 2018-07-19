@@ -88,16 +88,16 @@ class BrandAnaController extends ApiController
             ->setQuery($this->marketData->query())
             ->setQueryParams($queryParams);
 
-        $total = $queryBuilder->count();
         $totalValue = $queryBuilder->sum('value');
+        $totalVolumn = $queryBuilder->sum('volumn');
         $valuations = $queryBuilder
             ->groupBy('brand_id')
             ->selectRaw('sum(value) as total_price, brand_id')
             ->pluck('total_price', 'brand_id');
-        $brandShares = $queryBuilder
-            ->select('brand_id', DB::raw("count(brand_id) as total"))
+        $volumns = $queryBuilder
             ->groupBy('brand_id')
-            ->pluck('total', 'brand_id');
+            ->selectRaw('sum(volumn) as total_volumn, brand_id')
+            ->pluck('total_volumn', 'brand_id');
         $brands = $this->brand
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
@@ -105,8 +105,8 @@ class BrandAnaController extends ApiController
         return $this->respond([
             'valuations' => $valuations,
             'totalValue' => $totalValue,
-            'shares' => $brandShares,
-            'total' => $total,
+            'volumns' => $volumns,
+            'totalVolumn' => $totalVolumn,
             'brands' => $brands
         ]);
     }

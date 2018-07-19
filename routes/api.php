@@ -28,6 +28,10 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->resource('age-group-report', 'AgeGroupReportController');
     $router->resource('drug-form', 'DrugFormController');
     $router->resource('atc1', 'Atc1Controller');
+    $router->resource('atc2', 'Atc2Controller');
+    $router->resource('atc3', 'Atc3Controller');
+    $router->resource('atc4', 'Atc4Controller');
+    $router->resource('atc5', 'Atc5Controller');
     
     $router->post('disease-prevalence/individual-disease', 'DiseasePrevalenceController@individualDisease');
     $router->post('disease-prevalence/category', 'DiseasePrevalenceController@category');

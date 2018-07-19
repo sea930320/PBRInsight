@@ -23,10 +23,6 @@ export class TherapyAreaAnalyticsComponent implements OnInit {
   }
 
   fetchGlobal() {
-    this.drugFormService.index()
-      .subscribe((res: any) => {
-        this.drugForms = res.drug_forms
-      })
     this.atc1s = []
     this.drugForms = []
 

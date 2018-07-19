@@ -15,7 +15,7 @@ export var atc5Settings = {
             }
         },
         volumn: {
-            title: 'Percentage',
+            title: 'Volumn',
             filter: true,
             width: '20%',
             valuePrepareFunction: function (value) {

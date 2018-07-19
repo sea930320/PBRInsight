@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -15,6 +16,10 @@ import { PopulationService } from '../../shared/_api/population.service';
 import { AgeGroupReportService } from '../../shared/_api/age_group_report.service';
 import { DrugFormService } from '../../shared/_api/drug-form.service';
 import { Atc1Service } from '../../shared/_api/atc1.service';
+import { Atc2Service } from '../../shared/_api/atc2.service';
+import { Atc3Service } from '../../shared/_api/atc3.service';
+import { Atc4Service } from '../../shared/_api/atc4.service';
+import { Atc5Service } from '../../shared/_api/atc5.service';
 import { PatientFlowMetricsService } from '../../shared/_api/patient-flow-metrics.service';
 import { CoMorbiditiesService } from '../../shared/_api/co_morbidities.service';
 import { TherapyAreaLevelService } from '../../shared/_api/therapy-area-level.service';
@@ -23,6 +28,7 @@ import { BrandMoleculeService } from '../../shared/_api/brand-molecule.service';
 import { DiagnoticsService } from '../../shared/_api/diagnotics.service';
 import { MarketViewService } from '../../shared/_api/market-view.service';
 import { TherapyAreaAnaService } from '../../shared/_api/therapy-area-ana.service';
+import { BrandAnaService } from '../../shared/_api/brand-ana.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
 import { TherapyAreaAnaCommunicationService } from '../../shared/_communication/therapy-area-ana.service';
@@ -63,6 +69,7 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
 @NgModule({
     imports: [
         CommonModule,
+        NgSelectModule,
         FormsModule,
         NgbModule,
         NgxChartsModule,
@@ -112,6 +119,10 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         AgeGroupReportService,
         DrugFormService,
         Atc1Service,
+        Atc2Service,
+        Atc3Service,
+        Atc4Service,
+        Atc5Service,
         PatientFlowMetricsService,
         CoMorbiditiesService,
         TherapyAreaLevelService,
@@ -119,6 +130,7 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         DiagnoticsService,
         MarketViewService,
         TherapyAreaAnaService,
+        BrandAnaService,
         DiagnoticsCommunicationService,
         MarketViewCommunicationService,
         TherapyAreaAnaCommunicationService

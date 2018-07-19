@@ -1,8 +1,8 @@
-// atc4 DataTable Settings
-export var atc4Settings = {
+// Brand DataTable Settings
+export var brandSettings = {
     columns: {
         name: {
-            title: 'Atc4',
+            title: 'Brand',
             filter: true,
             width: '60%'
         },
