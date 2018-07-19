@@ -93,12 +93,11 @@ class CoMorbiditiesController extends ApiController
             $patient = $this->getPatientFromDiseasePrevalences($queryParams, $key);
 
             if (isset($coMorbidities->{"${diseaseCountByPatient}"})) {
-                $coMorbidities->{"$diseaseCountByPatient"}->count ++;
-                // $coMorbidities->{"$diseaseCountByPatient"}->patients[] = $patient;
+                $coMorbidities->{"$diseaseCountByPatient"}->count ++;                
                 $bundles = $coMorbidities->{"$diseaseCountByPatient"}->bundles;
                 $bundleIndex = $this->getBundleIndexFromBundles($bundles, $patient);
                 if ($bundleIndex === -1) {
-                    $coMorbidities->{"$diseaseCountByPatient"}->bundles[] = [
+                    $coMorbidities->{"$diseaseCountByPatient"}->bundles[] = (object) [
                         'bundle' => $patient,
                         'count' => 1
                     ];

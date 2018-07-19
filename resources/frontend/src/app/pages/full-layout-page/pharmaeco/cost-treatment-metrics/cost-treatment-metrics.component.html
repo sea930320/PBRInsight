@@ -1,3 +1,98 @@
-<p>
-  cost-treatment-metrics works!
-</p>
+<section id="cost-treatment">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"> Cost of Treatment of each Disease </h3>
+            <hr>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-8 col-sm-12">
+                  <div id="vartical-bar-chart" class="height-400" *ngIf="costTreatment.liveChart.length > 0">
+                    <ngx-charts-bar-vertical [scheme]="barChartSettings.barChartColorScheme" [results]="costTreatment.liveChart" [gradient]="barChartSettings.barChartGradient"
+                      [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+                      [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+                      [xAxisLabel]="'Average Prices'" [yAxisLabel]="'Price'">
+                    </ngx-charts-bar-vertical>
+                  </div>
+                  <div class="row mt-3" *ngIf="costTreatment.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="costTreatment.liveChartActivate" [value]="false" name="costTreatmentLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="costTreatment.liveChartActivate" [value]="true" name="costTreatmentLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #costTreatmentNS [(ngModel)]="costTreatment.drawChartStartPos" (change)="drawLiveChart(true)" [config]="costTreatmentConfig"></nouislider>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Cost of Treatment of Co-Morbidities for each Disease Category</h3>
+            <select class="custom-select form-control" [(ngModel)]="filter.therapy_area_id" (change)="fetchCormobiditiesData()">
+              <option value="">----Select----</option>
+              <option *ngFor="let therapyArea of therapyAreas" [ngValue]="therapyArea.id">{{therapyArea.name}}</option>
+            </select>
+            <hr>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div id="advanced-pie-chart" class="height-300" *ngIf="coMorbidities.liveChart.length > 0">
+                    <ngx-charts-advanced-pie-chart class="chart-container" [scheme]="pieChartSettings.pieChartColorScheme" [results]="coMorbidities.liveChart"
+                      (legendLabelClick)="selectLegend($event)" [gradient]="pieChartSettings.pieChartGradient" [tooltipText]="pieTooltipText"
+                      (select)="selectLegend($event)">
+                    </ngx-charts-advanced-pie-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-header" *ngIf="diagonsisSets">
+            <h3 class="card-title">Diagnosis Set</h3>
+            <hr class="m-0">
+          </div>
+          <div class="card-body" *ngIf="diagonsisSets">
+            <div class="card-block">
+              <div *ngFor="let bundlePair of diagonsisSets.bundles">
+                <span class="badge badge-pill badge-danger">{{calcTreatment(bundlePair)}}</span>
+                <ul class="list-group mb-2">
+                  <li *ngFor="let patient of bundlePair.bundle" class="list-group-item pt-1 pb-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <b>Active constituent: </b> {{patient.active_constituent}}
+                      </div>
+                      <div class="col-md-4">
+                        <b>Disease: </b> {{patient.disease.name}}
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

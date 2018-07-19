@@ -4,6 +4,7 @@ import { CoMorbiditiesService } from '../../../../shared/_api/co_morbidities.ser
 
 import { ClinicTypeService } from '../../../../shared/_api/clinic_type.service';
 import { TherapyAreaService } from '../../../../shared/_api/therapy_area.service';
+
 import * as chartsData from '../../../../shared/_config/ngx-charts.config'
 import { formatLabel } from '../../../../shared/_helpers/common';
 

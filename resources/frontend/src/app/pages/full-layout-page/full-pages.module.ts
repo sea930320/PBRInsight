@@ -35,6 +35,7 @@ import { BrandPriceService } from '../../shared/_api/brand-price.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
 import { TherapyAreaAnaCommunicationService } from '../../shared/_communication/therapy-area-ana.service';
+import { CostTreatmentService } from '../../shared/_api/cost-treatment.service';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -137,6 +138,7 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         MoleculeAnaService,
         MoleculePriceService,
         BrandPriceService,
+        CostTreatmentService,
         DiagnoticsCommunicationService,
         MarketViewCommunicationService,
         TherapyAreaAnaCommunicationService
