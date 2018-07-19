@@ -17,22 +17,33 @@
 @import url("../src/assets/css/demo.css"); */
 
 .ng2-smart-pagination.pagination .page-link {
-    line-height: 1rem;
+  line-height: 1rem;
 }
 
 ng2-smart-table-pager {
-    justify-content: center !important;
+  justify-content: center !important;
 }
 
 ng2-smart-table-pager .page-link-next,
 ng2-smart-table-pager .page-link-prev {
-    font-size: 14px !important;
+  font-size: 14px !important;
 }
 
 td.ng-star-inserted:last-child {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 .advanced-pie-legend {
-    line-height: 2rem !important;
+  line-height: 2rem !important;
+}
+
+.custom-ng-select {
+  height: 31px;
+  border-radius: 0;
+}
+
+.custom-ng-select .ng-select-container {
+  height: 31px !important;
+  min-height: 31px !important;
+  border-radius: 0;
 }

@@ -68,4 +68,7 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->post('brand-analytics/brand-share', 'BrandAnaController@brandShareByAtc');
 
     $router->post('molecule-analytics/molecule-share', 'MoleculeAnaController@moleculeShareByAtc');
+
+    $router->post('molecule-price/avg-price', 'MoleculePriceController@avgPrice');
+    $router->post('molecule-price/avg-price-by-ac', 'MoleculePriceController@avgPriceByAc');
 });

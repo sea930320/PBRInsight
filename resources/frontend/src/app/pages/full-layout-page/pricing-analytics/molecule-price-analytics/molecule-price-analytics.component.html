@@ -1,3 +1,166 @@
-<p>
-  molecule-price-analytics works!
-</p>
+<section id="brand-analytics" *ngIf="isLoaded">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"> Average Prices for each Therapy Area Level 5 in each Therapy Area Level 4 </h3>
+            <div class="row m-0">
+              <div class="col-md-8">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Year</span>
+                  </div>
+                  <select class="custom-select form-control" [(ngModel)]="filter.year" (change)="fetchData()">
+                    <option value="">----Select----</option>
+                    <option *ngFor="let year of getYears(2012)" [ngValue]="year">{{year}}</option>
+                  </select>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Quarater</span>
+                  </div>
+                  <select class="custom-select form-control" [(ngModel)]="filter.quarater" (change)="fetchData()">
+                    <option value="">----Select----</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4" style="clear:both;">
+                <span class="pt-0 pb-0 input-group-text custom-ng-select" style="display: -webkit-inline-box; float:left;">Atc4</span>
+                <div style="width:calc(100% - 70px); float:left">
+                  <ng-select class="custom-ng-select" [items]="atc4s" bindLabel="name" bindValue="id" [(ngModel)]="filter.atc4_id" (change)="fetchData()">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-8 col-sm-12">
+                  <div id="vartical-bar-chart-2d" class="height-400" *ngIf="avgPrice.liveChart.length > 0">
+                    <ngx-charts-bar-vertical-2d [scheme]="barChartSettings.barChartColorScheme" [results]="avgPrice.liveChart" [gradient]="barChartSettings.barChartGradient"
+                      [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+                      [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+                      [xAxisLabel]="'Average Prices'" [yAxisLabel]="'Price'" (select)="selectChart($event)">
+                    </ngx-charts-bar-vertical-2d>
+                  </div>
+                  <div class="row mt-3" *ngIf="avgPrice.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="avgPrice.liveChartActivate" [value]="false" name="avgPriceLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="avgPrice.liveChartActivate" [value]="true" name="avgPriceLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #avgPriceNS [(ngModel)]="avgPrice.drawChartStartPos" (change)="drawLiveChart(true)" [config]="avgPriceConfig"></nouislider>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="selectTable($event)"></ng2-smart-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12" *ngIf="comparsion.primary_atc_5.name">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"> Price Comparison with
+              <b style="font-weight: 600">{{comparsion.primary_atc_5.name}}</b>
+            </h3>
+            <hr>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-8 col-sm-12">
+                  <div id="vartical-bar-chart-stacked" class="height-400" *ngIf="comparsion.liveChart.length > 0">
+                    <ngx-charts-bar-vertical-stacked [scheme]="barChartSettings.barChartColorScheme" [results]="comparsion.liveChart" [gradient]="barChartSettings.barChartGradient"
+                      [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+                      [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+                      [barPadding]="20" [xAxisLabel]="'Price Comparsion'" [yAxisLabel]="barChartSettings.barChartYAxisLabel">
+                    </ngx-charts-bar-vertical-stacked>
+                  </div>
+                  <div class="row mt-3" *ngIf="comparsion.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="comparsion.liveChartActivate" [value]="false" name="comparsionLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="comparsion.liveChartActivate" [value]="true" name="comparsionLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #comparsionNS [(ngModel)]="comparsion.drawChartStartPos" (change)="comparsionDrawLiveChart(true)" [config]="comparsionConfig"></nouislider>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <ng2-smart-table [settings]="comparsionTableSettings" [source]="comparsionTableSource"></ng2-smart-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12" *ngIf="ac.atc5_name">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"> Average Molecule (INN) SKU Prices in each Therapy Area Level 5
+              <b style="font-weight: 600">({{ac.atc5_name}})</b>
+            </h3>
+            <hr>
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <div class="row">
+                <div class="col-md-8 col-sm-12">
+                  <div id="vartical-bar-chart-2d" class="height-400" *ngIf="ac.liveChart.length > 0">
+                    <ngx-charts-bar-vertical-2d [scheme]="barChartSettings.barChartColorScheme" [results]="ac.liveChart" [gradient]="barChartSettings.barChartGradient"
+                      [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
+                      [showXAxisLabel]="barChartSettings.barChartShowXAxisLabel" [showYAxisLabel]="barChartSettings.barChartShowYAxisLabel"
+                      [xAxisLabel]="'Average Prices'" [yAxisLabel]="'Price'">
+                    </ngx-charts-bar-vertical-2d>
+                  </div>
+                  <div class="row mt-3" *ngIf="ac.initialChart.length>0">
+                    <div class="col-md-3 col-sm-12 mt-2" style="display:inline-flex">
+                      <label class="mr-2">Live Chart: </label>
+                      <div class="mr-2">
+                        <input type="radio" [(ngModel)]="ac.liveChartActivate" [value]="false" name="acPriceLiveChart">
+                        <label>Yes</label>
+                      </div>
+                      <div class="">
+                        <input type="radio" [(ngModel)]="ac.liveChartActivate" [value]="true" name="acPriceLiveChart">
+                        <label>No</label>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-9 col-sm-12">
+                      <nouislider #acNS [(ngModel)]="ac.drawChartStartPos" (change)="drawLiveChart(true)" [config]="acConfig"></nouislider>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                  <ng2-smart-table [settings]="acTableSettings" [source]="acTableSource"></ng2-smart-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
