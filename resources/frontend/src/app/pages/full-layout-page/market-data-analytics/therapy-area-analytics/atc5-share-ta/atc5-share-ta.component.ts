@@ -22,8 +22,8 @@ export class Atc5ShareTaComponent implements OnInit {
   filter = {
     year: "",
     drug_form_id: "",
-    atc2_id: "",
-    atc2_name: ""
+    atc4_id: "",
+    atc4_name: ""
   }
 
   // Bar Charts
