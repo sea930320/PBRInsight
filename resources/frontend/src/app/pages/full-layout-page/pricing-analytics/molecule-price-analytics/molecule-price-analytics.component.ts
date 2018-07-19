@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NouisliderComponent } from 'ng2-nouislider';
-import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
 import { MoleculePriceService } from '../../../../shared/_api/molecule-price.service';

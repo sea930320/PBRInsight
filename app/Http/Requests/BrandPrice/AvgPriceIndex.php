@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\MoleculePrice;
+namespace App\Http\Requests\BrandPrice;
 
 use App\Http\Requests\BaseRequest;
 

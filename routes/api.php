@@ -71,4 +71,7 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
 
     $router->post('molecule-price/avg-price', 'MoleculePriceController@avgPrice');
     $router->post('molecule-price/avg-price-by-ac', 'MoleculePriceController@avgPriceByAc');
+
+
+    $router->post('brand-price/avg-price', 'BrandPriceController@avgPrice');
 });
