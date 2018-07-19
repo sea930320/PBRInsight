@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\MoleculeAna\MoleculeShareIndex;
 
 use App\Models\MarketData;
-use App\Models\Brand;
+use App\Models\GenericName;
 use App\Models\DrugForm;
 use App\Models\Atc5;
 use App\Models\Atc4;
@@ -25,9 +25,9 @@ class MoleculeAnaController extends ApiController
     private $marketData;
 
     /**
-     * @var Brand
+     * @var GenericName
      */
-    private $brand;
+    private $generic_name;
 
     /**
      * @var DrugForm
@@ -58,16 +58,16 @@ class MoleculeAnaController extends ApiController
      * MoleculeAnaController constructor.
      *
      * @param MarketData $marketData
-     * @param Brand $brand
+     * @param GenericName $generic_name
      * @param Atc5 $atc5
      * @param Atc4 $atc4
      * @param Atc2 $atc2
      * @param Atc1 $atc1
      */
-    public function __construct(MarketData $marketData,Brand $brand, Atc5 $atc5, Atc4 $atc4, Atc2 $atc2, Atc1 $atc1, DrugForm $drug_form)
+    public function __construct(MarketData $marketData,GenericName $generic_name, Atc5 $atc5, Atc4 $atc4, Atc2 $atc2, Atc1 $atc1, DrugForm $drug_form)
     {
         $this->marketData = $marketData;
-        $this->brand = $brand;
+        $this->generic_name = $generic_name;
         $this->atc5 = $atc5;
         $this->atc4 = $atc4;
         $this->atc2 = $atc2;
@@ -82,32 +82,32 @@ class MoleculeAnaController extends ApiController
      */
     public function moleculeShareByAtc(MoleculeShareIndex $request): JsonResponse
     {
-        // $queryParams = $request->validatedOnly();
-        // $queryBuilder = new MoleculeShareQueryBuilder();
-        // $queryBuilder = $queryBuilder
-        //     ->setQuery($this->marketData->query())
-        //     ->setQueryParams($queryParams);
+        $queryParams = $request->validatedOnly();
+        $queryBuilder = new MoleculeShareQueryBuilder();
+        $queryBuilder = $queryBuilder
+            ->setQuery($this->marketData->query())
+            ->setQueryParams($queryParams);
 
-        // $total = $queryBuilder->count();
-        // $totalValue = $queryBuilder->sum('value');
-        // $valuations = $queryBuilder
-        //     ->groupBy('brand_id')
-        //     ->selectRaw('sum(value) as total_price, brand_id')
-        //     ->pluck('total_price', 'brand_id');
-        // $brandShares = $queryBuilder
-        //     ->select('brand_id', DB::raw("count(brand_id) as total"))
-        //     ->groupBy('brand_id')
-        //     ->pluck('total', 'brand_id');
-        // $brands = $this->brand
-        //     ->select(['id', 'name'])
-        //     ->pluck('name','id')->all();
+        $totalValue = $queryBuilder->sum('value');
+        $totalVolumn = $queryBuilder->sum('volumn');
+        $valuations = $queryBuilder
+            ->groupBy('generic_name_id')
+            ->selectRaw('sum(value) as total_price, generic_name_id')
+            ->pluck('total_price', 'generic_name_id');
+        $volumns = $queryBuilder
+            ->groupBy('generic_name_id')
+            ->selectRaw('sum(volumn) as total_volumn, generic_name_id')
+            ->pluck('total_volumn', 'generic_name_id');
+        $generic_names = $this->generic_name
+            ->select(['id', 'name'])
+            ->pluck('name','id')->all();
 
-        // return $this->respond([
-        //     'valuations' => $valuations,
-        //     'totalValue' => $totalValue,
-        //     'shares' => $brandShares,
-        //     'total' => $total,
-        //     'brands' => $brands
-        // ]);
+        return $this->respond([
+            'valuations' => $valuations,
+            'totalValue' => $totalValue,
+            'volumns' => $volumns,
+            'totalVolumn' => $totalVolumn,
+            'generic_names' => $generic_names
+        ]);
     }
 }

@@ -31,15 +31,6 @@
           </ngb-tab>
         </ngb-tabset>
         <div class="row" *ngIf="curAtcs.length>0">
-          <!-- <div class="col-md-4 input-group input-group-sm">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Atc {{curAtcId}}</span>
-            </div>
-            <select class="custom-select form-control" [(ngModel)]="filter['atc' + curAtcId + '_id']" (change)="fetchData()">
-              <option value="">----Select----</option>
-              <option *ngFor="let atc of curAtcs" [ngValue]="atc.id">{{atc.name}}</option>
-            </select>
-          </div> -->
           <div class="col-md-6">
             <ng-select [items]="curAtcs" bindLabel="name" bindValue="id" [(ngModel)]="filter['atc' + curAtcId + '_id']" (change)="fetchData()">
             </ng-select>

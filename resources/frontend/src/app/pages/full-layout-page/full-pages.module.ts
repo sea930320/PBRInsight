@@ -29,6 +29,7 @@ import { DiagnoticsService } from '../../shared/_api/diagnotics.service';
 import { MarketViewService } from '../../shared/_api/market-view.service';
 import { TherapyAreaAnaService } from '../../shared/_api/therapy-area-ana.service';
 import { BrandAnaService } from '../../shared/_api/brand-ana.service';
+import { MoleculeAnaService } from '../../shared/_api/molecule-ana.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
 import { TherapyAreaAnaCommunicationService } from '../../shared/_communication/therapy-area-ana.service';
@@ -131,6 +132,7 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         MarketViewService,
         TherapyAreaAnaService,
         BrandAnaService,
+        MoleculeAnaService,
         DiagnoticsCommunicationService,
         MarketViewCommunicationService,
         TherapyAreaAnaCommunicationService
