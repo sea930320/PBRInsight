@@ -41,7 +41,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-danger pull-right remove" data-href="{{ route('users.destroy', $user->id) }}">
+                                        <a class="btn btn-xs btn-danger pull-right remove" href="{{ route('users.destroy', $user->id) }}">
                                             <i class="fa fa-trash"></i> Delete
                                         </a>
                                         <a class="btn btn-xs btn-default pull-right" href="{{ route('users.edit', $user->id) }}">
