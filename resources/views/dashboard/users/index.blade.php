@@ -41,9 +41,13 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at }}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-danger pull-right remove" href="{{ route('users.destroy', $user->id) }}">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </a>
+                                        <form method="post" action="{{ route('users.destroy', $user->id) }}">
+                                            <input type="hidden" name="_method" value="delete" />
+                                            {!! csrf_field() !!}
+                                            <button type="submit" class="btn btn-xs btn-danger pull-right remove">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>                                            
+                                        </form>
                                         <a class="btn btn-xs btn-default pull-right" href="{{ route('users.edit', $user->id) }}">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
