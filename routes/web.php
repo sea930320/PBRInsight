@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//Auth::routes();
+Route::middleware(['auth'])->namespace('Backend')->prefix('admin')->group(function() {
+    // Route::resource('users', 'UsersController');
 });
