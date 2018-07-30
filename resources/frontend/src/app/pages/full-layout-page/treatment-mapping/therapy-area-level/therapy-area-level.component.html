@@ -28,13 +28,13 @@
               <option value="">Year</option>
               <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
             </select>
-            <select class="custom-select form-control" [(ngModel)]="filter.start_quarater" [disabled]="!filter.start_year" (change)="fetchData()">
+            <!-- <select class="custom-select form-control" [(ngModel)]="filter.start_quarater" [disabled]="!filter.start_year" (change)="fetchData()">
               <option value="">Quarater</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-            </select>
+            </select> -->
             <div class="input-group-prepend">
               <span class="input-group-text">To</span>
             </div>
@@ -42,14 +42,14 @@
               <option value="">Year</option>
               <option *ngFor="let year of getYears(filter.start_year)" [ngValue]="year">{{year}}</option>
             </select>
-            <select class="custom-select form-control" [(ngModel)]="filter.end_quarater" [disabled]="!filter.start_year || !filter.end_year"
+            <!-- <select class="custom-select form-control" [(ngModel)]="filter.end_quarater" [disabled]="!filter.start_year || !filter.end_year"
               (change)="fetchData()">
               <option value="">Quarater</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-            </select>
+            </select> -->
           </div>
         </div>
         <div class="col-md-4">

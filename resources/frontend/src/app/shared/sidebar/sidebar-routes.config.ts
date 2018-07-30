@@ -31,17 +31,17 @@ export const ROUTES: RouteInfo[] = [
             { path: '/market-data-analytics/molecule', title: 'Molecule(INN)', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         ]
     },
-    {
-        path: '', title: 'Pricing Analytics', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
-        submenu: [
-            { path: '/pricing-analytics/molecule-price-analytics', title: 'Molecule(INN)', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/pricing-analytics/brand-price-analytics', title: 'Brand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
-        ]
-    },
-    {
-        path: '', title: 'Pharmacoeconomics', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
-        submenu: [
-            { path: '/pharmaeco/cost-treatment-metrics', title: 'Cost of Treatment Metrics', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
-        ]
-    }
+    // {
+    //     path: '', title: 'Pricing Analytics', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    //     submenu: [
+    //         { path: '/pricing-analytics/molecule-price-analytics', title: 'Molecule(INN)', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    //         { path: '/pricing-analytics/brand-price-analytics', title: 'Brand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
+    //     ]
+    // },
+    // {
+    //     path: '', title: 'Pharmacoeconomics', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    //     submenu: [
+    //         { path: '/pharmaeco/cost-treatment-metrics', title: 'Cost of Treatment Metrics', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] }
+    //     ]
+    // }
 ];

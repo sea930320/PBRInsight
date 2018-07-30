@@ -16,14 +16,14 @@
                     <option value="">Year</option>
                     <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
                   </select>
-                  <select class="custom-select form-control" [(ngModel)]="individualFilter.start_quarater" [disabled]="!individualFilter.start_year"
+                  <!-- <select class="custom-select form-control" [(ngModel)]="individualFilter.start_quarater" [disabled]="!individualFilter.start_year"
                     (change)="fetchIndividualData()">
                     <option value="">Quarater</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
+                  </select> -->
                   <div class="input-group-prepend">
                     <span class="input-group-text">To</span>
                   </div>
@@ -32,14 +32,14 @@
                     <option value="">Year</option>
                     <option *ngFor="let year of getYears(individualFilter.start_year)" [ngValue]="year">{{year}}</option>
                   </select>
-                  <select class="custom-select form-control" [(ngModel)]="individualFilter.end_quarater" [disabled]="!individualFilter.start_year || !individualFilter.end_year"
+                  <!-- <select class="custom-select form-control" [(ngModel)]="individualFilter.end_quarater" [disabled]="!individualFilter.start_year || !individualFilter.end_year"
                     (change)="fetchIndividualData()">
                     <option value="">Quarater</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
               <div class="col-md-4">
@@ -107,14 +107,14 @@
                     <option value="">Year</option>
                     <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
                   </select>
-                  <select class="custom-select form-control" [(ngModel)]="categoryFilter.start_quarater" [disabled]="!categoryFilter.start_year"
+                  <!-- <select class="custom-select form-control" [(ngModel)]="categoryFilter.start_quarater" [disabled]="!categoryFilter.start_year"
                     (change)="fetchCategoryData()">
                     <option value="">Quarater</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
+                  </select> -->
                   <div class="input-group-prepend">
                     <span class="input-group-text">To</span>
                   </div>
@@ -123,14 +123,14 @@
                     <option value="">Year</option>
                     <option *ngFor="let year of getYears(categoryFilter.start_year)" [ngValue]="year">{{year}}</option>
                   </select>
-                  <select class="custom-select form-control" [(ngModel)]="categoryFilter.end_quarater" [disabled]="!categoryFilter.start_year || !categoryFilter.end_year"
+                  <!-- <select class="custom-select form-control" [(ngModel)]="categoryFilter.end_quarater" [disabled]="!categoryFilter.start_year || !categoryFilter.end_year"
                     (change)="fetchCategoryData()">
                     <option value="">Quarater</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
               <div class="col-md-4">
@@ -198,14 +198,14 @@
                     <option value="">Year</option>
                     <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
                   </select>
-                  <select class="custom-select form-control" [(ngModel)]="diseaseByCategoryFilter.start_quarater" [disabled]="!diseaseByCategoryFilter.start_year"
+                  <!-- <select class="custom-select form-control" [(ngModel)]="diseaseByCategoryFilter.start_quarater" [disabled]="!diseaseByCategoryFilter.start_year"
                     (change)="fetchIndividualByCategoryData()">
                     <option value="">Quarater</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
+                  </select> -->
                   <div class="input-group-prepend">
                     <span class="input-group-text">To</span>
                   </div>
@@ -214,14 +214,14 @@
                     <option value="">Year</option>
                     <option *ngFor="let year of getYears(diseaseByCategoryFilter.start_year)" [ngValue]="year">{{year}}</option>
                   </select>
-                  <select class="custom-select form-control" [(ngModel)]="diseaseByCategoryFilter.end_quarater" [disabled]="!diseaseByCategoryFilter.start_year || !diseaseByCategoryFilter.end_year"
+                  <!-- <select class="custom-select form-control" [(ngModel)]="diseaseByCategoryFilter.end_quarater" [disabled]="!diseaseByCategoryFilter.start_year || !diseaseByCategoryFilter.end_year"
                     (change)="fetchIndividualByCategoryData()">
                     <option value="">Quarater</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
               <div class="col-md-4">
