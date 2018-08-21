@@ -10,6 +10,8 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  currentDate: Date = new Date();
+  
   constructor(config: NgbCarouselConfig) {
     config.interval = 10000;
     config.wrap = true;

@@ -86,39 +86,47 @@ class CoMorbiditiesController extends ApiController
             ->map(function($item, $key) {
                 return collect($item)->count();
             })->toArray();
-        $coMorbidities = new stdClass();
-        $total = 0;
-        foreach ($diseasesByPatient as $key => $diseaseCountByPatient) {
-            if ($diseaseCountByPatient == 1) continue;
-            $patient = $this->getPatientFromDiseasePrevalences($queryParams, $key);
+        
+        try {
+            $coMorbidities = new stdClass();
+            $total = 0;
+            foreach ($diseasesByPatient as $key => $diseaseCountByPatient) {
+                if ($diseaseCountByPatient == 1) continue;
+                $patient = $this->getPatientFromDiseasePrevalences($queryParams, $key);
 
-            if (isset($coMorbidities->{"${diseaseCountByPatient}"})) {
-                $coMorbidities->{"$diseaseCountByPatient"}->count ++;                
-                $bundles = $coMorbidities->{"$diseaseCountByPatient"}->bundles;
-                $bundleIndex = $this->getBundleIndexFromBundles($bundles, $patient);
-                if ($bundleIndex === -1) {
-                    $coMorbidities->{"$diseaseCountByPatient"}->bundles[] = (object) [
+                if (isset($coMorbidities->{"${diseaseCountByPatient}"})) {
+                    $coMorbidities->{"$diseaseCountByPatient"}->count ++;                
+                    $bundles = $coMorbidities->{"$diseaseCountByPatient"}->bundles;
+                    $bundleIndex = $this->getBundleIndexFromBundles($bundles, $patient);
+                    if ($bundleIndex === -1) {
+                        $coMorbidities->{"$diseaseCountByPatient"}->bundles[] = (object) [
+                            'bundle' => $patient,
+                            'count' => 1
+                        ];
+                    } else {
+                        $coMorbidities->{"$diseaseCountByPatient"}->bundles[$bundleIndex]->count++;
+                    }
+                } else {
+                    $coMorbidities->{"$diseaseCountByPatient"} = new StdClass();
+                    $coMorbidities->{"$diseaseCountByPatient"}->count = 1;
+                    // $coMorbidities->{"$diseaseCountByPatient"}->patients = [$patient];
+                    $coMorbidities->{"$diseaseCountByPatient"}->bundles = [(object) [
                         'bundle' => $patient,
                         'count' => 1
-                    ];
-                } else {
-                    $coMorbidities->{"$diseaseCountByPatient"}->bundles[$bundleIndex]->count++;
+                    ]];
                 }
-            } else {
-                $coMorbidities->{"$diseaseCountByPatient"} = new StdClass();
-                $coMorbidities->{"$diseaseCountByPatient"}->count = 1;
-                // $coMorbidities->{"$diseaseCountByPatient"}->patients = [$patient];
-                $coMorbidities->{"$diseaseCountByPatient"}->bundles = [(object) [
-                    'bundle' => $patient,
-                    'count' => 1
-                ]];
+                $total ++;
             }
-            $total ++;
+            return $this->respond([
+                'coMorbidities' => $coMorbidities,
+                'total' => $total
+            ]);
+        } catch (Exception $e) {
+            return $this->respond([
+                'exception' => $e->getMessage()
+            ]);
         }
-        return $this->respond([
-            'coMorbidities' => $coMorbidities,
-            'total' => $total
-        ]);
+        
     }
 
     /**

@@ -1,40 +1,37 @@
 @media (min-width: 992px) {
-    .cover {
-        width: 100%;
-        height: 700px !important;
-        object-fit: cover;
-    }
-
-    .carousel-caption {
-        top: 100px !important;
-    }
-
-    .ff-serif {
-        font-size: 40px;
-        font-weight: 700;
-        margin-bottom: 30px;
-    }
-
-    .carousel-text {
-        font-size: 17px;
-    }
+  .cover {
+    width: 100%;
+    height: 700px !important;
+    object-fit: cover;
+  }
+  .carousel-caption {
+    top: 100px !important;
+  }
+  .ff-serif {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+  .carousel-text {
+    font-size: 17px;
+  }
 }
 
 @media (max-width: 640px) {
-    .carousel-caption {
-        position: relative;
-        background: grey;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        height: 300px;
-        padding-left: 10px;
-        padding-right: 10px;
-        .ff-serif {
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
+  .carousel-caption {
+    position: relative;
+    background: grey;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 300px;
+    padding-left: 10px;
+    padding-right: 10px;
+    .ff-serif {
+      margin-top: 20px;
+      font-size: 1.2rem;
     }
+  }
 }
 
 // .devider:after,
@@ -44,7 +41,57 @@
 //     bottom: 6px;
 //     font-weight: 600;
 // }
-
 // .devider {
 //     margin-bottom: 30px;
 // }
+.search-section {
+  .menu-title {
+    padding: 5px 5px;
+    background: grey;
+    border-top-right-radius: 10px;
+    color: white;
+    font-weight: 400;
+  }
+  .round {
+    border-radius: 0.5rem;
+  }
+  .form-control {
+    &::-webkit-input-placeholder {
+      color: #4c4c4c !important;
+    }
+    &:-moz-placeholder {
+      /* Firefox 18- */
+      color: #4c4c4c !important;
+    }
+    &::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #4c4c4c !important;
+    }
+    &:-ms-input-placeholder {
+      color: #4c4c4c !important;
+    }
+  }
+}
+
+.img-section {
+  img {
+    width: 100%;
+  }
+}
+
+.text-section-1 {
+  word-break: break-all !important;
+  img {
+    width: 85%;
+  }
+}
+
+ul.social-footer {
+  color: #696a67;
+  padding: 0px;
+  margin: 0px;
+  li {
+    display: inline-block;
+    margin: 0px 10px;
+  }
+}

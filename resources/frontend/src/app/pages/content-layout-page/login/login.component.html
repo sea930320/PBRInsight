@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row full-height-vh">
       <div class="col-12 d-flex align-items-center justify-content-center">
-        <div class="card gradient-green-teal-customize text-center width-400">
+        <div class="card gradient-strawberry text-center width-400">
           <div class="card-img overlap">
             <img alt="LOGO" class="mb-1" src="assets/img/portrait/avatars/avatar-08.png" width="190">
             <!-- <img src="assets/img/logos/logo.png"> -->
@@ -37,12 +37,12 @@
 
                 <div class="form-group">
                   <div class="col-md-12">
-                    <button type="submit" [disabled]="loading" class="btn btn-pink btn-block btn-raised">Submit</button>
-                    <button type="button" class="btn btn-secondary btn-block btn-raised">Cancel</button>
+                    <button type="submit" [disabled]="loading" class="btn btn-orange btn-block btn-raised">Submit</button>
+                    <!-- <button type="button" class="btn btn-secondary btn-block btn-raised">Cancel</button> -->
                     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                     />
                     <ngb-alert type='warning' [dismissible]="false" *ngIf="error">
-                        {{error.message}}
+                      {{error.message}}
                     </ngb-alert>
                   </div>
                 </div>
@@ -54,7 +54,8 @@
               <a (click)="onForgotPassword()" class="white">Recover Password</a>
             </div>
             <div class="float-right">
-              <a [routerLink]="['/signup']" class="white">New User?</a>
+              <!-- <a [routerLink]="['/signup']" class="white">New User?</a> -->
+              <a class="white">New User?</a>
             </div>
           </div>
         </div>
