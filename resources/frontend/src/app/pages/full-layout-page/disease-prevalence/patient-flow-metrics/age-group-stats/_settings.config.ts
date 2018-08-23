@@ -33,6 +33,7 @@ export var AgeGroupSettings = {
             class: 'text-center percentage-col',
             type: 'html',
             valuePrepareFunction: function (value) {
+                value = value.toFixed(2)
                 return `<div class="text-center">${value} % </div>`
             }
         },
@@ -53,6 +54,7 @@ export var AgeGroupSettings = {
             width: '12%',
             type: 'html',
             valuePrepareFunction: function (value) {
+                value = value.toFixed(2)
                 return `<div class="text-center">${value} % </div>`
             }
         },
@@ -73,6 +75,7 @@ export var AgeGroupSettings = {
             width: '12%',
             type: 'html',
             valuePrepareFunction: function (value) {
+                value = value.toFixed(2)
                 return `<div class="text-center">${value} % </div>`
             }
         }
