@@ -8,8 +8,10 @@ export class PatientFlowMetricsCommunicationService {
     year: "",
     end_quarater: ""
   }
+  groups = [];
 
   @Output() changeFilter: EventEmitter<any> = new EventEmitter();
+  @Output() changeGroup: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -18,5 +20,12 @@ export class PatientFlowMetricsCommunicationService {
     console.log('filter change event emit')
     console.log(this.filter);
     this.changeFilter.emit(this.filter)
+  }
+
+  changeGroupEmit(groups) {
+    this.groups = groups
+    console.log('group change event emit')
+    console.log(this.groups);
+    this.changeGroup.emit(this.groups)
   }
 }

@@ -5,7 +5,7 @@
     <div class="filter-chart row m-0">
       <div class="col-md-12">
         <div class="input-group input-group-sm">
-          <div class="input-group-prepend">
+          <!-- <div class="input-group-prepend">
             <span class="input-group-text">From</span>
           </div>
           <select class="custom-select form-control" [(ngModel)]="filter.start_year" (ngModelChange)="changeFilter()">
@@ -13,10 +13,10 @@
           </select>
           <div class="input-group-prepend">
             <span class="input-group-text">To</span>
-          </div>
-          <select class="custom-select form-control" [(ngModel)]="filter.end_year" [disabled]="filter.start_year==0" (ngModelChange)="changeFilter()">
+          </div> -->
+          <!-- <select class="custom-select form-control" [(ngModel)]="filter.end_year" [disabled]="filter.start_year==0" (ngModelChange)="changeFilter()">
             <option *ngFor="let year of getYears(filter.start_year, populations[populations.length - 1].year, populations[0].year)" [ngValue]="year">{{year}}</option>
-          </select>
+          </select> -->
           <div class="input-group-prepend">
             <span class="input-group-text">Disease</span>
           </div>

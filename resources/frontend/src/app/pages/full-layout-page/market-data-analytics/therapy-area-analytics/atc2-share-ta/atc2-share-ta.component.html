@@ -1,10 +1,10 @@
 <div class="card" id="atc2-share-therapy-area-analytics">
   <div class="card-header">
-    <h3 class="card-title"> % Therapy Area Level 2 share and Value for Total MarketD
+    <h3 class="card-title"> % Therapy Area Level 2 share and Value for Total Market
     </h3>
     <hr>
     <div class="filter-chart row m-0">
-      <div class="col-md-8">
+      <div class="col-md-7">
         <div class="input-group input-group-sm">
           <div class="input-group-prepend">
             <span class="input-group-text">ATC1</span>
@@ -22,7 +22,7 @@
           </select>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-5">
         <div class="input-group input-group-sm">
           <div class="input-group-prepend">
             <span class="input-group-text">Year</span>
@@ -38,7 +38,7 @@
   <div class="card-body">
     <div class="card-block">
       <div class="row">
-        <div class="col-md-8 col-sm-12">
+        <div class="col-md-7 col-sm-12">
           <div id="vartical-bar-chart" class="height-400" *ngIf="atc2.liveChart.length > 0">
             <ngx-charts-bar-vertical-2d [scheme]="barChartSettings.barChartColorScheme" [results]="atc2.liveChart" [gradient]="barChartSettings.barChartGradient"
               [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
@@ -63,8 +63,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-sm-12">
-          <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="selectTable($event)"></ng2-smart-table>
+        <div class="col-md-5 col-sm-12">
+          <ng2-smart-table class="word-break-all" [settings]="dataTableSettings" [source]="dataTableSource" (rowSelect)="selectTable($event)"></ng2-smart-table>
         </div>
       </div>
     </div>

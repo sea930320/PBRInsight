@@ -49,6 +49,10 @@
           <hr>
           <div class="input-group input-group-sm">
             <div class="input-group-prepend">
+              <span class="input-group-text">Year</span>
+            </div>
+            <input class="form-control" [(ngModel)]="filter.start_year" disabled/>
+            <!-- <div class="input-group-prepend">
               <span class="input-group-text">From</span>
             </div>
             <select class="custom-select form-control" [(ngModel)]="filter.start_year" (change)="changeFilter()">
@@ -61,14 +65,14 @@
             <select class="custom-select form-control" [(ngModel)]="filter.end_year" (change)="changeFilter()">
               <option value="">Year</option>
               <option *ngFor="let year of getYears(filter.start_year)" [ngValue]="year">{{year}}</option>
-            </select>
+            </select> -->
             <div class="input-group-prepend">
               <span class="input-group-text">Total Population: {{selectedYears.total_population}}</span>
             </div>
           </div>
         </div>
         <div class="col-md-12 col-sm-12 text-center" *ngIf="selectedYears.years.length>0 && initialData.ageGroup">
-          <ng2-smart-table [settings]="ageGroupSettings" [source]="ageGroupDTSource"></ng2-smart-table>
+          <ng2-smart-table [settings]="ageGroupSettings" [source]="ageGroupDTSource" (userRowSelect)="userSelectRows($event.selected)"></ng2-smart-table>
         </div>
       </div>
     </div>

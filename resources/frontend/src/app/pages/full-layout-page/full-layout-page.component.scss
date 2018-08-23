@@ -1,0 +1,19 @@
+#dashboard {
+  .logo-img {
+    img {
+      width: 180px;
+      position: absolute;
+      right: 60px;
+      margin-top: -60px;
+    }
+  }
+  .darken-blue {
+    color: #203864 !important;
+  }
+  .darken-red {
+    color: #bc5610 !important;
+  }
+  .img-responsive {
+    width: 100%;
+  }
+}

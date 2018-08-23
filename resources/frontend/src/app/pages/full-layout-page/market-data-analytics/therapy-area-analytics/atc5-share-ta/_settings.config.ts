@@ -15,7 +15,7 @@ export var atc5Settings = {
             }
         },
         volumn: {
-            title: 'Volumn',
+            title: 'Volume',
             filter: true,
             width: '20%',
             valuePrepareFunction: function (value) {

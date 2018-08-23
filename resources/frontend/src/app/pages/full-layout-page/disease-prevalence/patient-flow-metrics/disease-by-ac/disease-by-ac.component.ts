@@ -4,8 +4,8 @@ import { NouisliderComponent } from 'ng2-nouislider';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 
 import { PatientFlowMetricsService } from '../../../../../shared/_api/patient-flow-metrics.service';
+import { PatientFlowMetricsCommunicationService } from '../../../../../shared/_communication/patient-flow-metrics.service';
 import { DiseaseService } from '../../../../../shared/_api/disease.service';
-import { PopulationService } from '../../../../../shared/_api/population.service';
 import { _getYears } from '../../../../../shared/_helpers/common'
 
 import * as chartsData from '../../../../../shared/_config/ngx-charts.config'
@@ -17,7 +17,7 @@ import * as settings from './_settings.config'
   styleUrls: ['./disease-by-ac.component.scss']
 })
 export class DiseaseByAcComponent implements OnInit {
-
+  @Input() populations: any[];
   // global Settings
   @ViewChild('acNS') acNS: NouisliderComponent
   isLoaded = false
@@ -26,7 +26,8 @@ export class DiseaseByAcComponent implements OnInit {
     total_population: 0
   }
   diseases = []
-  populations = []
+  groups = []
+  groupPercentage = 0;
   getYears = _getYears
   filter = {
     start_year: 0,
@@ -72,33 +73,44 @@ export class DiseaseByAcComponent implements OnInit {
     }
   }
 
-  constructor(private populationService: PopulationService, private patientFlowMetricsService: PatientFlowMetricsService, private diseaseService: DiseaseService) { }
+  constructor(private patientFlowMetricsService: PatientFlowMetricsService, private diseaseService: DiseaseService, private pfmCommunicationService: PatientFlowMetricsCommunicationService) { }
 
   ngOnInit() {
     this.fetchGlobalValues()
+    this.pfmCommunicationService.changeGroup.subscribe(groups => {
+      this.groups = groups;
+      let oldGroupPercentage = this.groupPercentage
+      this.groupPercentage = 0
+      this.groups.forEach((group) => {
+        this.groupPercentage += group.total_percentage
+      })
+      if (oldGroupPercentage === 0 || this.groupPercentage === 0) {
+        this.fetchData()
+      }
+      this.populationByDisease = Math.floor(this.selectedYears.total_population * (this.ac.totalOccurence / this.totalTb) * this.groupPercentage / 100.0);
+    });
+    this.pfmCommunicationService.changeFilter.subscribe(filter => {
+      this.groups = []
+      this.groupPercentage = 0
+      this.populationByDisease = 0
+      this.filter.start_year = filter.start_year;
+      this.filter.end_year = filter.end_year;
+      this.changeFilter()
+    });
   }
 
   fetchGlobalValues() {
     this.diseases = []
-    this.populations = []
-    let values$ = combineLatest(
-      this.diseaseService.index(),
-      this.populationService.index(),
-      (first, second) => {
-        return { first, second };
-      }
-    );
-    values$.subscribe((res: any) => {
-      this.diseases = res.first.diseases
-      this.populations = res.second.populations
-      this.selectedYears = {
-        years: [this.populations[0].year],
-        total_population: this.populations[0].total_population
-      }
-      this.filter.start_year = this.populations[0].year
-      this.filter.end_year = this.populations[0].year
-      this.fetchData()
+    this.selectedYears = {
+      years: [this.populations[0].year],
+      total_population: this.populations[0].total_population
+    }
+    this.filter.start_year = this.populations[0].year
+    this.filter.end_year = this.populations[0].year
 
+    this.diseaseService.index().subscribe((res: any) => {
+      this.diseases = res.diseases
+      this.fetchData()
       this.isLoaded = true
     });
   }
@@ -109,6 +121,13 @@ export class DiseaseByAcComponent implements OnInit {
     this.ac.liveChartActivate = true;
 
     if (this.ac.timer) clearInterval(this.ac.timer);
+    this.dataTableSource = new LocalDataSource(this.ac.initialChart)
+    this.dataTableSource.load(this.ac.initialChart)
+
+    if (this.groupPercentage === 0) {
+      return
+    }
+
     this.patientFlowMetricsService.diseaseByAc(this.filter)
       .subscribe((res: any) => {
         this.ac.acs = []
@@ -146,7 +165,7 @@ export class DiseaseByAcComponent implements OnInit {
         this.drawLiveChart();
         this.ac.timer = setInterval(this.drawLiveChart.bind(this), 5000);
         //emit event to child
-        this.populationByDisease = Math.floor(this.selectedYears.total_population * (this.ac.totalOccurence / this.totalTb));
+        this.populationByDisease = Math.floor(this.selectedYears.total_population * (this.ac.totalOccurence / this.totalTb) * this.groupPercentage / 100.0);
         this.filter = { ...this.filter };
       });
   }

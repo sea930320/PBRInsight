@@ -1,5 +1,10 @@
 // Population by Age Group DataTable Settings
 export var AgeGroupSettings = {
+    selectMode: 'multi',
+    mode: 'external',
+    pager: {
+        display: false,
+    },
     columns: {
         age_group: {
             title: 'Age Group',

@@ -16,6 +16,10 @@
 @import url("../src/assets/css/data-table/icons.css");
 @import url("../src/assets/css/demo.css"); */
 
+body {
+  background: white !important;
+}
+
 .ng2-smart-pagination.pagination .page-link {
   line-height: 1rem;
 }
@@ -46,4 +50,8 @@ td.ng-star-inserted:last-child {
   height: 31px !important;
   min-height: 31px !important;
   border-radius: 0;
+}
+
+.word-break-all table {
+  word-break: break-all !important;
 }

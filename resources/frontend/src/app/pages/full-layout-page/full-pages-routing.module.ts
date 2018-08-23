@@ -17,7 +17,7 @@ import { BrandPriceAnalyticsComponent } from './pricing-analytics/brand-price-an
 import { CostTreatmentMetricsComponent } from './pharmaeco/cost-treatment-metrics/cost-treatment-metrics.component';
 const routes: Routes = [
   {
-    path: 'full-layout',
+    path: 'dashboard',
     component: FullLayoutPageComponent,
     data: {
       title: 'Full Layout Page'

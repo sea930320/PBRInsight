@@ -4,6 +4,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NouisliderComponent } from 'ng2-nouislider';
 
 import { PatientFlowMetricsService } from '../../../../../shared/_api/patient-flow-metrics.service';
+import { PatientFlowMetricsCommunicationService } from '../../../../../shared/_communication/patient-flow-metrics.service';
 
 import * as chartsData from '../../../../../shared/_config/ngx-charts.config'
 import * as settings from './_settings.config'
@@ -19,6 +20,8 @@ export class DiseaseByAtcComponent implements OnChanges {
   @Input() parentFilter: any;
   @ViewChild('atcNS') atcNS: NouisliderComponent
 
+  groups = []
+  groupPercentage = 0;
   atcLevels = [2, 3, 4, 5]
   filter = {
     atc_level: 2,
@@ -63,7 +66,26 @@ export class DiseaseByAtcComponent implements OnChanges {
     }
   }
 
-  constructor(private patientFlowMetricsService: PatientFlowMetricsService) { }
+  constructor(private patientFlowMetricsService: PatientFlowMetricsService, private pfmCommunicationService: PatientFlowMetricsCommunicationService) { }
+
+  ngOnInit() {
+    this.pfmCommunicationService.changeGroup.subscribe(groups => {
+      this.groups = groups;
+      let oldGroupPercentage = this.groupPercentage
+      this.groupPercentage = 0
+      this.groups.forEach((group) => {
+        this.groupPercentage += group.total_percentage
+      })
+      this.fetchData()
+    });
+    this.pfmCommunicationService.changeFilter.subscribe(filter => {
+      this.groups = []
+      this.groupPercentage = 0
+      this.filter.start_year = filter.start_year;
+      this.filter.end_year = filter.end_year;
+      this.fetchData()
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.hasOwnProperty('parentFilter') || changes.parentFilter.firstChange) return;
@@ -85,6 +107,11 @@ export class DiseaseByAtcComponent implements OnChanges {
     this.atc.liveChartActivate = true;
 
     if (this.atc.timer) clearInterval(this.atc.timer);
+    if (this.groupPercentage === 0) {
+      this.dataTableSource = new LocalDataSource(this.atc.initialChart)
+      this.dataTableSource.load(this.atc.initialChart)
+      return
+    }
     this.patientFlowMetricsService.diseaseByAtc(this.filter)
       .subscribe((res: any) => {
         this.atc.atcs = res.atcs

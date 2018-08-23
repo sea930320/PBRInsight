@@ -3,6 +3,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { NouisliderComponent } from 'ng2-nouislider';
 
 import { AgeGroupReportService } from '../../../../../shared/_api/age_group_report.service';
+import { PatientFlowMetricsCommunicationService } from '../../../../../shared/_communication/patient-flow-metrics.service';
 
 import { AgeGroupSettings } from './_settings.config'
 import { PopulationSettings } from './_settings.config'
@@ -79,7 +80,7 @@ export class AgeGroupStatsComponent implements OnInit {
   }
 
   // constructor
-  constructor(private ageGroupReportService: AgeGroupReportService) { }
+  constructor(private ageGroupReportService: AgeGroupReportService, private pfmCommunicationService: PatientFlowMetricsCommunicationService) { }
 
   ngOnInit() {
     this.fetchPopulation();
@@ -144,10 +145,10 @@ export class AgeGroupStatsComponent implements OnInit {
 
   fetchAgeGroupReport() {
     if (this.selectedYears.years.length === 0) return;
+    let ageGroupReports = []
     this.ageGroupReportService.index()
       .subscribe((res: any) => {
         this.initialData.ageGroup = res.ageGroupReports
-        let ageGroupReports = []
         res.ageGroupReports.forEach(ageGroupReport => {
           let agr = {
             age_group: ageGroupReport.age_group.range,
@@ -160,6 +161,9 @@ export class AgeGroupStatsComponent implements OnInit {
           }
           ageGroupReports.push(agr);
         })
+
+        this.ageGroupSettings.selectMode = 'multi'
+        this.ageGroupSettings = Object.assign({}, this.ageGroupSettings)
         this.ageGroupDTSource = new LocalDataSource(ageGroupReports)
         this.ageGroupDTSource.load(ageGroupReports)
       });
@@ -187,6 +191,7 @@ export class AgeGroupStatsComponent implements OnInit {
       this.selectedYears.total_population += ele[0].total_population
       startYear++;
     }
+    this.pfmCommunicationService.changeFilterEmit(this.filter)
     this.fetchAgeGroupReport();
   }
 
@@ -213,5 +218,9 @@ export class AgeGroupStatsComponent implements OnInit {
       years.push(startYear++);
     }
     return years;
+  }
+
+  userSelectRows(groups) {
+    this.pfmCommunicationService.changeGroupEmit(groups)
   }
 }

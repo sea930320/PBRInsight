@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="card-block">
       <div class="row">
-        <div class="col-md-8 col-sm-12">
+        <div class="col-md-7 col-sm-12">
           <div id="vartical-bar-chart" class="height-400" *ngIf="atc5.liveChart.length > 0">
             <ngx-charts-bar-vertical-2d [scheme]="barChartSettings.barChartColorScheme" [results]="atc5.liveChart" [gradient]="barChartSettings.barChartGradient"
               [xAxis]="barChartSettings.barChartShowXAxis" [yAxis]="barChartSettings.barChartShowYAxis" [legend]="barChartSettings.barChartShowLegend"
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-5 col-sm-12">
           <ng2-smart-table [settings]="dataTableSettings" [source]="dataTableSource"></ng2-smart-table>
         </div>
       </div>
