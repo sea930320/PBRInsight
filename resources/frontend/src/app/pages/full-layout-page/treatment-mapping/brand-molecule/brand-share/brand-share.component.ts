@@ -14,7 +14,7 @@ import * as settings from './_settings.config'
   styleUrls: ['./brand-share.component.scss']
 })
 export class BrandShareComponent implements OnInit {
-  
+
   // global Settings
   @Input() clinicTypes: any[];
   @ViewChild('brandNS') brandNS: NouisliderComponent
@@ -84,7 +84,7 @@ export class BrandShareComponent implements OnInit {
   }
 
   getYears(startYear) {
-    var currentYear = new Date().getFullYear(), years = [];
+    var currentYear = new Date().getFullYear() - 1, years = [];
     startYear = startYear || 1980;
     while (startYear <= currentYear) {
       years.push(currentYear--);

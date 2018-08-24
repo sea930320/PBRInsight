@@ -102,7 +102,7 @@ export class Atc5ShareTaComponent implements OnInit {
             'atc5_name': this.atc5.atc5s[atc5_id]
           }
           var volumn = {
-            'name': 'Volumn',
+            'name': 'Volume',
             'value': this.atc5.volumns[atc5_id] ? (parseFloat(this.atc5.volumns[atc5_id]) / this.atc5.totalVolumn * 100).toFixed(2) : 0,
             'volumn': this.atc5.volumns[atc5_id] ? this.atc5.volumns[atc5_id] : 0,
             'atc5_id': atc5_id

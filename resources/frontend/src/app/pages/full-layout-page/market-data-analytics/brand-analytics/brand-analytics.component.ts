@@ -85,7 +85,7 @@ export class BrandAnalyticsComponent implements OnInit {
   }
 
   getYears(startYear) {
-    var currentYear = new Date().getFullYear(), years = [];
+    var currentYear = new Date().getFullYear() - 1, years = [];
     startYear = startYear || 1980;
     while (startYear <= currentYear) {
       years.push(currentYear.toString());
@@ -162,7 +162,7 @@ export class BrandAnalyticsComponent implements OnInit {
             'brand_name': this.brand.brands[brand_id]
           }
           var volumn = {
-            'name': 'Volumn',
+            'name': 'Volume',
             'value': this.brand.volumns[brand_id] ? (parseFloat(this.brand.volumns[brand_id]) / this.brand.totalVolumn * 100).toFixed(2) : 0,
             'volumn': this.brand.volumns[brand_id] ? this.brand.volumns[brand_id] : 0,
             'brand_id': brand_id,

@@ -15,7 +15,7 @@ export var brandSettings = {
             }
         },
         volumn: {
-            title: 'Volumn',
+            title: 'Volume',
             filter: true,
             width: '20%',
             valuePrepareFunction: function (value) {

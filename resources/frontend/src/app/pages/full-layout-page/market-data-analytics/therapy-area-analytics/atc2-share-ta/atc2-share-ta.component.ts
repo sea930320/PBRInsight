@@ -72,7 +72,7 @@ export class Atc2ShareTaComponent implements OnInit {
   }
 
   getYears(startYear) {
-    var currentYear = new Date().getFullYear(), years = [];
+    var currentYear = new Date().getFullYear() - 1, years = [];
     startYear = startYear || 1980;
     while (startYear <= currentYear) {
       years.push(currentYear.toString());
@@ -107,7 +107,7 @@ export class Atc2ShareTaComponent implements OnInit {
             'atc2_name': this.atc2.atc2s[atc2_id]
           }
           var volumn = {
-            'name': 'Volumn',
+            'name': 'Volume',
             'value': this.atc2.volumns[atc2_id] ? (parseFloat(this.atc2.volumns[atc2_id]) / this.atc2.totalVolumn * 100).toFixed(2) : 0,
             'volumn': this.atc2.volumns[atc2_id] ? this.atc2.volumns[atc2_id] : 0,
             'atc2_id': atc2_id,

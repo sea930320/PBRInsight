@@ -102,7 +102,7 @@ export class Atc4ShareTaComponent implements OnInit {
             'atc4_name': this.atc4.atc4s[atc4_id]
           }
           var volumn = {
-            'name': 'Volumn',
+            'name': 'Volume',
             'value': this.atc4.volumns[atc4_id] ? (parseFloat(this.atc4.volumns[atc4_id]) / this.atc4.totalVolumn * 100).toFixed(2) : 0,
             'volumn': this.atc4.volumns[atc4_id] ? this.atc4.volumns[atc4_id] : 0,
             'atc4_id': atc4_id

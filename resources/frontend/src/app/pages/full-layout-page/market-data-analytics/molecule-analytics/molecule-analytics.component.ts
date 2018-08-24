@@ -85,7 +85,7 @@ export class MoleculeAnalyticsComponent implements OnInit {
   }
 
   getYears(startYear) {
-    var currentYear = new Date().getFullYear(), years = [];
+    var currentYear = new Date().getFullYear() - 1, years = [];
     startYear = startYear || 1980;
     while (startYear <= currentYear) {
       years.push(currentYear.toString());
@@ -162,7 +162,7 @@ export class MoleculeAnalyticsComponent implements OnInit {
             'molecule_name': this.molecule.molecules[molecule_id]
           }
           var volumn = {
-            'name': 'Volumn',
+            'name': 'Volume',
             'value': this.molecule.volumns[molecule_id] ? (parseFloat(this.molecule.volumns[molecule_id]) / this.molecule.totalVolumn * 100).toFixed(2) : 0,
             'volumn': this.molecule.volumns[molecule_id] ? this.molecule.volumns[molecule_id] : 0,
             'molecule_id': molecule_id,
