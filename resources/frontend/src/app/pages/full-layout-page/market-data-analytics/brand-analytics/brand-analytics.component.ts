@@ -33,9 +33,9 @@ export class BrandAnalyticsComponent implements OnInit {
   filter = {
     year: "",
     drug_form_id: "",
-    atc1_id: "",
-    atc4_id: "",
-    atc5_id: ""
+    atc1_id: 1,
+    atc4_id: null,
+    atc5_id: null
   }
 
   // Bar Charts
@@ -81,7 +81,6 @@ export class BrandAnalyticsComponent implements OnInit {
 
   ngOnInit() {
     this.fetchGlobal();
-    this.fetchData();
   }
 
   getYears(startYear) {
@@ -97,18 +96,21 @@ export class BrandAnalyticsComponent implements OnInit {
   public beforeChange($event: NgbTabChangeEvent) {
     let id = $event.nextId.replace('ATC-', '');
     this.curAtcId = parseInt(id)
-    this.filter.atc1_id = ""
-    this.filter.atc4_id = ""
-    this.filter.atc5_id = ""
+    this.filter.atc1_id = null
+    this.filter.atc4_id = null
+    this.filter.atc5_id = null
     switch (this.curAtcId) {
       case 1:
         this.curAtcs = this.atc1s
+        this.filter.atc1_id = 1
         break;
       case 4:
         this.curAtcs = this.atc4s
+        this.filter.atc4_id = 1
         break;
       case 5:
         this.curAtcs = this.atc5s
+        this.filter.atc5_id = 1
         break;
     }
     this.curAtcs = [...this.curAtcs]
@@ -133,6 +135,7 @@ export class BrandAnalyticsComponent implements OnInit {
       this.curAtcs = this.atc1s
       this.curAtcs = [...this.curAtcs]
       this.isLoaded = true;
+      this.fetchData();
     });
   }
 
