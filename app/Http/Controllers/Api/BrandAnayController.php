@@ -17,7 +17,7 @@ use Illuminate\Http\JsonResponse;
 use DB;
 use App\Services\QueryBuilders\BrandAna\BrandShareQueryBuilder;
 
-class BrandAnaController extends ApiController
+class BrandAnayController extends ApiController
 {
     /**
      * @var MarketData

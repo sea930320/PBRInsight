@@ -17,7 +17,7 @@ use Illuminate\Http\JsonResponse;
 use DB;
 use App\Services\QueryBuilders\MoleculeAna\MoleculeShareQueryBuilder;
 
-class MoleculeAnaController extends ApiController
+class MoleculeAnayController extends ApiController
 {
     /**
      * @var MarketData

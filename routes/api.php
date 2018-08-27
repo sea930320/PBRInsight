@@ -65,9 +65,9 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->post('therapy-area-analytics/atc4-share', 'TherapyAreaAnaController@atc4Share');
     $router->post('therapy-area-analytics/atc5-share', 'TherapyAreaAnaController@atc5Share');
 
-    $router->post('brand-analytics/brand-share', 'BrandAnaController@brandShareByAtc');
+    $router->post('brand-analytics/brand-share', 'BrandAnayController@brandShareByAtc');
 
-    $router->post('molecule-analytics/molecule-share', 'MoleculeAnaController@moleculeShareByAtc');
+    $router->post('molecule-analytics/molecule-share', 'MoleculeAnayController@moleculeShareByAtc');
 
     $router->post('molecule-price/avg-price', 'MoleculePriceController@avgPrice');
     $router->post('molecule-price/avg-price-by-ac', 'MoleculePriceController@avgPriceByAc');

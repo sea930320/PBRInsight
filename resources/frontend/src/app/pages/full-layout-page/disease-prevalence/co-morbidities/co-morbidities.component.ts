@@ -56,6 +56,9 @@ export class CoMorbiditiesComponent implements OnInit {
     return years;
   }
 
+  getArrayFromObject(obj) {
+    return Array.from(Object.keys(obj), k=>obj[k]);
+  }
   fetchData() {
     this.coMorbidities.liveChart = []
     this.diagonsisSets = null

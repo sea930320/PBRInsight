@@ -85,7 +85,7 @@
               <div *ngFor="let bundlePair of diagonsisSets.bundles">
                 <span class="badge badge-pill badge-danger">{{calcPercentage(bundlePair.count / diagonsisSets.count * 100)}} % - Count({{ bundlePair.count}})</span>
                 <ul class="list-group mb-2">
-                  <li *ngFor="let patient of bundlePair.bundle" class="list-group-item pt-1 pb-1">
+                  <li *ngFor="let patient of getArrayFromObject(bundlePair.bundle)" class="list-group-item pt-1 pb-1">
                     <div class="row">
                       <div class="col-md-8">
                         <b>Active constituent: </b> {{patient.active_constituent}}

@@ -19,7 +19,8 @@ use App\Services\QueryBuilders\CoMorbidities\CoMorbiditiesQueryBuilder;
 
 class CoMorbiditiesController extends ApiController
 {
-/**
+    private $patients = [];
+    /**
      * @var Disease
      */
     private $disease;
@@ -86,13 +87,19 @@ class CoMorbiditiesController extends ApiController
             ->map(function($item, $key) {
                 return collect($item)->count();
             })->toArray();
-        
+
+        $this->patients = (new CoMorbiditiesQueryBuilder())
+            ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
+            ->setQueryParams($queryParams)
+            ->get(['patient', 'active_constituent', 'disease_id'])
+            ->toArray();
         try {
             $coMorbidities = new stdClass();
             $total = 0;
             foreach ($diseasesByPatient as $key => $diseaseCountByPatient) {
                 if ($diseaseCountByPatient == 1) continue;
-                $patient = $this->getPatientFromDiseasePrevalences($queryParams, $key);
+                // $patient = $this->getPatientFromDiseasePrevalences($queryParams, $key);
+                $patient = $this->getPatientFromDiseasePrevalencesFromArray($key);
 
                 if (isset($coMorbidities->{"${diseaseCountByPatient}"})) {
                     $coMorbidities->{"$diseaseCountByPatient"}->count ++;                
@@ -150,7 +157,7 @@ class CoMorbiditiesController extends ApiController
      * @param Array $queryParams
      * @param String $patientName
      *
-     * @return Object
+     * @return Array
      */
     private function getPatientFromDiseasePrevalences($queryParams, $patientName) {
         $patient = (new CoMorbiditiesQueryBuilder())
@@ -161,6 +168,21 @@ class CoMorbiditiesController extends ApiController
             ->orderBy('active_constituent')
             ->get(['active_constituent', 'disease_id'])
             ->toArray();
+        return $patient;
+    }
+
+     /**
+     * @param String $patientName
+     *
+     * @return Array
+     */
+    private function getPatientFromDiseasePrevalencesFromArray($patientName) {
+        $patient = array_filter(
+            $this->patients,
+            function ($pt)  use ($patientName) {
+                return $pt['patient'] === $patientName;
+            }
+        );
         return $patient;
     }
 }
