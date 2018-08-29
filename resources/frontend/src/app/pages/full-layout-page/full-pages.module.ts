@@ -7,6 +7,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FullPagesRoutingModule } from "./full-pages-routing.module";
 import { NouisliderModule } from 'ng2-nouislider';
+import { ChartistModule} from 'ng-chartist';
 
 //-----------------service-----------------------//
 import { ClinicTypeService } from '../../shared/_api/clinic_type.service';
@@ -33,6 +34,7 @@ import { MoleculeAnaService } from '../../shared/_api/molecule-ana.service';
 import { MoleculePriceService } from '../../shared/_api/molecule-price.service';
 import { BrandPriceService } from '../../shared/_api/brand-price.service';
 import { CostTreatmentService } from '../../shared/_api/cost-treatment.service';
+import { LoginInfoService } from '../../shared/_api/login-info.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
 import { TherapyAreaAnaCommunicationService } from '../../shared/_communication/therapy-area-ana.service';
@@ -80,7 +82,8 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         NgxChartsModule,
         Ng2SmartTableModule,
         FullPagesRoutingModule,
-        NouisliderModule
+        NouisliderModule,
+        ChartistModule
     ],
     declarations: [
         FullLayoutPageComponent,
@@ -140,6 +143,7 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         MoleculePriceService,
         BrandPriceService,
         CostTreatmentService,
+        LoginInfoService,
         DiagnoticsCommunicationService,
         MarketViewCommunicationService,
         TherapyAreaAnaCommunicationService,

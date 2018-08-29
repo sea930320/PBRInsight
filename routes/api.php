@@ -21,6 +21,7 @@ Route::group(['middleware' => ['api']], function ($router) {
 });
 
 Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
+    $router->get('login-info', 'LoginInfoController@index');
     $router->resource('clinic-type', 'ClinicTypeController');
     $router->resource('therapy-area', 'TherapyAreaController');
     $router->resource('disease', 'DiseaseController');

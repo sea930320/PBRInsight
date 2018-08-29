@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\Hash;
+use App\Events\JwtLogin;
 
 class ApiAuthController extends LoginController
 {
@@ -60,10 +61,11 @@ class ApiAuthController extends LoginController
                 'message' => 'Failed to create token'
             ], 401);
         }
-        
+
+        event(new JwtLogin(auth()->user()));
         return response()->json([
             'response' => 'success',
-            'token' => $token,
+            'token' => $token
         ]);
     }
 

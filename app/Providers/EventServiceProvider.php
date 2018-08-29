@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\UserRegistered' => [
             'App\Listeners\UserRegisteredListener',
+        ],
+        'App\Events\JwtLogin' => [
+            'App\Listeners\UserLoginListener',
         ]
     ];
 

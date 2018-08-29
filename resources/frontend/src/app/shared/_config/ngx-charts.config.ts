@@ -63,19 +63,20 @@ export var lineChartSettings = {
 export var areaChartView: any[] = [550, 400];
 
 // options
-export var areaChartShowXAxis = true;
-export var areaChartShowYAxis = true;
-export var areaChartGradient = false;
-export var areaChartShowLegend = false;
-export var areaChartShowXAxisLabel = true;
-export var areaChartXAxisLabel = 'Country';
-export var areaChartShowYAxisLabel = true;
-export var areaChartYAxisLabel = 'Population';
-
-export var areaChartColorScheme = {
-    domain: ['#FF8D60', '#FF586B', '#1CBCD8', '#AAAAAA']
-};
-
-// line, area
-export var areaChartAutoScale = true;
-export var areaChartLineInterpolation = shape.curveBasis;
+export var areaChartSettings = {
+    areaChartShowXAxis: true,
+    areaChartShowYAxis: true,
+    areaChartGradient: false,
+    areaChartShowLegend: false,
+    areaChartShowXAxisLabel: true,
+    areaChartShowYAxisLabel: true,
+    areaChartYAxisLabel: '%',
+    areaChartColorScheme: {
+        domain: ['#FF8D60', '#FF586B', '#1CBCD8', '#AAAAAA']
+    },
+    areaChartColorScheme1: {
+        domain: ['#FF586B', '#FF8D60', '#1CBCD8', '#AAAAAA']
+    },
+    areaChartAutoScale: true,
+    areaChartLineInterpolation: shape.curveBasis,
+}

@@ -1,4 +1,4 @@
-<div id="dashboard" class="mt-5 mb-3">
+<!-- <div id="dashboard" class="mt-5 mb-3">
   <div class="row justify-content-center">
     <div class="col-xl-8 col-lg-12">
       <div class="logo-img">
@@ -32,6 +32,122 @@
         <br> Africa Contact: +2347087471773
         <br> International Contact: +1 646 8789737
       </p>
+    </div>
+  </div>
+</div> -->
+
+<div id="dashboard" class="">
+  <div class="login-info" *ngIf="loginInfo">
+    <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-blackberry">
+          <div class="card-body">
+            <div class="card-block pt-2 pb-0">
+              <div class="media">
+                <div class="media-body white text-left">
+                  <h5 class="mb-0">Last Login At</h5>
+                  <span>{{loginInfo.last_login_at}}</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="icon-clock font-large-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-ibiza-sunset">
+          <div class="card-body">
+            <div class="card-block pt-2 pb-0">
+              <div class="media">
+                <div class="media-body white text-left">
+                  <h5 class="mb-0">Last Login IP</h5>
+                  <span>{{loginInfo.last_login_ip}}</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="icon-globe font-large-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-green-tea">
+          <div class="card-body">
+            <div class="card-block pt-2 pb-0">
+              <div class="media">
+                <div class="media-body white text-left">
+                  <h5 class="mb-0">Current Login At</h5>
+                  <span>{{loginInfo.current_login_at}}</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="icon-clock font-large-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-pomegranate">
+          <div class="card-body">
+            <div class="card-block pt-2 pb-0">
+              <div class="media">
+                <div class="media-body white text-left">
+                  <h5 class="mb-0">Current Login IP</h5>
+                  <span>{{loginInfo.current_login_ip}}</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="icon-globe font-large-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Disease Prevalence (2016-2017)</h4>
+      </div>
+      <div class="card-body">
+        <div class="card-block">
+          <div class="chart-info mb-3 ml-3">
+            <span class="d-inline-block rounded-circle mr-1" style="background-color: #FF8D60;width:15px; height:15px;"></span>
+            Top 5 Diseases
+            <span class="d-inline-block rounded-circle mr-1 ml-2" style="background-color: #FF586B;width:15px; height:15px;"></span>
+            Top 5 Disease Categories
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div id="area-chart1" class="height-400">
+                <ngx-charts-area-chart [scheme]="areaChartSettings.areaChartColorScheme" [results]="diseaseChart"
+                  [gradient]="areaChartSettings.areaChartGradient" [xAxis]="areaChartSettings.areaChartShowXAxis"
+                  [yAxis]="areaChartSettings.areaChartShowYAxis" [legend]="areaChartSettings.areaChartShowLegend"
+                  [showXAxisLabel]="false" [showYAxisLabel]="areaChartSettings.areaChartShowYAxisLabel" xAxisLabel="Disease"
+                  [yAxisLabel]="areaChartSettings.areaChartYAxisLabel" [autoScale]="false" xScaleMin="0" [curve]="areaChartSettings.areaChartLineInterpolation">
+                </ngx-charts-area-chart>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div id="area-chart1" class="height-400">
+                <ngx-charts-area-chart [scheme]="areaChartSettings.areaChartColorScheme1" [results]="diseaseCategoriesChart"
+                  [gradient]="areaChartSettings.areaChartGradient" [xAxis]="areaChartSettings.areaChartShowXAxis"
+                  [yAxis]="areaChartSettings.areaChartShowYAxis" [legend]="areaChartSettings.areaChartShowLegend"
+                  [showXAxisLabel]="false" [showYAxisLabel]="areaChartSettings.areaChartShowYAxisLabel" xAxisLabel="Disease"
+                  [yAxisLabel]="areaChartSettings.areaChartYAxisLabel" [autoScale]="false" xScaleMin="0" [curve]="areaChartSettings.areaChartLineInterpolation">
+                </ngx-charts-area-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
