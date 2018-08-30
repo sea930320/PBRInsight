@@ -230,17 +230,29 @@
           </div>
           <div class="row">
             <div class="col-sm-6">
-              <div class="height-250" *ngIf="totalMarketAnaAtc1.length > 0">
-                <ngx-charts-number-card [scheme]="barChartSettings.barChartColorScheme3" cardColor="rgb(255, 141, 96)"
-                  emptyColor="rgb(255, 141, 96)" [results]="totalMarketAnaAtc1">
-                </ngx-charts-number-card>
+              <div class="height-400" *ngIf="totalMarketAnaAtc1.length > 0">
+                <!-- <ngx-charts-number-card [scheme]="barChartSettings.barChartColorScheme3" cardColor="rgb(255, 141, 96)"
+                    emptyColor="rgb(255, 141, 96)" [results]="totalMarketAnaAtc1">
+                  </ngx-charts-number-card> -->
+                <ngx-charts-line-chart [scheme]="areaChartSettings.areaChartColorScheme" [results]="totalMarketAnaAtc1"
+                  [gradient]="true" [xAxis]="lineChartSettings.lineChartShowXAxis" [yAxis]="lineChartSettings.lineChartShowYAxis"
+                  [showXAxisLabel]="lineChartSettings.lineChartShowXAxisLabel" [showYAxisLabel]="lineChartSettings.lineChartShowYAxisLabel"
+                  [xAxisLabel]="" [yAxisLabel]="yAxisLabel" [autoScale]="false" [yScaleMin]="0" [showGridLines]="true"
+                  [curve]="lineChartSettings.lineChartLineInterpolation" [roundDomains]="true">
+                </ngx-charts-line-chart>
               </div>
             </div>
             <div class="col-sm-6">
-              <div class="height-250" *ngIf="totalMarketAnaAtc2.length > 0">
-                <ngx-charts-number-card [scheme]="barChartSettings.barChartColorScheme3" cardColor="rgb(255, 88, 107)"
+              <div class="height-400" *ngIf="totalMarketAnaAtc2.length > 0">
+                <!-- <ngx-charts-number-card [scheme]="barChartSettings.barChartColorScheme3" cardColor="rgb(255, 88, 107)"
                   emptyColor="rgb(255, 88, 107)" [results]="totalMarketAnaAtc2">
-                </ngx-charts-number-card>
+                </ngx-charts-number-card> -->
+                <ngx-charts-line-chart [scheme]="areaChartSettings.areaChartColorScheme1" [results]="totalMarketAnaAtc2"
+                  [gradient]="true" [xAxis]="lineChartSettings.lineChartShowXAxis" [yAxis]="lineChartSettings.lineChartShowYAxis"
+                  [showXAxisLabel]="lineChartSettings.lineChartShowXAxisLabel" [showYAxisLabel]="lineChartSettings.lineChartShowYAxisLabel"
+                  [xAxisLabel]="" [yAxisLabel]="yAxisLabel" [autoScale]="false" [yScaleMin]="0" [showGridLines]="true"
+                  [curve]="lineChartSettings.lineChartLineInterpolation" [roundDomains]="true">
+                </ngx-charts-line-chart>
               </div>
             </div>
           </div>
@@ -249,6 +261,11 @@
     </div>
 
     <div class="rss-feeds" *ngIf="isLoaded">
+      <div class="row">
+        <div class="col-12 mt-3 mb-1">
+          <div class="content-header">Global Pharma Market Updates (RSS Feeds)</div>
+        </div>
+      </div>
       <div class="card" *ngFor="let rssFeed of rssFeeds;">
         <div class="card-header">
           <h5 class="card-title">

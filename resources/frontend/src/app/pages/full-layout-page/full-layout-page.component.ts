@@ -53,6 +53,10 @@ export class FullLayoutPageComponent implements OnInit {
   pieChartSettings = chartsData.pieChartSettings;
   pieChartView: any[] = chartsData.pieChartView;
 
+  // Line Charts
+  lineChartSettings = chartsData.lineChartSettings;
+  lineChartView: any[] = chartsData.lineChartView;
+
   constructor(private loginInfoService: LoginInfoService, private rssService: RssService, private dashboardService: DashboardService) { }
   ngOnInit() {
     this.loginInfoService.index()
@@ -79,8 +83,8 @@ export class FullLayoutPageComponent implements OnInit {
         this.treatmentMappingAtc3 = this.chartFormattingForSingle(res.treatmentMappingAtc3)
         this.marketSharebySegment = this.chartFormattingForSingle(res.marketSharebySegment)
         this.totalMarketShare = this.chartFormattingForSingle(res.totalMarketShare)
-        this.totalMarketAnaAtc1 = this.chartFormattingForSingle(res.totalMarketAnaAtc1)
-        this.totalMarketAnaAtc2 = this.chartFormattingForSingle(res.totalMarketAnaAtc2)
+        this.totalMarketAnaAtc1 = this.chartFormattingForMulti(res.totalMarketAnaAtc1, "Top 5 ATC Level 1")
+        this.totalMarketAnaAtc2 = this.chartFormattingForMulti(res.totalMarketAnaAtc2, "Top 5 ATC Level 2")
         this.isLoaded = true
       });
   }
