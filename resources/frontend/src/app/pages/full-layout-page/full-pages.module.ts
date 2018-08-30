@@ -7,7 +7,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FullPagesRoutingModule } from "./full-pages-routing.module";
 import { NouisliderModule } from 'ng2-nouislider';
-import { ChartistModule} from 'ng-chartist';
+import { ChartistModule } from 'ng-chartist';
 
 //-----------------service-----------------------//
 import { ClinicTypeService } from '../../shared/_api/clinic_type.service';
@@ -35,10 +35,15 @@ import { MoleculePriceService } from '../../shared/_api/molecule-price.service';
 import { BrandPriceService } from '../../shared/_api/brand-price.service';
 import { CostTreatmentService } from '../../shared/_api/cost-treatment.service';
 import { LoginInfoService } from '../../shared/_api/login-info.service';
+import { RssService } from '../../shared/_api/rss.service';
+import { DashboardService } from '../../shared/_api/dashboard.service';
 import { DiagnoticsCommunicationService } from '../../shared/_communication/diagnotics.service';
 import { MarketViewCommunicationService } from '../../shared/_communication/market-view.service';
 import { TherapyAreaAnaCommunicationService } from '../../shared/_communication/therapy-area-ana.service';
 import { PatientFlowMetricsCommunicationService } from '../../shared/_communication/patient-flow-metrics.service';
+
+//----------------pipe----------------------//
+import { SanitizeHtmlPipe } from './full-layout-page.component';
 
 //----------------component----------------------//
 import { FullLayoutPageComponent } from './full-layout-page.component';
@@ -116,7 +121,8 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         Atc2ShareComponent,
         Atc2ShareTaComponent,
         Atc4ShareTaComponent,
-        Atc5ShareTaComponent
+        Atc5ShareTaComponent,
+        SanitizeHtmlPipe
     ],
     providers: [
         DiseaseService,
@@ -144,6 +150,8 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         BrandPriceService,
         CostTreatmentService,
         LoginInfoService,
+        RssService,
+        DashboardService,
         DiagnoticsCommunicationService,
         MarketViewCommunicationService,
         TherapyAreaAnaCommunicationService,

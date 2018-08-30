@@ -76,4 +76,7 @@ Route::namespace('Api')->middleware(['jwt.auth'])->group(function($router) {
     $router->post('brand-price/avg-price', 'BrandPriceController@avgPrice');
     
     $router->resource('cost-treatment', 'CostTreatmentMetricsController');
+
+    $router->get('rss/feeds', 'RssFeedController@makeFeeds');
+    $router->resource('dashboard', 'DashboardController');
 });

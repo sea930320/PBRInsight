@@ -25,6 +25,32 @@ $dashboard1-gradient-path: '/dashboard';
   }
 }
 
+.rss-feeds {
+  .card {
+    background: rgba(255, 193, 7, 0.2);
+
+    .card-title {
+      a {
+        margin: 0px !important;
+        padding: 0px !important;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+        color: #F44336;
+      }
+    }
+  }
+
+  .card .card-header {
+    padding-bottom: 0rem !important;
+  }
+
+  .card .card-block {
+    padding: 0.5rem 1.5rem .2rem !important;
+  }
+}
+
 :host /deep/ .ct-grid {
   stroke-dasharray: 0px;
   stroke: rgba(0, 0, 0, 0.1);

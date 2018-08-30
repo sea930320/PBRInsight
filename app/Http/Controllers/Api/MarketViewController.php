@@ -61,6 +61,7 @@ class MarketViewController extends ApiController
      * @param Atc4 $atc4
      * @param Atc2 $atc2
      * @param Atc1 $atc1
+     * @param DrugForm $drug_form
      */
     public function __construct(MarketData $marketData, Atc5 $atc5, Atc4 $atc4, Atc2 $atc2, Atc1 $atc1, DrugForm $drug_form)
     {

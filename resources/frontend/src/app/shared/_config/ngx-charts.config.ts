@@ -16,7 +16,16 @@ export var barChartSettings = {
     barChartXSDisplayCount: 5,
     barChartColorScheme: {
         domain: ['#009DA0', '#FF8D60', '#FF586B', '#AAAAAA']
-    }
+    },
+    barChartColorScheme1: {
+        domain: ['#FF8D60', '#FF8D60', '#FF8D60', '#FF8D60']
+    },
+    barChartColorScheme2: {
+        domain: ['#FF586B', '#FF586B', '#FF586B', '#FF586B']
+    },
+    barChartColorScheme3: {
+        domain: ['#009DA0', '#FFC107', '#8BC34A', '#AAAAAA']
+    },
 }
 
 
