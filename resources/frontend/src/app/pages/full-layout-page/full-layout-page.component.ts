@@ -113,7 +113,7 @@ export class FullLayoutPageComponent implements OnInit {
       if (data.hasOwnProperty(key)) {
         chartObj.push({
           "name": key,
-          "value": data[key]
+          "value": parseFloat(data[key])
         })
       }
     }

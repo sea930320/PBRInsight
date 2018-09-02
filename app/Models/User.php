@@ -17,7 +17,22 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'last_login_at',
+        'last_login_ip',
+        'current_login_at',
+        'current_login_ip',
+        'is_admin',
+        'company_name',
+        'title',
+        'mailing_address',
+        'city',
+        'state',
+        'zip_code',
+        'country',
+        'telephone'
     ];
 
     /**
@@ -46,7 +61,18 @@ class User extends Authenticatable implements JWTSubject
         'last_login_at',
         'last_login_ip',
         'current_login_at',
-        'current_login_ip'
+        'current_login_ip',
+        'is_admin',
+        'company_name',
+        'title',
+        'mailing_address',
+        'city',
+        'state',
+        'zip_code',
+        'country',
+        'telephone',
+
+        'permissions'
     ];
 
     /**
@@ -88,5 +114,19 @@ class User extends Authenticatable implements JWTSubject
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * The permissions that belong to the user.
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany(TherapyArea::class, 'therapy_area_user')
+                ->withPivot(
+                    'disease_prevalence_ana',
+                    'treatment_mapping',
+                    'market_ana',
+                    'diagnotics'
+                );
     }
 }

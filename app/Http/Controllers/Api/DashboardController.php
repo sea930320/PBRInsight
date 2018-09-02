@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use App\Models\Disease;
-use App\Models\DiseasePrevalence;
+use App\Models\DPOrigin;
 use App\Models\TherapyArea;
 use App\Models\Atc3;
 use App\Models\Atc2;
@@ -23,7 +23,7 @@ class DashboardController extends ApiController
     private $disease;
     
     /**
-     * @var DiseasePrevalence
+     * @var DPOrigin
      */
     private $diseasePrevalence;
 
@@ -61,13 +61,13 @@ class DashboardController extends ApiController
      * DashboardController constructor.
      *
      * @param Disease $disease
-     * @param DiseasePrevalence $diseasePrevalence
+     * @param DPOrigin $diseasePrevalence
      * @param TherapyArea $therapyArea
      * @param Atc3 $atc3
      * @param Atc2 $atc2
      * @param MarketData $marketData
      */
-    public function __construct(Disease $disease, DiseasePrevalence $diseasePrevalence, TherapyArea $therapyArea, Atc3 $atc3, Atc2 $atc2, Atc1 $atc1, MarketData $marketData, DrugForm $drug_form)
+    public function __construct(Disease $disease, DPOrigin $diseasePrevalence, TherapyArea $therapyArea, Atc3 $atc3, Atc2 $atc2, Atc1 $atc1, MarketData $marketData, DrugForm $drug_form)
     {
         $this->disease = $disease;
         $this->diseasePrevalence = $diseasePrevalence;
@@ -89,7 +89,7 @@ class DashboardController extends ApiController
         $diseasePrevalenceCount = $this->diseasePrevalence->count();
         $marketDataCount = $this->marketData->count();
 
-        $datas = $this->diseasePrevalence            
+        $datas = $this->diseasePrevalence
             ->select('disease_id', DB::raw("count(disease_id) as total"))
             ->groupBy(['disease_id'])
             ->pluck('total','disease_id')

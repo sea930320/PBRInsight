@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\BelongsToTherapyArea;
 
-class DiseasePrevalence extends Model
+class DPOrigin extends Model
 {
-    use BelongsToTherapyArea;
-    
+        
     /**
      * @var string
      */

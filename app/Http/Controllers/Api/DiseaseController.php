@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
-use App\Models\Disease;
+use App\Models\DiseaseByPermission;
 
 use Illuminate\Http\JsonResponse;
 
 class DiseaseController extends ApiController
 {
     /**
-     * @var Disease
+     * @var DiseaseByPermission
      */
     private $disease;
 
     /**
      * DiseaseController constructor.
      *
-     * @param Disease $disease
+     * @param DiseaseByPermission $disease
      */
-    public function __construct(Disease $disease)
+    public function __construct(DiseaseByPermission $disease)
     {
         $this->disease = $disease;
     }

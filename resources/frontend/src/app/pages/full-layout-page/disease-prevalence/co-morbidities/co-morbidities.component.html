@@ -1,12 +1,11 @@
 <section id="disease-prevalence-analytics">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12" *ngIf="isLoaded">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">% of 2, 3, ... (N) Co-Morbidities</h3>
             <select class="custom-select form-control" [(ngModel)]="filter.therapy_area_id" (change)="fetchData()">
-              <option value="">----Select----</option>
               <option *ngFor="let therapyArea of therapyAreas" [ngValue]="therapyArea.id">{{therapyArea.name}}</option>
             </select>
             <hr>

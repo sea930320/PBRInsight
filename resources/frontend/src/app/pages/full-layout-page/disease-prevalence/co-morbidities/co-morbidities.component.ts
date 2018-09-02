@@ -15,6 +15,7 @@ import { formatLabel } from '../../../../shared/_helpers/common';
 })
 export class CoMorbiditiesComponent implements OnInit {
   // global Settings
+  isLoaded = false;
   years = null
   clinicTypes = []
   therapyAreas = []
@@ -43,7 +44,6 @@ export class CoMorbiditiesComponent implements OnInit {
   ngOnInit() {
     this.years = this.getYears(2016)
     this.fetchClinicType()
-    this.fetchData()
     this.fetchTherapyArea()
   }
 
@@ -57,7 +57,7 @@ export class CoMorbiditiesComponent implements OnInit {
   }
 
   getArrayFromObject(obj) {
-    return Array.from(Object.keys(obj), k=>obj[k]);
+    return Array.from(Object.keys(obj), k => obj[k]);
   }
   fetchData() {
     this.coMorbidities.liveChart = []
@@ -89,6 +89,9 @@ export class CoMorbiditiesComponent implements OnInit {
     this.therapyAreaService.index()
       .subscribe((res: any) => {
         this.therapyAreas = res.therapy_areas
+        this.filter.therapy_area_id = this.therapyAreas[0].id;
+        this.isLoaded = true;
+        this.fetchData()
       });
   }
 

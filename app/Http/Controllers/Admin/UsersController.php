@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UserStore;
 use App\Http\Requests\Users\UserUpdate;
 use Prologue\Alerts\Facades\Alert;
+
 use App\Models\User;
+use App\Models\TherapyArea;
 
 class UsersController extends Controller
 {
@@ -17,14 +19,21 @@ class UsersController extends Controller
     private $user;
 
     /**
+     * @var TherapyArea
+     */
+    private $therapyArea;
+
+    /**
      * UsersController constructor.
      *
      * @param User $user
+     * @param TherapyArea $therapyArea
      */
 
-    public function __construct(User $user)
+    public function __construct(User $user, TherapyArea $therapyArea)
     {
         $this->user = $user;
+        $this->therapyArea = $therapyArea;
     }
 
     /**
@@ -116,4 +125,82 @@ class UsersController extends Controller
 
         return redirect()->route('users.index')->with('alerts', Alert::all());
     }
+
+    
+    public function compareOrder($a, $b)
+    {
+        return $a['id'] - $b['id'];
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPermissions(int $id)
+    {
+        $user = $this->user
+            ->with(['permissions'])
+            ->findOrFail($id)
+            ->toArray();
+        $therapyAreas =$this->therapyArea
+            ->get()
+            ->toArray();
+        $permissions = $user['permissions'];
+        foreach ($therapyAreas as $key => $therapyArea) {
+            if (!in_array($therapyArea['id'], array_column($user['permissions'], 'id'))) {
+                $permissions[] = $therapyArea;
+            }
+        }
+
+        usort($permissions, [$this, 'compareOrder']);
+
+        return view('dashboard.users.edit_permission', [ 
+            'user' => $user,
+            'permissions' => $permissions
+        ]);
+    }
+
+    public function syncPivot($user, $queryParams, $name = 'disease_prevalence_ana') {
+        foreach ($queryParams as $key => $queryParam) {
+            $user->permissions()->sync([
+                $key => [
+                    $name => 1
+                ]
+            ], false);
+        }
+    }
+    /**
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function savePermissions(int $id, Request $request)
+    {
+        $user = $this->user
+            ->findOrFail($id);
+        $user->permissions()->detach();
+
+        $das = $request->get('disease_prevalence_ana');
+        $tms = $request->get('treatment_mapping');
+        $mas = $request->get('market_ana');
+        $dgs = $request->get('diagnotics');
+        if ($das) {
+            $this->syncPivot($user, $das, 'disease_prevalence_ana');
+        }
+        if ($tms) {
+            $this->syncPivot($user, $tms, 'treatment_mapping');
+        }        
+        if ($mas) {
+            $this->syncPivot($user, $mas, 'market_ana');
+        }        
+        foreach ($dgs as $key => $dg) {
+            $this->syncPivot($user, $dgs, 'diagnotics');
+        }
+
+        Alert::success($user->name . ' has been privileged successfully')->flash();
+
+        return redirect()->route('users.index')->with('alerts', Alert::all());
+    }
+
 }

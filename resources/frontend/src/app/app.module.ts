@@ -16,6 +16,7 @@ import { GlobalConstants } from './shared/_constants/global.constants';
 import { AuthService } from './shared/_auth/auth.service';
 import { AuthGuard } from './shared/_auth/auth-guard.service';
 import { JwtInterceptor } from './shared/_helpers/jwt.interceptor';
+import { PermissionService } from './shared/_api/permission.service';
 
 //------------------plugins----------------------//
 import * as $ from 'jquery';
@@ -41,7 +42,8 @@ import * as $ from 'jquery';
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
-        }
+        },
+        PermissionService
     ],
     bootstrap: [AppComponent]
 })

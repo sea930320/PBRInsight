@@ -85,7 +85,8 @@ return [
     // The classes for the middleware to check if the visitor is an admin
     // Can be a single class or an array of clases
     'middleware_class' => [
-        \Backpack\Base\app\Http\Middleware\CheckIfAdmin::class,
+        // \Backpack\Base\app\Http\Middleware\CheckIfAdmin::class,
+        \App\Http\Middleware\AuthAdmin::class,
     ],
 
     // Alias for that middleware

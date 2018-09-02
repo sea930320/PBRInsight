@@ -51,6 +51,9 @@
                                         <a class="btn btn-xs btn-default pull-right" href="{{ route('users.edit', $user->id) }}">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
+                                        <a class="btn btn-xs btn-default pull-right" href="{{ route('users.permission', $user->id) }}">
+                                            <i class="fa fa-lock"></i> Permission
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

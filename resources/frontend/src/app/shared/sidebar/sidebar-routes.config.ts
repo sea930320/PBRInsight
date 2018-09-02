@@ -20,7 +20,7 @@ export const ROUTES: RouteInfo[] = [
         ]
     },
     {
-        path: '/diagnotics', title: 'Diagnotics', icon: 'ft-bar-chart-2', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+        path: '/diagnotics', title: 'Diagnostics', icon: 'ft-bar-chart-2', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
     {
         path: '', title: 'Market Data Analytics', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,

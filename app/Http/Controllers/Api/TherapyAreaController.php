@@ -4,23 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 
-use App\Models\TherapyArea;
+use App\Models\TherapyAreaByPermission;
 
 use Illuminate\Http\JsonResponse;
 
 class TherapyAreaController extends ApiController
 {
     /**
-     * @var TherapyArea
+     * @var TherapyAreaByPermission
      */
     private $therapyArea;
 
     /**
      * TherapyAreaController constructor.
      *
-     * @param TherapyArea $therapyArea
+     * @param TherapyAreaByPermission $therapyArea
      */
-    public function __construct(TherapyArea $therapyArea)
+    public function __construct(TherapyAreaByPermission $therapyArea)
     {
         $this->therapyArea = $therapyArea;
     }

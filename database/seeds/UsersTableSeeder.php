@@ -10,6 +10,7 @@ class UsersTableSeeder extends Seeder
     const EMAIL = 'email';
     const NAME = 'name';
     const PASSWORD = 'password';
+    const ISADMIN = 'is_admin';
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -29,6 +30,7 @@ class UsersTableSeeder extends Seeder
                 static::EMAIL =>'superadmin@gmail.com',
                 static::NAME => 'Super Admin',
                 static::PASSWORD => Hash::make('qwerty123'),
+                static::ISADMIN => 1,
                 static::CREATED_AT => '2018-01-01 10:00:00',
                 static::UPDATED_AT => '2018-01-01 10:00:00'
             ],
@@ -37,6 +39,7 @@ class UsersTableSeeder extends Seeder
                 static::EMAIL =>'admin@gmail.com',
                 static::NAME => 'Admin Admin',
                 static::PASSWORD => Hash::make('qwerty123'),
+                static::ISADMIN => 1,
                 static::CREATED_AT => '2018-01-01 10:00:00',
                 static::UPDATED_AT => '2018-01-01 10:00:00'
             ],
@@ -45,6 +48,7 @@ class UsersTableSeeder extends Seeder
                 static::EMAIL =>'user@gmail.com',
                 static::NAME => 'Tester Testowski',
                 static::PASSWORD => Hash::make('qwerty123'),
+                static::ISADMIN => 0,
                 static::CREATED_AT => '2018-01-01 10:00:00',
                 static::UPDATED_AT => '2018-01-01 10:00:00'
             ],
@@ -52,6 +56,7 @@ class UsersTableSeeder extends Seeder
                 static::ID => 4,
                 static::EMAIL =>'user2@gmail.com',
                 static::NAME => 'User',
+                static::ISADMIN => 0,
                 static::PASSWORD => Hash::make('qwerty123'),
                 static::CREATED_AT => '2018-01-01 10:00:00',
                 static::UPDATED_AT => '2018-01-01 10:00:00'
@@ -60,6 +65,7 @@ class UsersTableSeeder extends Seeder
                 static::ID => 5,
                 static::EMAIL =>'sky930320@gmail.com',
                 static::NAME => 'Jonas Fu',
+                static::ISADMIN => 1,
                 static::PASSWORD => Hash::make('qwerty123'),
                 static::CREATED_AT => '2018-06-14 10:00:00',
                 static::UPDATED_AT => '2018-06-14 10:00:00'

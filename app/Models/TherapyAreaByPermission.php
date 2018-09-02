@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BelongsToTherapyArea;
 
-class TherapyArea extends Model
+class TherapyAreaByPermission extends Model
 {
+    use BelongsToTherapyArea;
+    
     /**
      * @var string
      */
