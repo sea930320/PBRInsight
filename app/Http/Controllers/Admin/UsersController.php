@@ -194,7 +194,7 @@ class UsersController extends Controller
         if ($mas) {
             $this->syncPivot($user, $mas, 'market_ana');
         }        
-        foreach ($dgs as $key => $dg) {
+        if ($dgs) {
             $this->syncPivot($user, $dgs, 'diagnotics');
         }
 
