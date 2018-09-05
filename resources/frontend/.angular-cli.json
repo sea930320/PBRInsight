@@ -29,6 +29,7 @@
         "../node_modules/nouislider/distribute/nouislider.min.css",
         "../node_modules/@swimlane/ngx-datatable/release/index.css",
         "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
+        "../node_modules/ngx-ui-switch/ui-switch.component.css",
         "assets/css/demo.css",
         "assets/sass/app.scss",
         "styles.css"

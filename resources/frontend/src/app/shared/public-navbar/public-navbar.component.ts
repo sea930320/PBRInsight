@@ -25,8 +25,10 @@ export class PublicNavbarComponent implements OnInit {
           this.authorized = false;
         }
         this.routePath = event.url;
+        console.log(this.routePath)
       }
     });
+    console.log(this.routePath)
   }
 
   ngOnInit() {

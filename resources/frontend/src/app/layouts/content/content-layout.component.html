@@ -1,4 +1,45 @@
 <div class="public">
   <app-public-navbar *ngIf="navBarNeeded"></app-public-navbar>
   <router-outlet></router-outlet>
+  <footer *ngIf="footerNeeded">
+    <div class="container-fluid">
+      <ul class="social-footer text-center">
+        <li class="grey darken-2">
+          <a class="grey darken-2" target="_blank" href="https://twitter.com/pharmabusreview?lang=en">
+            <img src="assets/img/landing-photo/tw.png" class="img-responsive center-block" alt="Random first slide">
+            Follow us on Twitter
+          </a>
+        </li>
+        <li class="grey darken-2">
+          <a class="grey darken-2" target="_blank" href="https://www.linkedin.com/in/pharma-business-review-aa452410b/">
+            <img src="assets/img/landing-photo/linkedin.png" class="img-responsive center-block" alt="Random first slide">
+            Follow us on Linkedin
+          </a>
+        </li>
+        <li class="grey darken-2">
+          <a class="grey darken-2" target="_blank" href="javascript:void()">
+            <img src="assets/img/landing-photo/fb.png" class="img-responsive center-block" alt="Random first slide">
+            Follow us on Facebook
+          </a>
+        </li>
+      </ul>
+      <div class="row">
+        <div class="col-md-3">
+          <p class="copyright text-center mt-3 cursor-pointer" [routerLink]="['/terms-of-use']">
+            Terms of Use
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="copyright text-center mt-3">
+            Copyright &copy; {{currentDate | date: 'yyyy'}} Pharma Business Review. All rights reserved.
+          </p>
+        </div>
+        <div class="col-md-3">
+          <p class="copyright text-center mt-3 cursor-pointer" [routerLink]="['/privacy']">
+            Privacy Statement
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>

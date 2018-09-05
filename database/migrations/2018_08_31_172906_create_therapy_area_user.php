@@ -19,7 +19,7 @@ class CreateTherapyAreaUser extends Migration
             $table->integer('therapy_area_id')->unsigned()->nullable()->default(null);
             $table->boolean('disease_prevalence_ana')->default(FALSE);
             $table->boolean('treatment_mapping')->default(FALSE);
-            $table->boolean('market_ana')->default(FALSE);
+            $table->boolean('patient_forecasting')->default(FALSE);
             $table->boolean('diagnotics')->default(FALSE);
             $table->timestamps();
 

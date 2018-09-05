@@ -1,0 +1,160 @@
+<div class="wrapper request-access-form">
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <div class="main-panel">
+        <div class="main-content" style="margin-top: 40px;">
+          <div class="row">
+            <div class="col-md-12 nav-link-section text-right">
+              <a class="nav-link" [routerLink]="[authorized?'/dashboard':'/login']">
+                <span class="menu-title"> {{authorized ? 'My Account':'Log In'}} </span>
+              </a>
+              <a class="nav-link" [routerLink]="['/request-access-form']">
+                <span class="menu-title"> Request Access </span>
+              </a>
+            </div>
+            <div class="col-md-11 text-section">
+              <h4 class="grey darken-2 font-weight-bold">
+                Access Information Request
+              </h4>
+              <p>
+                Thank you for registering on pbr.com for more information on accessing the PBR Market Analytics
+                Platform. Information provided ensures we are able to send you needed information towards supporting
+                your organization in achieving its objectives.
+              </p>
+            </div>
+          </div>
+
+          <div class="row mt-2 m-0">
+            <div class="col-md-8">
+              <form [formGroup]="userInfoForm" class="form form-horizontal" (ngSubmit)="preventSubmit($event)"
+                novalidate>
+                <div class="form-body">
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *First Name </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="first_name" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Last Name </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="last_name" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Email Address </label>
+                    <div class="col-md-9 p-0">
+                      <input type="email" class="form-control" formControlName="email" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Company Name </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="company_name" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Your Title in the company </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="title" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> Mailing Address </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="mailing_address">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> City </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="city">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> State/Province </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="state">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Zip/Postal Code </label>
+                    <div class="col-md-9 p-0">
+                      <input type="text" class="form-control" formControlName="zip_code" required>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Country </label>
+                    <div class="col-md-9 p-0">
+                      <select class="custom-select d-block w-100" formControlName="country" required>
+                        <option value>-- Select --</option>
+                        <option *ngFor="let country of countries" [value]="country.name">{{country.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for=""> *Telephone </label>
+                    <div class="col-md-9 p-0">
+                      <input type="tel" class="form-control" formControlName="telephone" required>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-md-12 mt-2">
+              <h4 class="font-weight-bold" style="margin-left: -15px;">
+                Select Therapy Area for which you want access to the platform
+              </h4>
+              <p style="margin-left: -15px;">
+                Annual subscription to any of the Therapy Areas offers access to all four data analytics for the
+                period.
+              </p>
+              <table *ngIf="therapyAreas.length > 0" class="table table-responsive-md text-center">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Therapy Areas</th>
+                    <th>Disease Prevalence Analytics</th>
+                    <th>Treatment Mapping</th>
+                    <th>Patient Forecasting</th>
+                    <th>Diagnostics</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let therapyArea of therapyAreas">
+                    <td>
+                      <ui-switch (valueChange)="onChangeSwitchEvent($event, therapyArea)"></ui-switch>
+                    </td>
+                    <td>{{therapyArea.name}}</td>
+                    <td>
+                      <ui-switch [(ngModel)]="therapyArea.disesePrevalenceAna"></ui-switch>
+                    </td>
+                    <td>
+                      <ui-switch [(ngModel)]="therapyArea.treateMapping"></ui-switch>
+                    </td>
+                    <td>
+                      <ui-switch [(ngModel)]="therapyArea.patientForecasting"></ui-switch>
+                    </td>
+                    <td>
+                      <ui-switch [(ngModel)]="therapyArea.diagnostics"></ui-switch>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="form-actions center text-center">
+                <button type="button" class="btn btn-raised btn-danger" [disabled]="!userInfoForm.valid || !isTherapyAreaChecked()"
+                  (click)="submitForm()">
+                  <i class="fa fa-check-square-o"></i> Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

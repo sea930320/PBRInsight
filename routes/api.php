@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('therapy-areas', 'Api\TherapyAreaController@getAllTherapyAreas');
+Route::post('request-access', 'Api\RequestAccessController@store');
+
 Route::group(['middleware' => ['api']], function ($router) {
     $router->post('login', ['uses' => 'Auth\ApiAuthController@login', 'as' => 'api.login']);
     $router->post('register', ['uses' => 'Auth\ApiAuthController@register', 'as' => 'api.register']);

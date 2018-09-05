@@ -20,7 +20,6 @@ import { PermissionService } from './shared/_api/permission.service';
 
 //------------------plugins----------------------//
 import * as $ from 'jquery';
-
 @NgModule({
     declarations: [
         AppComponent,

@@ -9,17 +9,21 @@ import { Router, NavigationEnd } from '@angular/router';
 
 export class ContentLayoutComponent {
     public navBarNeeded: boolean = true;
+    public footerNeeded: boolean = true;
+    public currentDate: Date = new Date();
 
     constructor(private router: Router) {
-        // router.events.subscribe((event: any) => {
-        //     if (event instanceof NavigationEnd) {
-        //         if (event.url === '/login' || event.url === '/signup') {
-        //             this.navBarNeeded = false;
-        //         }
-        //         else {
-        //             this.navBarNeeded = true;
-        //         }
-        //     }
-        // });
+        router.events.subscribe((event: any) => {
+            if (event instanceof NavigationEnd) {
+                if (event.url.includes('/login') || event.url === '/signup') {
+                    // this.navBarNeeded = false;
+                    this.footerNeeded = false;
+                }
+                else {
+                    // this.navBarNeeded = true;
+                    this.footerNeeded = true
+                }
+            }
+        });
     }
 }

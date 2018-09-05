@@ -69,7 +69,7 @@
     <div class="collapse navbar-collapse" id="menuNavbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/home']">
+          <a class="nav-link" [routerLink]="['/home']" [ngClass]="routePath==='/home' ? 'active':''">
             <span class="menu-title"> About Us </span>
           </a>
           <div class="sr-bar"> | </div>
@@ -86,18 +86,22 @@
           </a>
           <div class="sr-bar"> | </div>
         </li>
-        <li class="nav-item" ngbDropdown>
-          <a class="nav-link" id="dropdownPBRSolutions" ngbDropdownToggle>
+        <!-- <li class="nav-item" ngbDropdown> -->
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/pbrsolution']" [ngClass]="routePath==='/pbrsolution' || routePath==='/request-access' || routePath==='/request-access-form' ? 'active':''">
             <span class="menu-title"> PBR Solutions </span>
           </a>
-          <div ngbDropdownMenu aria-labelledby="dropdownPBRSolutions">
+          <!-- <a class="nav-link" id="dropdownPBRSolutions" ngbDropdownToggle>
+            <span class="menu-title"> PBR Solutions </span>
+          </a> -->
+          <!-- <div ngbDropdownMenu aria-labelledby="dropdownPBRSolutions">
             <a *ngIf="!authorized" class="dropdown-item" routerLink="/login">
               <span>PBR Market Analytics</span>
             </a>
             <a *ngIf="authorized" class="dropdown-item" routerLink="/dashboard">
               <span>PBR Market Analytics</span>
             </a>
-          </div>
+          </div> -->
           <div class="sr-bar"> | </div>
         </li>
         <li class="nav-item">

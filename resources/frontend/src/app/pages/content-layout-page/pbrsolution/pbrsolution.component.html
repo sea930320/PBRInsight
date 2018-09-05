@@ -1,0 +1,85 @@
+<div class="wrapper pbr-solution">
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <div class="main-panel">
+        <div class="main-content" style="margin-top: 40px;">
+          <div class="row">
+            <div class="col-md-7 text-section">
+              <h4 class="grey darken-2 font-weight-bold">
+                Pharma Business Review Market Analytics Platform
+              </h4>
+              <h2 class="grey darken-4 font-weight-bold">
+                Uncover Local Insights that Drive Growth
+              </h2>
+            </div>
+            <div class="col-md-5 search-section text-right">
+              <a class="nav-link" [routerLink]="[authorized?'/dashboard':'/login']">
+                <span class="menu-title"> {{authorized ? 'My Account':'Log In'}} </span>
+              </a>
+              <a class="nav-link" [routerLink]="['/request-access-form']">
+                <span class="menu-title"> Request Access </span>
+              </a>
+              <form class="navbar-form navbar-right mt-1" role="search">
+                <div class="position-relative has-icon-right">
+                  <input type="text" class="form-control bg-grey bg-lighten-2 grey darken-4 round" placeholder="Search">
+                  <div class="form-control-position grey darken-4">
+                    <i class="ft-search"></i>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row mt-2 m-0">
+            <div class="col-xl-7 p-0 img-section opacity-7 col-lg-12">
+              <img src="assets/img/landing-photo/2.png">
+            </div>
+            <div class="col-xl-5 p-0 desc-pane col-lg-12">
+              <div class="description-wrap">
+                <ul class="description p-1">
+                  <li class="header-img fix-height-img-header text-center">
+                    <img src="assets/img/landing-photo/pbrsolution-1.png">
+                  </li>
+                  <li class="content-text-wrap fix-height-img">
+                    <img src="assets/img/landing-photo/pbrsolution-2.png">
+                    <div class="content-text">
+                      <b>Pharma Market Analytics and Insights</b>
+                      <p>
+                        We continually seek to provide insights that drive growth. We dig deeper into trends across
+                        developing countries to get you most needed insight.
+                      </p>
+                    </div>
+                  </li>
+                  <li class="content-text-wrap fix-height-img">
+                    <img src="assets/img/landing-photo/pbrsolution-3.png">
+                    <div class="content-text">
+                      <b>Aiding Objective Planning & Review</b>
+                      <p>
+                        Our quest is to provide unprecedented real-world insights to stakeholders in both public and
+                        private sectors for strategy development and performance assessments.
+                      </p>
+                    </div>
+                  </li>
+                  <li class="content-text-wrap fix-height-img">
+                    <img src="assets/img/landing-photo/pbrsolution-4.png">
+                    <div class="content-text">
+                      <b>Combining International Expertise & Deep Local Awareness </b>
+                      <p>
+                        Take advantage of our strong international and local awareness of key markets for growing your
+                        business and products
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="learn-more text-center">
+                <a href="javascript:void()" [routerLink]="['/request-access']">
+                  <b><i>Learn more...</i></b>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

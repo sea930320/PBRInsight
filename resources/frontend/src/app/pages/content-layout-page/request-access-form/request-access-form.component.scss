@@ -1,0 +1,33 @@
+.request-access-form {
+  .nav-link-section {
+    .menu-title {
+      padding: 5px 5px;
+      background: grey;
+      border-top-right-radius: 10px;
+      color: white;
+      font-weight: 400;
+    }
+
+    .nav-link {
+      display: inline;
+    }
+  }
+
+  form.form-horizontal .form-group {
+    margin-bottom: 1px;
+    background: rgba(0, 0, 0, 0.1);
+
+    .label-control {
+      text-align: left !important;
+      color: #595a5a;
+    }
+
+    .form-control {
+      font-size: .9 !important;
+    }
+  }
+
+  .custom-checkbox .custom-control-indicator {
+    position: relative;
+  }
+}

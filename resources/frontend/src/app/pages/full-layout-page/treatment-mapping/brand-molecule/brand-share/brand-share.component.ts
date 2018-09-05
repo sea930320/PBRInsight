@@ -76,11 +76,15 @@ export class BrandShareComponent implements OnInit {
 
   fetchGlobalValues() {
     this.years = this.getYears(2016)
-    this.therapyAreaService.index().subscribe((res: any) => {
-      this.isLoaded = true
-      this.therapyAreas = res.therapy_areas
-      this.fetchData();
-    });
+    this.therapyAreaService
+      .index({
+        category: 'treatment_mapping'
+      })
+      .subscribe((res: any) => {
+        this.isLoaded = true
+        this.therapyAreas = res.therapy_areas
+        this.fetchData();
+      });
   }
 
   getYears(startYear) {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TherapyAreaLevelShare\TherapyAreaLevelShareIndex;
 
 use App\Models\Disease;
-use App\Models\DiseasePrevalence;
+use App\Models\DPForTM;
 use App\Models\TherapyArea;
 use App\Models\Atc5;
 use App\Models\Atc4;
@@ -25,7 +25,7 @@ class TherapyAreaLevelShareController extends ApiController
     private $disease;
     
     /**
-     * @var DiseasePrevalence
+     * @var DPForTM
      */
     private $diseasePrevalence;
 
@@ -53,13 +53,13 @@ class TherapyAreaLevelShareController extends ApiController
      * DiseasePrevalenceController constructor.
      *
      * @param Disease $disease
-     * @param DiseasePrevalence $diseasePrevalence
+     * @param DPForTM $diseasePrevalence
      * @param Atc5 $atc5
      * @param Atc4 $atc4
      * @param Atc3 $atc3
      * @param Atc2 $atc2
      */
-    public function __construct(Disease $disease, DiseasePrevalence $diseasePrevalence, Atc5 $atc5, Atc4 $atc4, Atc3 $atc3, Atc2 $atc2)
+    public function __construct(Disease $disease, DPForTM $diseasePrevalence, Atc5 $atc5, Atc4 $atc4, Atc3 $atc3, Atc2 $atc2)
     {
         $this->disease = $disease;
         $this->diseasePrevalence = $diseasePrevalence;

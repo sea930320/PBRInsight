@@ -32,9 +32,9 @@ trait BelongsToTherapyArea
     public function newQuery($excludeDeleted = true) {
         $user = auth()->user();
         $das = $this->getPermission('disease_prevalence_ana');
-        $tms = $this->getPermission('treatment_mapping');
-        $mas = $this->getPermission('market_ana');
-        $dts = $this->getPermission('diagnotics');
+        // $tms = $this->getPermission('treatment_mapping');
+        // $pfs = $this->getPermission('patient_forecasting');
+        // $dts = $this->getPermission('diagnotics');
         switch ($this->getTable()) {
             case 'disease_prevalences':
                 return parent::newQuery($excludeDeleted)

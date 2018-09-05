@@ -35,8 +35,8 @@ export class SidebarComponent implements OnInit {
                                 return false
                             }
                             break;
-                        case "Market Data Analytics":
-                            if (!res.market_ana) {
+                        case "Patient Forecasting":
+                            if (!res.patient_forecasting) {
                                 return false
                             }
                             break;

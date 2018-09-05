@@ -82,7 +82,9 @@ export class TherapyAreaLevelComponent implements OnInit {
     this.years = this.getYears(2016)
     let values$ = combineLatest(
       this.clinicTypeService.index(),
-      this.therapyAreaService.index(),
+      this.therapyAreaService.index({
+        category: 'treatment_mapping'
+      }),
       (first, second) => {
         return { first, second };
       }

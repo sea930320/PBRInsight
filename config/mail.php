@@ -120,4 +120,5 @@ return [
         ],
     ],
 
+    'request_to_email' => env('REQUEST_TO_EMAIL', 'sky930320@gmail.com'),
 ];

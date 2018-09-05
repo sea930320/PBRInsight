@@ -10,8 +10,8 @@ export class TherapyAreaService {
         this.therapyAreaRoute = `${this.constants.APIURL}/therapy-area`
     }
 
-    index() {
-        return this.http.get<any>(this.therapyAreaRoute);
+    index(data = { category: "disease_prevalence" }) {
+        return this.http.get<any>(this.therapyAreaRoute + '?category=' + data.category);
     }
 
     show(id) {

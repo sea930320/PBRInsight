@@ -10,7 +10,7 @@ export class DiseaseService {
     this.diseaseRoute = `${this.constants.APIURL}/disease`
   }
 
-  index() {
-    return this.http.get<any>(this.diseaseRoute);
+  index(data = { category: 'disease_prevalence' }) {
+    return this.http.get<any>(this.diseaseRoute + '?category=' + data.category);
   }
 }

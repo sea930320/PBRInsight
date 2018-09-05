@@ -34,13 +34,6 @@ const routes: Routes = [
         }
       },
       {
-        path: 'patient-flow-metrics',
-        component: PatientFlowMetricsComponent,
-        data: {
-          title: 'Disease Prevalence-Patient Flow Metrics'
-        }
-      },
-      {
         path: 'co-morbidities',
         component: CoMorbiditiesComponent,
         data: {
@@ -48,6 +41,13 @@ const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: 'patient-flow-metrics',
+    component: PatientFlowMetricsComponent,
+    data: {
+      title: 'Patient Forecasting'
+    }
   },
   {
     path: 'treatment-mapping',

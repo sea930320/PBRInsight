@@ -23,8 +23,8 @@ class PermissionController extends ApiController
         $treatment_mapping = $user->permissions()
             ->where('treatment_mapping', 1)
             ->exists();
-        $market_ana = $user->permissions()
-            ->where('market_ana', 1)
+        $patient_forecasting = $user->permissions()
+            ->where('patient_forecasting', 1)
             ->exists();
         $diagnotics = $user->permissions()
             ->where('diagnotics', 1)
@@ -33,7 +33,7 @@ class PermissionController extends ApiController
         return $this->respond([
             'disease_prevalence_ana' => $disease_prevalence_ana,
             'treatment_mapping' => $treatment_mapping,
-            'market_ana' => $market_ana,
+            'patient_forecasting' => $patient_forecasting,
             'diagnotics' => $diagnotics,
         ]);
     }

@@ -8,9 +8,12 @@ export const ROUTES: RouteInfo[] = [
         path: '', title: 'Disease Prevalence', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
         submenu: [
             { path: '/disease-prevalence/analytics', title: 'Disease Prevalence', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/disease-prevalence/patient-flow-metrics', title: 'Patient Flow Metrics', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            // { path: '/disease-prevalence/patient-flow-metrics', title: 'Patient Forecasting', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/disease-prevalence/co-morbidities', title: 'Co-Morbidities', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         ]
+    },
+    {
+        path: '/patient-flow-metrics', title: 'Patient Forecasting', icon: 'ft-bar-chart-2', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
     },
     {
         path: '', title: 'Treatment Mapping', icon: 'ft-bar-chart-2', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,

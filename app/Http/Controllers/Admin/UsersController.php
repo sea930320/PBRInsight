@@ -183,7 +183,7 @@ class UsersController extends Controller
 
         $das = $request->get('disease_prevalence_ana');
         $tms = $request->get('treatment_mapping');
-        $mas = $request->get('market_ana');
+        $pfs = $request->get('patient_forecasting');
         $dgs = $request->get('diagnotics');
         if ($das) {
             $this->syncPivot($user, $das, 'disease_prevalence_ana');
@@ -191,8 +191,8 @@ class UsersController extends Controller
         if ($tms) {
             $this->syncPivot($user, $tms, 'treatment_mapping');
         }        
-        if ($mas) {
-            $this->syncPivot($user, $mas, 'market_ana');
+        if ($pfs) {
+            $this->syncPivot($user, $pfs, 'patient_forecasting');
         }        
         if ($dgs) {
             $this->syncPivot($user, $dgs, 'diagnotics');

@@ -108,7 +108,9 @@ export class DiseaseByAcComponent implements OnInit {
     this.filter.start_year = this.populations[0].year
     this.filter.end_year = this.populations[0].year
 
-    this.diseaseService.index().subscribe((res: any) => {
+    this.diseaseService.index({
+      category: 'patient_forecasting'
+    }).subscribe((res: any) => {
       this.diseases = res.diseases
       this.fetchData()
       this.isLoaded = true

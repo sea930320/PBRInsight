@@ -7,7 +7,7 @@ use App\Http\Requests\BrandMolecule\BrandShareIndex;
 use App\Http\Requests\BrandMolecule\AcShareIndex;
 
 use App\Models\Disease;
-use App\Models\DiseasePrevalence;
+use App\Models\DPForTM;
 use App\Models\Brand;
 
 use Illuminate\Http\JsonResponse;
@@ -23,7 +23,7 @@ class BrandMoleculeController extends ApiController
     private $disease;
     
     /**
-     * @var DiseasePrevalence
+     * @var DPForTM
      */
     private $diseasePrevalence;
 
@@ -36,10 +36,10 @@ class BrandMoleculeController extends ApiController
      * BrandMoleculeController constructor.
      *
      * @param Disease $disease
-     * @param DiseasePrevalence $diseasePrevalence
+     * @param DPForTM $diseasePrevalence
      * @param Brand $brand
      */
-    public function __construct(Disease $disease, DiseasePrevalence $diseasePrevalence, Brand $brand)
+    public function __construct(Disease $disease, DPForTM $diseasePrevalence, Brand $brand)
     {
         $this->disease = $disease;
         $this->diseasePrevalence = $diseasePrevalence;

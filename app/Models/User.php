@@ -125,7 +125,7 @@ class User extends Authenticatable implements JWTSubject
                 ->withPivot(
                     'disease_prevalence_ana',
                     'treatment_mapping',
-                    'market_ana',
+                    'patient_forecasting',
                     'diagnotics'
                 );
     }

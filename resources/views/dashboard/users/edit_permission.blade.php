@@ -34,7 +34,7 @@
                                     <th>Therapy Areas</th>
                                     <th>Disease Prevalence Analytics</th>
                                     <th>Treatment Mapping</th>
-                                    <th>Market Analytics</th>
+                                    <th>Patient Forecasting</th>
                                     <th>Diagnostics</th>
                                 </tr>
                             </thead>
@@ -62,10 +62,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (isset($permission['pivot']) && isset($permission['pivot']['market_ana']) && $permission['pivot']['market_ana'])
-                                            <input type="checkbox" name="market_ana[{{$permission['id']}}]" checked class="permission" permissionid="{{$permission['id']}}" />
+                                        @if (isset($permission['pivot']) && isset($permission['pivot']['patient_forecasting']) && $permission['pivot']['patient_forecasting'])
+                                            <input type="checkbox" name="patient_forecasting[{{$permission['id']}}]" checked class="permission" permissionid="{{$permission['id']}}" />
                                         @else
-                                            <input type="checkbox" name="market_ana[{{$permission['id']}}]" class="permission" permissionid="{{$permission['id']}}" />
+                                            <input type="checkbox" name="patient_forecasting[{{$permission['id']}}]" class="permission" permissionid="{{$permission['id']}}" />
                                         @endif
                                     </td>
                                     <td>
