@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
                             }
                             break;
                         case "Market Data Analytics":
-                            let submenu = menuItem.submenu.filter(submenu => {
+                            let submenu = res.mkt ? menuItem.submenu.filter(submenu => {
                                 switch (submenu.title) {
                                     case "Market View":
                                         if (!res.mkt.total_market_view) {
@@ -70,7 +70,7 @@ export class SidebarComponent implements OnInit {
                                         break;
                                 }
                                 return true;
-                            })
+                            }) : []
                             menuItem.submenu = submenu
                             if (submenu.length === 0)
                                 return false;
