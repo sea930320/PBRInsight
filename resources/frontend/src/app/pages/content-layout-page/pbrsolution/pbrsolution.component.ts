@@ -15,5 +15,4 @@ export class PbrsolutionComponent implements OnInit {
   ngOnInit() {
     this.authorized = this.authService.getToken() ? true : false;
   }
-
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { fadeAnimation } from '../../animations'
 
 @Component({
     selector: 'app-content-layout',
     templateUrl: './content-layout.component.html',
-    styleUrls: ['./content-layout.component.scss']
+    styleUrls: ['./content-layout.component.scss'],
+    animations: [fadeAnimation]
 })
 
 export class ContentLayoutComponent {
@@ -25,5 +27,11 @@ export class ContentLayoutComponent {
                 }
             }
         });
+    }
+
+    getPage(outlet) {
+        console.log(outlet.activatedRouteData['title'] || '');
+        // o.isActivated ? o.activatedRoute : ''
+        return outlet.activatedRouteData['title'] || '';
     }
 }

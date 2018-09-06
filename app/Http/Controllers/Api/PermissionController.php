@@ -29,12 +29,12 @@ class PermissionController extends ApiController
         $diagnotics = $user->permissions()
             ->where('diagnotics', 1)
             ->exists();
-
         return $this->respond([
             'disease_prevalence_ana' => $disease_prevalence_ana,
             'treatment_mapping' => $treatment_mapping,
             'patient_forecasting' => $patient_forecasting,
             'diagnotics' => $diagnotics,
+            'mkt' => $user->permission_for_mkt()->first()
         ]);
     }
 }

@@ -78,7 +78,54 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                        </table>                    
+                        </table>
+
+                        <table class="table table-bordered table-hover text-center" style="margin-top: 30px">
+                            <thead>
+                                <tr>
+                                    <th>Market Analytics</th>
+                                    <th>Total Market View</th>
+                                    <th>Therapy Area Analytics</th>
+                                    <th>Brand Analytics</th>
+                                    <th>Molecule (INN) Analytics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="all-mkt" />
+                                    </td>
+                                    <td>
+                                        @if (isset($mkt_permission['total_market_view']) && $mkt_permission['total_market_view'])
+                                            <input type="checkbox" name="mkt_permission[total_market_view]" checked class="permission-mkt" />
+                                        @else
+                                            <input type="checkbox" name="mkt_permission[total_market_view]" class="permission-mkt" />
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (isset($mkt_permission['therapy_area_ana']) && $mkt_permission['therapy_area_ana'])
+                                            <input type="checkbox" name="mkt_permission[therapy_area_ana]" checked class="permission-mkt" />
+                                        @else
+                                            <input type="checkbox" name="mkt_permission[therapy_area_ana]" class="permission-mkt" />
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (isset($mkt_permission['brand_ana']) && $mkt_permission['brand_ana'])
+                                            <input type="checkbox" name="mkt_permission[brand_ana]" checked class="permission-mkt" />
+                                        @else
+                                            <input type="checkbox" name="mkt_permission[brand_ana]" class="permission-mkt" />
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (isset($mkt_permission['molecule_ana']) && $mkt_permission['molecule_ana'])
+                                            <input type="checkbox" name="mkt_permission[molecule_ana]" checked class="permission-mkt" />
+                                        @else
+                                            <input type="checkbox" name="mkt_permission[molecule_ana]" class="permission-mkt" />
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-success">
@@ -118,6 +165,27 @@
                 $("input[permissionid=" + id + "]").iCheck('uncheck');
             });
         $("input[type='checkbox'].permission")
+            .iCheck({
+                checkboxClass: 'icheckbox_minimal',
+                radioClass: 'iradio_minimal'
+            })
+            .on('ifChecked', function(event) {
+            })
+            .on('ifUnchecked', function(event) {
+            });
+
+        $("input[type='checkbox'].all-mkt")
+            .iCheck({
+                checkboxClass: 'icheckbox_minimal',
+                radioClass: 'iradio_minimal'
+            })
+            .on('ifChecked', function(event) {
+                $("input.permission-mkt").iCheck('check');
+            })
+            .on('ifUnchecked', function(event) {
+                $("input.permission-mkt").iCheck('uncheck');
+            });
+        $("input[type='checkbox'].permission-mkt")
             .iCheck({
                 checkboxClass: 'icheckbox_minimal',
                 radioClass: 'iradio_minimal'

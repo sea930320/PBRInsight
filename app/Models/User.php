@@ -27,10 +27,8 @@ class User extends Authenticatable implements JWTSubject
         'is_admin',
         'company_name',
         'title',
-        'mailing_address',
         'city',
         'state',
-        'zip_code',
         'country',
         'telephone'
     ];
@@ -65,14 +63,13 @@ class User extends Authenticatable implements JWTSubject
         'is_admin',
         'company_name',
         'title',
-        'mailing_address',
         'city',
         'state',
-        'zip_code',
         'country',
         'telephone',
 
-        'permissions'
+        'permissions',
+        'permission_for_mkt'
     ];
 
     /**
@@ -128,5 +125,13 @@ class User extends Authenticatable implements JWTSubject
                     'patient_forecasting',
                     'diagnotics'
                 );
+    }
+
+    /**
+     * The permissions that belong to the user.
+     */
+    public function permission_for_mkt()
+    {
+        return $this->hasOne(MktPermission::class);
     }
 }

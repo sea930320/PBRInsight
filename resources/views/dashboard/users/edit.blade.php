@@ -32,16 +32,58 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label>Name *</label>
-                            <input type="text" class="form-control" name="name" @isset($user) value="{{ $user->name }}" @endisset>
+                            <input type="text" class="form-control" name="name" @isset($user) value="{{ $user->name }}" @endisset required>
                             @if($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
                         <div class="form-group">
                             <label>Email *</label>
-                            <input type="text" class="form-control" name="email" @isset($user) value="{{ $user->email }}" @endisset>
+                            <input type="text" class="form-control" name="email" @isset($user) value="{{ $user->email }}" @endisset required>
                             @if($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Company Name *</label>
+                            <input type="text" class="form-control" name="company_name" @isset($user) value="{{ $user->company_name }}" @endisset required>
+                            @if($errors->has('company_name'))
+                                <span class="text-danger">{{ $errors->first('company_name') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Title in the Company *</label>
+                            <input type="text" class="form-control" name="title" @isset($user) value="{{ $user->title }}" @endisset required>
+                            @if($errors->has('title'))
+                                <span class="text-danger">{{ $errors->first('title') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>city</label>
+                            <input type="text" class="form-control" name="city" @isset($user) value="{{ $user->city }}" @endisset>
+                            @if($errors->has('city'))
+                                <span class="text-danger">{{ $errors->first('city') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>State/Province</label>
+                            <input type="text" class="form-control" name="state" @isset($user) value="{{ $user->state }}" @endisset>
+                            @if($errors->has('state'))
+                                <span class="text-danger">{{ $errors->first('state') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Country *</label>
+                            <input type="text" class="form-control" name="country" @isset($user) value="{{ $user->country }}" @endisset required>
+                            @if($errors->has('country'))
+                                <span class="text-danger">{{ $errors->first('country') }}</span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label>Telephone *</label>
+                            <input type="text" class="form-control" name="telephone" @isset($user) value="{{ $user->telephone }}" @endisset required>
+                            @if($errors->has('telephone'))
+                                <span class="text-danger">{{ $errors->first('telephone') }}</span>
                             @endif
                         </div>
                         <hr>

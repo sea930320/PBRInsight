@@ -27,7 +27,12 @@ class UserUpdate extends BaseRequest
             'user_id' => 'required|exists:users,id',
             'email' => 'required|string',
             'name' => 'required|string',
-            'password' => 'nullable|string'
+            'company_name' => 'required|string',
+            'title' => 'required|string',
+            'city' => 'nullable|string',
+            'state' => 'nullable|string',
+            'country' => 'required|string',
+            'telephone' => 'required|string',
         ];
     }
 }

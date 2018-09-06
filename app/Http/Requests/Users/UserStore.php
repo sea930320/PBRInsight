@@ -24,9 +24,15 @@ class UserStore extends BaseRequest
     public function rules()
     {
         return [
-            'email' => 'required|string',
+            'email' => 'required|string|unique:users',
             'name' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'company_name' => 'required|string',
+            'title' => 'required|string',
+            'city' => 'nullable|string',
+            'state' => 'nullable|string',
+            'country' => 'required|string',
+            'telephone' => 'required|string',
         ];
     }
 }

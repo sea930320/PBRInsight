@@ -30,12 +30,11 @@ class RequestAccessStore extends BaseRequest
             'user_info.email' => 'required|string',
             'user_info.first_name' => 'required|string',
             'user_info.last_name' => 'required|string',
-            'user_info.mailing_address' => 'nullable|string',
             'user_info.state' => 'nullable|string',
             'user_info.telephone' => 'required|string',
             'user_info.title' => 'required|string',
-            'user_info.zip_code' => 'required|string',
-            'therapy_areas' => 'required'
+            'therapy_areas' => 'required',
+            'market_ana' => 'required'
         ];
     }
 }

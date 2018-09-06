@@ -18,8 +18,8 @@ class RequestAccessController extends ApiController
     public function store(RequestAccessStore $request): JsonResponse
     {
         $queryParams = $request->validatedOnly();
-        $mailing_address = $queryParams["user_info"]["mailing_address"] ?? $queryParams["user_info"]["email"];
-        $ram = new RequestAccessMail($queryParams, $mailing_address);
+        $email =  $queryParams["user_info"]["email"];
+        $ram = new RequestAccessMail($queryParams, $email);
         Mail::to(config('mail.request_to_email'))->send($ram);
 
         return $this->respond([

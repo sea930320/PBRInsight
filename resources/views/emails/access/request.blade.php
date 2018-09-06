@@ -28,12 +28,6 @@
             {{$requestForm["user_info"]["title"]}}
         </div>
         <div class="col-md-3">
-            <b>Mailing Address:</b>
-        </div>
-        <div class="col-md-9">
-            {{$requestForm["user_info"]["mailing_address"]}}
-        </div>
-        <div class="col-md-3">
             <b>City</b>
         </div>
         <div class="col-md-9">
@@ -44,12 +38,6 @@
         </div>
         <div class="col-md-9">
             {{$requestForm["user_info"]["state"]}}
-        </div>
-        <div class="col-md-3">
-            <b>Zip/Postal Code:</b>
-        </div>
-        <div class="col-md-9">
-            {{$requestForm["user_info"]["zip_code"]}}
         </div>
         <div class="col-md-3">
             <b>Country:</b>
@@ -72,6 +60,12 @@
 @foreach ($requestForm["therapy_areas"] as $therapyArea)
 | <div class="text-left">{{$therapyArea["name"]}}</div> | @if ($therapyArea["disesePrevalenceAna"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif | @if ($therapyArea["treateMapping"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif |  @if ($therapyArea["patientForecasting"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif | @if ($therapyArea["diagnostics"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif |
 @endforeach
+@endcomponent
+
+@component('mail::table')
+| Total Market View | Therapy Area Analytics | Brand Analytics | Molecule (INN) Analytics |
+| ------------- |:-------------:| --------:| --------:| --------:|
+| @if ($requestForm["market_ana"]["total_market_view"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif | @if ($requestForm["market_ana"]["therapy_area_ana"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif |  @if ($requestForm["market_ana"]["brand_ana"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif | @if ($requestForm["market_ana"]["molecule_ana"]) <input type="checkbox" checked disabled/> @else <input type="checkbox" disabled/> @endif |
 @endcomponent
 
 @endcomponent

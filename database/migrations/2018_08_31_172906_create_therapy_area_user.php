@@ -41,8 +41,6 @@ class CreateTherapyAreaUser extends Migration
      */
     public function down()
     {
-        Schema::table('therapy_area_user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('therapy_area_user');
     }
 }

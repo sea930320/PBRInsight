@@ -6,4 +6,5 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./content-layout-page.component.scss']
 })
 export class ContentLayoutPageComponent {
+
 }

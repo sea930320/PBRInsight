@@ -18,12 +18,12 @@ class RequestAccessMail extends Mailable
      *
      * @return void
      */
-    public function __construct($requestForm, $mailing_address)
+    public function __construct($requestForm, $email)
     {
         $this->requestForm = $requestForm;
         // $this->from = [
         //     [
-        //         'address' => $mailing_address,
+        //         'address' => $email,
         //         'name' => $requestForm["user_info"]["first_name"]. " ". $requestForm["user_info"]["last_name"]
         //     ]
         // ];

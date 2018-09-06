@@ -17,6 +17,13 @@ export class RequestAccessFormComponent implements OnInit {
   therapyAreasRoute: string;
   requestAccessRoute: string;
   therapyAreas = []
+  marketAna = {
+    select_all: 0,
+    total_market_view: 0,
+    therapy_area_ana: 0,
+    brand_ana: 0,
+    molecule_ana: 0
+  }
   countries = countriesJson
 
   constructor(private constants: GlobalConstants, private http: HttpClient, private authService: AuthService) {
@@ -27,6 +34,7 @@ export class RequestAccessFormComponent implements OnInit {
       .subscribe((res: any) => {
         this.therapyAreas = res.therapy_areas
         this.therapyAreas.forEach(therapyArea => {
+          therapyArea.selectAll = false
           therapyArea.disesePrevalenceAna = false
           therapyArea.treateMapping = false
           therapyArea.patientForecasting = false
@@ -44,10 +52,8 @@ export class RequestAccessFormComponent implements OnInit {
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'company_name': new FormControl(null, [Validators.required]),
       'title': new FormControl(null, [Validators.required]),
-      'mailing_address': new FormControl(null, [this.customEmailValidator]),
       'city': new FormControl(null, []),
       'state': new FormControl(null, []),
-      'zip_code': new FormControl(null, [Validators.required]),
       'country': new FormControl(null, [Validators.required]),
       'telephone': new FormControl(null, [Validators.required]),
     });
@@ -77,6 +83,17 @@ export class RequestAccessFormComponent implements OnInit {
     return false;
   }
 
+  isMarketAnaChecked() {
+    for (var key in this.marketAna) {
+      if (this.marketAna.hasOwnProperty(key)) {
+        if (this.marketAna[key] === 1 || this.marketAna[key] === true) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   onChangeSwitchEvent($event, therapyArea) {
     if ($event) {
       therapyArea.disesePrevalenceAna = true;
@@ -91,23 +108,51 @@ export class RequestAccessFormComponent implements OnInit {
     }
   }
 
+  onChangeSwitchEventForMktAna($event) {
+    if ($event) {
+      this.marketAna = {
+        select_all: $event,
+        total_market_view: 1,
+        therapy_area_ana: 1,
+        brand_ana: 1,
+        molecule_ana: 1
+      }
+    } else {
+      this.marketAna = {
+        select_all: $event,
+        total_market_view: 0,
+        therapy_area_ana: 0,
+        brand_ana: 0,
+        molecule_ana: 0
+      }
+    }
+  }
   submitForm() {
-    if (!this.userInfoForm.valid || !this.isTherapyAreaChecked()) {
+    if (!this.userInfoForm.valid || (!this.isTherapyAreaChecked() && !this.isMarketAnaChecked())) {
       return;
     }
     let userInfo = this.userInfoForm.value;
     this.http.post<any>(this.requestAccessRoute, {
       user_info: userInfo,
-      therapy_areas: this.therapyAreas
+      therapy_areas: this.therapyAreas,
+      market_ana: this.marketAna
     })
       .subscribe((res: any) => {
         swal("Success", res.message, "success");
         this.userInfoForm.reset();
         this.therapyAreas.forEach(therapyArea => {
+          therapyArea.selectAll = false;
           therapyArea.disesePrevalenceAna = false
           therapyArea.treateMapping = false
           therapyArea.patientForecasting = false
           therapyArea.diagnostics = false
+          this.marketAna = {
+            select_all: 0,
+            total_market_view: 0,
+            therapy_area_ana: 0,
+            brand_ana: 0,
+            molecule_ana: 0
+          }
         })
       })
   }

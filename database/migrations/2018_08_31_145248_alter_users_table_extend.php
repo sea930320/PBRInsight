@@ -17,10 +17,8 @@ class AlterUsersTableExtend extends Migration
             $table->boolean('is_admin')->default(FALSE);
             $table->string('company_name')->default('');
             $table->string('title')->default('');
-            $table->string('mailing_address')->nullable()->default(null);
             $table->string('city')->nullable()->default(null);
             $table->string('state')->nullable()->default(null);
-            $table->string('zip_code')->default('');
             $table->string('country')->default('');
             $table->string('telephone')->default('');
         });
@@ -36,11 +34,9 @@ class AlterUsersTableExtend extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn(['is_admin']);
             $table->dropColumn(['company_name']);
-            $table->dropColumn(['title']);
-            $table->dropColumn(['mailing_address']);            
+            $table->dropColumn(['title']);       
             $table->dropColumn(['city']);
             $table->dropColumn(['state']);
-            $table->dropColumn(['zip_code']);
             $table->dropColumn(['country']);
             $table->dropColumn(['telephone']);
         });

@@ -45,8 +45,38 @@ export class SidebarComponent implements OnInit {
                                 return false
                             }
                             break;
+                        case "Market Data Analytics":
+                            let submenu = menuItem.submenu.filter(submenu => {
+                                switch (submenu.title) {
+                                    case "Market View":
+                                        if (!res.mkt.total_market_view) {
+                                            return false;
+                                        }
+                                        break;
+                                    case "Therapy Area":
+                                        if (!res.mkt.therapy_area_ana) {
+                                            return false;
+                                        }
+                                        break;
+                                    case "Brand Ana":
+                                        if (!res.mkt.brand_ana) {
+                                            return false;
+                                        }
+                                        break;
+                                    case "Molecule(INN) Ana":
+                                        if (!res.mkt.molecule_ana) {
+                                            return false;
+                                        }
+                                        break;
+                                }
+                                return true;
+                            })
+                            menuItem.submenu = submenu
+                            if (submenu.length === 0)
+                                return false;
+                            break;
                     }
-                    return menuItem
+                    return true;
                 });
             });
     }

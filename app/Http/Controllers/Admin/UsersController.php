@@ -10,6 +10,7 @@ use Prologue\Alerts\Facades\Alert;
 
 use App\Models\User;
 use App\Models\TherapyArea;
+use App\Models\MktPermission;
 
 class UsersController extends Controller
 {
@@ -24,16 +25,23 @@ class UsersController extends Controller
     private $therapyArea;
 
     /**
+     * @var MktPermission
+     */
+    private $mktPermission;
+
+    /**
      * UsersController constructor.
      *
      * @param User $user
      * @param TherapyArea $therapyArea
+     * @param MktPermission $mktPermission
      */
 
-    public function __construct(User $user, TherapyArea $therapyArea)
+    public function __construct(User $user, TherapyArea $therapyArea, MktPermission $mktPermission)
     {
         $this->user = $user;
         $this->therapyArea = $therapyArea;
+        $this->mktPermission = $mktPermission;
     }
 
     /**
@@ -77,7 +85,13 @@ class UsersController extends Controller
         $this->user->create([
             'email' => $request->get('email'),
             'name' => $request->get('name'),
-            'password' => bcrypt($request->get('password'))
+            'password' => bcrypt($request->get('password')),
+            'company_name' => $request->get('company_name'),
+            'title' => $request->get('title'),
+            'city' => $request->get('city') ?? '',
+            'state' => $request->get('state') ?? '',
+            'country' => $request->get('country'),
+            'telephone' => $request->get('telephone'),
         ]);
 
         Alert::success('User successfully created')->flash();
@@ -99,6 +113,12 @@ class UsersController extends Controller
         $user->update([
         	'email' => $request->get('email'),
             'name' => $request->get('name'),
+            'company_name' => $request->get('company_name'),
+            'title' => $request->get('title'),
+            'city' => $request->get('city'),
+            'state' => $request->get('state'),
+            'country' => $request->get('country'),
+            'telephone' => $request->get('telephone'),
         ]);
 
         if (isset($queryParams['password'])) {
@@ -140,7 +160,7 @@ class UsersController extends Controller
     public function editPermissions(int $id)
     {
         $user = $this->user
-            ->with(['permissions'])
+            ->with(['permissions', 'permission_for_mkt'])
             ->findOrFail($id)
             ->toArray();
         $therapyAreas =$this->therapyArea
@@ -157,7 +177,8 @@ class UsersController extends Controller
 
         return view('dashboard.users.edit_permission', [ 
             'user' => $user,
-            'permissions' => $permissions
+            'permissions' => $permissions,
+            'mkt_permission' => $user['permission_for_mkt']
         ]);
     }
 
@@ -177,9 +198,11 @@ class UsersController extends Controller
      */
     public function savePermissions(int $id, Request $request)
     {
+        
         $user = $this->user
             ->findOrFail($id);
         $user->permissions()->detach();
+        $user->permission_for_mkt()->delete();
 
         $das = $request->get('disease_prevalence_ana');
         $tms = $request->get('treatment_mapping');
@@ -197,6 +220,18 @@ class UsersController extends Controller
         if ($dgs) {
             $this->syncPivot($user, $dgs, 'diagnotics');
         }
+
+        // save to mkt_permissions
+        $mktPermission = $request->get('mkt_permission');
+        if (isset($mktPermission)) {
+            $this->mktPermission->create([
+                'user_id' => $id,
+                'total_market_view' => isset($mktPermission['total_market_view']) ? 1:0,
+                'therapy_area_ana' => isset($mktPermission['therapy_area_ana']) ? 1:0,
+                'brand_ana' => isset($mktPermission['brand_ana']) ? 1:0,
+                'molecule_ana' => isset($mktPermission['molecule_ana']) ? 1:0,
+            ]);
+        }        
 
         Alert::success($user->name . ' has been privileged successfully')->flash();
 

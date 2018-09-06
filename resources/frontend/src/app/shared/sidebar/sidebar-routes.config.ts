@@ -30,8 +30,8 @@ export const ROUTES: RouteInfo[] = [
         submenu: [
             { path: '/market-data-analytics/market-view', title: 'Market View', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/market-data-analytics/therapy-area', title: 'Therapy Area', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/market-data-analytics/brand', title: 'Brand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/market-data-analytics/molecule', title: 'Molecule(INN)', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/market-data-analytics/brand', title: 'Brand Ana', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/market-data-analytics/molecule', title: 'Molecule(INN) Ana', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         ]
     },
     // {
