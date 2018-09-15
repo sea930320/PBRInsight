@@ -58,7 +58,7 @@ class DiseasePrevalenceController extends ApiController
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
             ->setQueryParams($queryParams);
-        $total = $individualPrevalences->count();
+        $total = $individualPrevalences->distinct('patient')->count('patient');
 
         $individualDiseases = $this->disease
             ->select(['id', 'name'])
@@ -86,7 +86,7 @@ class DiseasePrevalenceController extends ApiController
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
             ->setQueryParams($queryParams);
-        $total = $individualPrevalences->count();
+        $total = $individualPrevalences->distinct('patient')->count('patient');
 
         $individualPrevalences = $individualPrevalences
             ->select('disease_id', DB::raw("count(*) as total"))
@@ -117,24 +117,6 @@ class DiseasePrevalenceController extends ApiController
      */
     public function diseaseByCategory(DiseaseByCategoryIndex $request): JsonResponse
     {
-        // $queryParams = $request->validatedOnly();
-        // $queryBuilder = new IndividualDiseaseQueryBuilder();
-        // $individualPrevalences = $queryBuilder
-        //     ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
-        //     ->setQueryParams($queryParams);
-        // $individualDiseases = $this->disease
-        //     ->where('therapy_area_id', $queryParams['therapy_area_id'])
-        //     ->select(['id', 'name'])
-        //     ->pluck('name','id')->all();
-        // return $this->respond([
-        //     'total' => $individualPrevalences->count(),
-        //     'individualPrevalencesByCategory' => $individualPrevalences
-        //         ->select(['disease_id', DB::raw('count(*) as total')])
-        //         ->groupBy('disease_id')
-        //         ->pluck('total','disease_id')->all(),
-        //     'individualDiseasesByCategory' => $individualDiseases
-        // ]);
-
         $queryParams = $request->validatedOnly();
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
@@ -145,7 +127,7 @@ class DiseasePrevalenceController extends ApiController
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
         return $this->respond([
-            'total' => $individualPrevalences->count(),
+            'total' => $individualPrevalences->distinct('patient')->count('patient'),
             'individualPrevalencesByCategory' => $individualPrevalences                
                 ->select('disease_id', DB::raw("count(*) as total"))
                 ->groupBy(['disease_id'])

@@ -86,7 +86,7 @@ class TherapyAreaLevelShareController extends ApiController
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $atcShares->count(),
+            'total' => $atcShares->distinct('patient')->count('patient'),
             'atcShares' => $atcShares
                 ->select(['atc'. $queryParams['atc_level']. '_id', DB::raw('count(*) as total')])
                 ->groupBy('atc'. $queryParams['atc_level']. '_id')
@@ -112,7 +112,7 @@ class TherapyAreaLevelShareController extends ApiController
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $atcShares->count(),
+            'total' => $atcShares->distinct('patient')->count('patient'),
             'atcShares' => $atcShares
                 ->select(['atc'. $queryParams['atc_level']. '_id', DB::raw('count(*) as total')])
                 ->groupBy('atc'. $queryParams['atc_level']. '_id')

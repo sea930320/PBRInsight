@@ -63,7 +63,7 @@ class BrandMoleculeController extends ApiController
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $brandPrevalences->count(),
+            'total' => $brandPrevalences->distinct('patient')->count('patient'),
             'brandPrevalences' => $brandPrevalences
                 ->select(['brand_id', DB::raw('count(*) as total')])
                 ->groupBy('brand_id')
@@ -94,7 +94,7 @@ class BrandMoleculeController extends ApiController
             });
         }
         return $this->respond([
-            'total' => $acPrevalences->count(),
+            'total' => $acPrevalences->distinct('patient')->count('patient'),
             'acPrevalences' => $acPrevalences
                 ->select(['active_constituent', DB::raw('count(*) as total')])
                 ->groupBy('active_constituent')

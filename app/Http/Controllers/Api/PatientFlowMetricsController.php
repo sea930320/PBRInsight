@@ -97,7 +97,7 @@ class PatientFlowMetricsController extends ApiController
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $brandPrevalences->count(),
+            'total' => $brandPrevalences->distinct('patient')->count('patient'),
             'brandPrevalences' => $brandPrevalences
                 ->select(['brand_id', DB::raw('count(*) as total')])
                 ->groupBy('brand_id')
@@ -123,7 +123,7 @@ class PatientFlowMetricsController extends ApiController
             $acPrevalences = $acPrevalences->where('disease_id', $queryParams['disease_id']);
         }
         return $this->respond([
-            'total' => $acPrevalences->count(),
+            'total' => $acPrevalences->distinct('patient')->count('patient'),
             'acPrevalences' => $acPrevalences
                 ->select(['active_constituent', DB::raw('count(*) as total')])
                 ->groupBy('active_constituent')
@@ -150,7 +150,7 @@ class PatientFlowMetricsController extends ApiController
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $atcPrevalences->count(),
+            'total' => $atcPrevalences->distinct('patient')->count('patient'),
             'atcPrevalences' => $atcPrevalences
                 ->select(['atc'. $queryParams['atc_level']. '_id', DB::raw('count(*) as total')])
                 ->groupBy('atc'. $queryParams['atc_level']. '_id')
