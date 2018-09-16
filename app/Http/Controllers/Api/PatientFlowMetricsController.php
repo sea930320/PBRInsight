@@ -115,20 +115,44 @@ class PatientFlowMetricsController extends ApiController
     {
         $queryParams = $request->validatedOnly();
         $queryBuilder = new DiseaseByAcQueryBuilder();
+        // $acPrevalences = $queryBuilder
+        //     ->setQuery($this->diseasePrevalence->query())
+        //     ->setQueryParams($queryParams);
+        
         $acPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
             ->setQueryParams($queryParams);
-        $totalTb = $acPrevalences->count();
+        $totalTb = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
+        $total = $totalTb;
         if (isset($queryParams['disease_id'])) {
             $acPrevalences = $acPrevalences->where('disease_id', $queryParams['disease_id']);
+            $total = $queryBuilder
+                ->setQuery($this->diseasePrevalence->query())
+                ->setQueryParams($queryParams)
+                ->where('disease_id', $queryParams['disease_id'])
+                ->distinct('patient')
+                ->count('patient');
         }
+        $acPrevalences = $acPrevalences
+            ->select('active_constituent', DB::raw("count(active_constituent) as total"))
+            ->groupBy(['active_constituent', 'patient'])
+            ->get();
         return $this->respond([
-            'total' => $acPrevalences->distinct('patient')->count('patient'),
+            'total' => $total,
+            // 'acPrevalences' => $acPrevalences
+            //     ->select(['active_constituent', DB::raw('count(*) as total')])
+            //     ->groupBy('active_constituent')
+            //     ->orderBy('active_constituent')
+            //     ->pluck('total','active_constituent')->all(),
             'acPrevalences' => $acPrevalences
-                ->select(['active_constituent', DB::raw('count(*) as total')])
-                ->groupBy('active_constituent')
-                ->orderBy('active_constituent')
-                ->pluck('total','active_constituent')->all(),
+                ->groupBy(['active_constituent'])
+                ->map(function($item, $key) {
+                    return collect($item)->count();
+                }),
             'total_tb' => $totalTb
         ]);
     }
@@ -144,17 +168,27 @@ class PatientFlowMetricsController extends ApiController
         $queryBuilder = new DiseaseByAtcQueryBuilder();
         $atcPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
-            ->setQueryParams($queryParams);
+            ->setQueryParams($queryParams)
+            ->select('atc'. $queryParams['atc_level']. '_id', DB::raw("count(".'atc'. $queryParams['atc_level']. '_id'. ") as total"))
+            ->groupBy(['atc'. $queryParams['atc_level']. '_id', 'patient'])
+            ->get();        
+        $total = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
+
         $atcs = $this->{'atc'. $queryParams['atc_level']}
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
             
         return $this->respond([
-            'total' => $atcPrevalences->distinct('patient')->count('patient'),
+            'total' => $total,
             'atcPrevalences' => $atcPrevalences
-                ->select(['atc'. $queryParams['atc_level']. '_id', DB::raw('count(*) as total')])
-                ->groupBy('atc'. $queryParams['atc_level']. '_id')
-                ->pluck('total','atc'. $queryParams['atc_level']. '_id')->all(),
+                ->groupBy(['atc'. $queryParams['atc_level']. '_id'])
+                ->map(function($item, $key) {
+                    return collect($item)->count();
+                }),
             'atcs' => $atcs
         ]);
     }

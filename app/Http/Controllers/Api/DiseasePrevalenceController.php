@@ -10,6 +10,7 @@ use App\Http\Requests\DiseasePrevalence\DiseaseByCategoryIndex;
 use App\Models\Disease;
 use App\Models\DiseasePrevalence;
 use App\Models\TherapyArea;
+use App\Models\ClinicType;
 
 use Illuminate\Http\JsonResponse;
 use DB;
@@ -33,17 +34,24 @@ class DiseasePrevalenceController extends ApiController
     private $therapyArea;
 
     /**
+     * @var ClinicType
+     */
+    private $clinicType;
+
+    /**
      * DiseasePrevalenceController constructor.
      *
      * @param Disease $disease
      * @param DiseasePrevalence $diseasePrevalence
      * @param TherapyArea $therapyArea
+     * @param ClinicType $clinicType
      */
-    public function __construct(Disease $disease, DiseasePrevalence $diseasePrevalence, TherapyArea $therapyArea)
+    public function __construct(Disease $disease, DiseasePrevalence $diseasePrevalence, TherapyArea $therapyArea, ClinicType $clinicType)
     {
         $this->disease = $disease;
         $this->diseasePrevalence = $diseasePrevalence;
         $this->therapyArea = $therapyArea;
+        $this->clinicType = $clinicType;
     }
 
     /**
@@ -57,19 +65,30 @@ class DiseasePrevalenceController extends ApiController
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
-            ->setQueryParams($queryParams);
-        $total = $individualPrevalences->distinct('patient')->count('patient');
+            ->setQueryParams($queryParams)
+            ->select('disease_id', DB::raw("count(disease_id) as total"))
+            ->groupBy(['disease_id', 'patient'])
+            ->get();
+        $total = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
 
         $individualDiseases = $this->disease
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
-            
+        $mul = 1;
+        if (isset($queryParams['clinic_type_id']) && isset($queryParams['start_year']) && $queryParams['start_year'] == 2017) {
+            $mul = $this->clinicType->find($queryParams['clinic_type_id'])['2017_multiply'];
+        }
         return $this->respond([
             'total' => $total,
             'individualPrevalences' => $individualPrevalences
-                ->select('disease_id', DB::raw("count(*) as total"))
                 ->groupBy(['disease_id'])
-                ->pluck('total','disease_id')->all(),
+                ->map(function($item, $key) use ($mul) {
+                    return collect($item)->count() * $mul;
+                }),
             'individualDiseases' => $individualDiseases
         ]);
     }
@@ -85,13 +104,26 @@ class DiseasePrevalenceController extends ApiController
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
-            ->setQueryParams($queryParams);
-        $total = $individualPrevalences->distinct('patient')->count('patient');
-
+            ->setQueryParams($queryParams)
+            ->select('disease_id', DB::raw("count(disease_id) as total"))
+            ->groupBy(['disease_id', 'patient'])
+            ->get();
+        $total = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
+        
+        $mul = 1;
+        if (isset($queryParams['clinic_type_id']) && isset($queryParams['start_year']) && $queryParams['start_year'] == 2017) {
+            $mul = $this->clinicType->find($queryParams['clinic_type_id'])['2017_multiply'];
+        }
         $individualPrevalences = $individualPrevalences
-            ->select('disease_id', DB::raw("count(*) as total"))
             ->groupBy(['disease_id'])
-            ->pluck('total','disease_id')->all();
+            ->map(function($item, $key) use ($mul) {
+                return collect($item)->count() * $mul;
+            })
+            ->toArray();
         $therapyAreas = $this->therapyArea->with(['diseases'])->get()->toArray();
         $therapyAreaPrevalences = [];
         foreach ($therapyAreas as $key => $therapyArea) {
@@ -121,17 +153,30 @@ class DiseasePrevalenceController extends ApiController
         $queryBuilder = new IndividualDiseaseQueryBuilder();
         $individualPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
-            ->setQueryParams($queryParams);
+            ->setQueryParams($queryParams)
+            ->select('disease_id', DB::raw("count(disease_id) as total"))
+            ->groupBy(['disease_id', 'patient'])
+            ->get();
+        $total = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
         $individualDiseases = $this->disease
             ->where('therapy_area_id', $queryParams['therapy_area_id'])
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
+        $mul = 1;
+        if (isset($queryParams['clinic_type_id']) && isset($queryParams['start_year']) && $queryParams['start_year'] == 2017) {
+            $mul = $this->clinicType->find($queryParams['clinic_type_id'])['2017_multiply'];
+        }
         return $this->respond([
-            'total' => $individualPrevalences->distinct('patient')->count('patient'),
-            'individualPrevalencesByCategory' => $individualPrevalences                
-                ->select('disease_id', DB::raw("count(*) as total"))
+            'total' => $total,
+            'individualPrevalencesByCategory' => $individualPrevalences
                 ->groupBy(['disease_id'])
-                ->pluck('total','disease_id')->all(),
+                ->map(function($item, $key) use ($mul) {
+                    return collect($item)->count() * $mul;
+                }),
             'individualDiseasesByCategory' => $individualDiseases
         ]);
     }

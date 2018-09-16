@@ -12,6 +12,7 @@ use App\Models\Atc5;
 use App\Models\Atc4;
 use App\Models\Atc3;
 use App\Models\Atc2;
+use App\Models\ClinicType;
 
 use Illuminate\Http\JsonResponse;
 use DB;
@@ -50,6 +51,11 @@ class TherapyAreaLevelShareController extends ApiController
     private $atc2;
 
     /**
+     * @var ClinicType
+     */
+    private $clinicType;
+
+    /**
      * DiseasePrevalenceController constructor.
      *
      * @param Disease $disease
@@ -58,8 +64,9 @@ class TherapyAreaLevelShareController extends ApiController
      * @param Atc4 $atc4
      * @param Atc3 $atc3
      * @param Atc2 $atc2
+     * @param ClinicType $clinicType
      */
-    public function __construct(Disease $disease, DPForTM $diseasePrevalence, Atc5 $atc5, Atc4 $atc4, Atc3 $atc3, Atc2 $atc2)
+    public function __construct(Disease $disease, DPForTM $diseasePrevalence, Atc5 $atc5, Atc4 $atc4, Atc3 $atc3, Atc2 $atc2, ClinicType $clinicType)
     {
         $this->disease = $disease;
         $this->diseasePrevalence = $diseasePrevalence;
@@ -67,6 +74,7 @@ class TherapyAreaLevelShareController extends ApiController
         $this->atc4 = $atc4;
         $this->atc3 = $atc3;
         $this->atc2 = $atc2;
+        $this->clinicType = $clinicType;
     }
 
     /**
@@ -80,17 +88,31 @@ class TherapyAreaLevelShareController extends ApiController
         $queryBuilder = new TherapyAreaLevelQueryBuilder();
         $atcShares = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
-            ->setQueryParams($queryParams);
+            ->setQueryParams($queryParams)
+            ->select('atc'. $queryParams['atc_level']. '_id', DB::raw("count(".'atc'. $queryParams['atc_level']. '_id'. ") as total"))
+            ->groupBy(['atc'. $queryParams['atc_level']. '_id', 'patient'])
+            ->get();
+        $total = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
         $atcs = $this->{'atc'. $queryParams['atc_level']}
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
+
+        $mul = 1;
+        if (isset($queryParams['clinic_type_id']) && isset($queryParams['start_year']) && $queryParams['start_year'] == 2017) {
+            $mul = $this->clinicType->find($queryParams['clinic_type_id'])['2017_multiply'];
+        }
             
         return $this->respond([
-            'total' => $atcShares->distinct('patient')->count('patient'),
+            'total' => $total,
             'atcShares' => $atcShares
-                ->select(['atc'. $queryParams['atc_level']. '_id', DB::raw('count(*) as total')])
-                ->groupBy('atc'. $queryParams['atc_level']. '_id')
-                ->pluck('total','atc'. $queryParams['atc_level']. '_id')->all(),
+                ->groupBy(['atc'. $queryParams['atc_level']. '_id'])
+                ->map(function($item, $key) use ($mul) {
+                    return collect($item)->count() * $mul;
+                }),
             'atcs' => $atcs
         ]);
     }
@@ -106,17 +128,30 @@ class TherapyAreaLevelShareController extends ApiController
         $queryBuilder = new TherapyAreaLevelQueryBuilder();
         $atcShares = $queryBuilder
             ->setQuery($this->diseasePrevalence->with(['disease', 'disease.therapy_area']))
-            ->setQueryParams($queryParams);
+            ->setQueryParams($queryParams)
+            ->select('atc'. $queryParams['atc_level']. '_id', DB::raw("count(".'atc'. $queryParams['atc_level']. '_id'. ") as total"))
+            ->groupBy(['atc'. $queryParams['atc_level']. '_id', 'patient'])
+            ->get();
+        $total = $queryBuilder
+            ->setQuery($this->diseasePrevalence->query())
+            ->setQueryParams($queryParams)
+            ->distinct('patient')
+            ->count('patient');
         $atcs = $this->{'atc'. $queryParams['atc_level']}
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
-            
+        
+        $mul = 1;
+        if (isset($queryParams['clinic_type_id']) && isset($queryParams['start_year']) && $queryParams['start_year'] == 2017) {
+            $mul = $this->clinicType->find($queryParams['clinic_type_id'])['2017_multiply'];
+        }    
         return $this->respond([
-            'total' => $atcShares->distinct('patient')->count('patient'),
+            'total' => $total,
             'atcShares' => $atcShares
-                ->select(['atc'. $queryParams['atc_level']. '_id', DB::raw('count(*) as total')])
-                ->groupBy('atc'. $queryParams['atc_level']. '_id')
-                ->pluck('total','atc'. $queryParams['atc_level']. '_id')->all(),
+                ->groupBy(['atc'. $queryParams['atc_level']. '_id'])
+                ->map(function($item, $key) use ($mul) {
+                    return collect($item)->count() * $mul;
+                }),
             'atcs' => $atcs
         ]);
     }

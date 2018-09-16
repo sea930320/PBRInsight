@@ -14,7 +14,7 @@ class ClinicType extends Model
     /**
      * @var array
      */
-    public $fillable = ['name', 'description'];
+    public $fillable = ['name', 'description', '2017_multiply'];
 
     
     /**
@@ -23,6 +23,7 @@ class ClinicType extends Model
     public $visible = [
         'id',
         'name',
-        'description'
+        'description',
+        '2017_multiply'
     ];
 }
