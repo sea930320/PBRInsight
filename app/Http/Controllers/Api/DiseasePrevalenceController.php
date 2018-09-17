@@ -102,11 +102,11 @@ class DiseasePrevalenceController extends ApiController
     {
         $queryParams = $request->validatedOnly();
         $queryBuilder = new IndividualDiseaseQueryBuilder();
-        $individualPrevalences = $queryBuilder
+        $therapyAreaPrevalences = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
             ->setQueryParams($queryParams)
-            ->select('disease_id', DB::raw("count(disease_id) as total"))
-            ->groupBy(['disease_id', 'patient'])
+            ->select('therapy_area_id', DB::raw("count(therapy_area_id) as total"))
+            ->groupBy(['therapy_area_id', 'patient'])
             ->get();
         $total = $queryBuilder
             ->setQuery($this->diseasePrevalence->query())
@@ -118,24 +118,22 @@ class DiseasePrevalenceController extends ApiController
         if (isset($queryParams['clinic_type_id']) && isset($queryParams['start_year']) && $queryParams['start_year'] == 2017) {
             $mul = $this->clinicType->find($queryParams['clinic_type_id'])['2017_multiply'];
         }
-        $individualPrevalences = $individualPrevalences
-            ->groupBy(['disease_id'])
-            ->map(function($item, $key) use ($mul) {
-                return collect($item)->count() * $mul;
-            })
-            ->toArray();
-        $therapyAreas = $this->therapyArea->with(['diseases'])->get()->toArray();
-        $therapyAreaPrevalences = [];
-        foreach ($therapyAreas as $key => $therapyArea) {
-            $count = 0;
-            foreach ($therapyArea['diseases'] as $key => $disease) {
-                $count += array_key_exists($disease['id'], $individualPrevalences) ? $individualPrevalences[$disease['id']]:0;
-            }
-            $therapyAreaPrevalences[$therapyArea['id']] = $count;
-        }
+        // $therapyAreas = $this->therapyArea->with(['diseases'])->get()->toArray();
+        // $therapyAreaPrevalences = [];
+        // foreach ($therapyAreas as $key => $therapyArea) {
+        //     $count = 0;
+        //     foreach ($therapyArea['diseases'] as $key => $disease) {
+        //         $count += array_key_exists($disease['id'], $individualPrevalences) ? $individualPrevalences[$disease['id']]:0;
+        //     }
+        //     $therapyAreaPrevalences[$therapyArea['id']] = $count;
+        // }
         return $this->respond([
             'total' => $total,
-            'therapyAreaPrevalences' => $therapyAreaPrevalences,
+            'therapyAreaPrevalences' => $therapyAreaPrevalences
+                ->groupBy(['therapy_area_id'])
+                ->map(function($item, $key) use ($mul) {
+                    return collect($item)->count() * $mul;
+                }),
             'therapyAreas' => $this->therapyArea
                 ->select(['id', 'name'])
                 ->pluck('name','id')->all()
