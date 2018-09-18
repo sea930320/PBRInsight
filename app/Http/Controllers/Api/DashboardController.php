@@ -86,61 +86,68 @@ class DashboardController extends ApiController
      */
     public function index(): JsonResponse
     {
-        $diseasePrevalenceCount = $this->diseasePrevalence->count();
+        // $diseasePrevalenceCount = $this->diseasePrevalence->distinct('patient')->count('patient');
         $marketDataCount = $this->marketData->count();
 
-        $datas = $this->diseasePrevalence
-            ->select('disease_id', DB::raw("count(disease_id) as total"))
-            ->groupBy(['disease_id'])
-            ->pluck('total','disease_id')
-            ->toArray();
-        arsort($datas);
-        $datas = array_slice($datas, 0, 5, TRUE);
-        $diseaseChart = [];
-        foreach ($datas as $key => $data) {
-            $disease = $this->disease->where('id', $key)->first()['name'];
-            $diseaseChart[$disease] = round($data / $diseasePrevalenceCount * 100, 2);
-        }
+        // $initialDatas = $this->diseasePrevalence
+        //     ->select('disease_id', 'therapy_area_id', 'atc2_id', 'atc3_id', 'patient')
+        //     ->get();
+        // $datas = $initialDatas
+        //     ->groupBy('disease_id')
+        //     ->map(function($item, $key) {
+        //         return collect($item)->groupBy('patient')->count();
+        //     })
+        //     ->toArray();
+        // arsort($datas);
+        // $datas = array_slice($datas, 0, 5, TRUE);
+        // $diseaseChart = [];
+        // foreach ($datas as $key => $data) {
+        //     $disease = $this->disease->where('id', $key)->first()['name'];
+        //     $diseaseChart[$disease] = round($data / $diseasePrevalenceCount * 100, 2);
+        // }
 
-        $datas = $this->diseasePrevalence            
-            ->select('therapy_area_id', DB::raw("count(therapy_area_id) as total"))
-            ->groupBy(['therapy_area_id'])
-            ->pluck('total','therapy_area_id')
-            ->toArray();        
-        arsort($datas);
-        $datas = array_slice($datas, 0, 5, TRUE);
-        $datas = array_slice($datas, 0, 5, TRUE);
-        $diseaseCategoriesChart = [];
-        foreach ($datas as $key => $data) {
-            $therapyArea = $this->therapyArea->where('id', $key)->first()['name'];
-            $diseaseCategoriesChart[$therapyArea] = round($data / $diseasePrevalenceCount * 100, 2);
-        }
+        // $datas = $initialDatas
+        //     ->groupBy(['therapy_area_id'])
+        //     ->map(function($item, $key) {
+        //         return collect($item)->groupBy('patient')->count();
+        //     })
+        //     ->toArray();
+        // arsort($datas);
+        // $datas = array_slice($datas, 0, 5, TRUE);
+        // $datas = array_slice($datas, 0, 5, TRUE);
+        // $diseaseCategoriesChart = [];
+        // foreach ($datas as $key => $data) {
+        //     $therapyArea = $this->therapyArea->where('id', $key)->first()['name'];
+        //     $diseaseCategoriesChart[$therapyArea] = round($data / $diseasePrevalenceCount * 100, 2);
+        // }
 
-        $datas = $this->diseasePrevalence            
-            ->select('atc2_id', DB::raw("count(atc2_id) as total"))
-            ->groupBy(['atc2_id'])
-            ->pluck('total','atc2_id')
-            ->toArray();
-        arsort($datas);
-        $datas = array_slice($datas, 0, 5, TRUE);
-        $treatmentMappingAtc2 = [];
-        foreach ($datas as $key => $data) {
-            $atc2 = $this->atc2->where('id', $key)->first()['name'];
-            $treatmentMappingAtc2[$atc2] = round($data / $diseasePrevalenceCount * 100, 2);
-        }
+        // $datas = $initialDatas
+        //     ->groupBy(['atc2_id'])
+        //     ->map(function($item, $key) {
+        //         return collect($item)->groupBy('patient')->count();
+        //     })
+        //     ->toArray();
+        // arsort($datas);
+        // $datas = array_slice($datas, 0, 5, TRUE);
+        // $treatmentMappingAtc2 = [];
+        // foreach ($datas as $key => $data) {
+        //     $atc2 = $this->atc2->where('id', $key)->first()['name'];
+        //     $treatmentMappingAtc2[$atc2] = round($data / $diseasePrevalenceCount * 100, 2);
+        // }
 
-        $datas = $this->diseasePrevalence            
-            ->select('atc3_id', DB::raw("count(atc3_id) as total"))
-            ->groupBy(['atc3_id'])
-            ->pluck('total','atc3_id')
-            ->toArray();        
-        arsort($datas);
-        $datas = array_slice($datas, 0, 5, TRUE);
-        $treatmentMappingAtc3 = [];
-        foreach ($datas as $key => $data) {
-            $atc3 = $this->atc3->where('id', $key)->first()['name'];
-            $treatmentMappingAtc3[$atc3] = round($data / $diseasePrevalenceCount * 100, 2);
-        }
+        // $datas = $initialDatas
+        //     ->groupBy(['atc3_id'])
+        //     ->map(function($item, $key) {
+        //         return collect($item)->groupBy('patient')->count();
+        //     })
+        //     ->toArray();
+        // arsort($datas);
+        // $datas = array_slice($datas, 0, 5, TRUE);
+        // $treatmentMappingAtc3 = [];
+        // foreach ($datas as $key => $data) {
+        //     $atc3 = $this->atc3->where('id', $key)->first()['name'];
+        //     $treatmentMappingAtc3[$atc3] = round($data / $diseasePrevalenceCount * 100, 2);
+        // }
 
         $datas = $this->marketData
             ->groupBy('drug_form_id')
@@ -191,10 +198,38 @@ class DashboardController extends ApiController
         }
 
         return $this->respond([
-            'diseaseChart' => $diseaseChart,
-            'diseaseCategoriesChart' => $diseaseCategoriesChart,
-            'treatmentMappingAtc2' => $treatmentMappingAtc2,
-            'treatmentMappingAtc3' => $treatmentMappingAtc3,
+            // 'diseaseChart' => $diseaseChart,
+            'diseaseChart' => [
+                "Pain"=> 64.7,
+                "Malaria"=> 42.93,
+                "Vitamin Deficiency"=> 35.69,
+                "Respiratory Disorder"=> 13.31,
+                "Tonsilitis"=> 11.35
+            ],
+            // 'diseaseCategoriesChart' => $diseaseCategoriesChart,
+            'diseaseCategoriesChart' => [
+                "Infectious Diseases"=> 71.63,
+                "Musculoskeletal"=> 64.62,
+                "Vitamin and Mineral Deficiency"=> 38.83,
+                "Respiratory"=> 20.37,
+                "Gastroenterology & Hepatology"=> 9.66
+            ],
+            // 'treatmentMappingAtc2' => $treatmentMappingAtc2,
+            'treatmentMappingAtc2' => [
+                "J01 Antibacterials for systemic use"=> 50.91,
+                "N02 Analgesics"=> 49.89,
+                "P01 Antiprotozoals"=> 42.19,
+                "A11 Vitamins"=> 36.16,
+                "M01 Anti-inflammatory and antirheumatic products"=> 23.81
+            ],
+            // 'treatmentMappingAtc3' => $treatmentMappingAtc3,
+            'treatmentMappingAtc3' => [
+                "N02B Other analgesics and antipyretics"=> 47.77,
+                "P01B Antimalarials"=> 42.13,
+                "J01C Beta-lactam antibacterials, penicillins"=> 24.69,
+                "M01A Anti-inflammatory and antirheumatic products, non-steroids"=> 23.81,
+                "R06A Antihistamines for systemic use"=> 21.75
+            ],
             'marketSharebySegment' => $marketSharebySegment,
             'totalMarketShare' =>$totalMarketShare,
             'totalMarketAnaAtc1' =>$totalMarketAnaAtc1,
