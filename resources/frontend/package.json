@@ -50,11 +50,9 @@
     "node-sass": "^4.7.2",
     "nouislider": "^11.1.0",
     "resize-observer-polyfill": "^1.4.2",
-    "rxjs": "^6.5.2",
-    "rxjs-compat": "^6.5.2",
+    "rxjs": "^5.5.7",
     "screenfull": "^3.3.1",
     "sweetalert2": "^7.26.13",
-    "typescript": "3.1",
     "web-animations-js": "^2.2.5",
     "zone.js": "^0.8.17"
   },
@@ -76,6 +74,7 @@
     "karma-jasmine-html-reporter": "^1.0.0",
     "protractor": "^5.3.0",
     "ts-node": "^5.0.1",
-    "tslint": "^5.7.0"
+    "tslint": "^5.7.0",
+    "typescript": "3.4.5"
   }
 }
