@@ -68,6 +68,7 @@ import { MarketViewComponent } from './market-data-analytics/market-view/market-
 import { TherapyAreaAnalyticsComponent } from './market-data-analytics/therapy-area-analytics/therapy-area-analytics.component';
 import { BrandAnalyticsComponent } from './market-data-analytics/brand-analytics/brand-analytics.component';
 import { MoleculeAnalyticsComponent } from './market-data-analytics/molecule-analytics/molecule-analytics.component';
+import { ImsComponent } from './market-data-analytics/ims/ims.component';
 import { MoleculePriceAnalyticsComponent } from './pricing-analytics/molecule-price-analytics/molecule-price-analytics.component';
 import { BrandPriceAnalyticsComponent } from './pricing-analytics/brand-price-analytics/brand-price-analytics.component';
 import { CostTreatmentMetricsComponent } from './pharmaeco/cost-treatment-metrics/cost-treatment-metrics.component';
@@ -113,6 +114,7 @@ import { Atc5ShareTaComponent } from './market-data-analytics/therapy-area-analy
         TherapyAreaAnalyticsComponent,
         BrandAnalyticsComponent,
         MoleculeAnalyticsComponent,
+        ImsComponent,
         MoleculePriceAnalyticsComponent,
         BrandPriceAnalyticsComponent,
         CostTreatmentMetricsComponent,

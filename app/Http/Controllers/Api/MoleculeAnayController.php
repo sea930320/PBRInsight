@@ -90,6 +90,7 @@ class MoleculeAnayController extends ApiController
 
         $totalValue = $queryBuilder->sum('value');
         $totalVolumn = $queryBuilder->sum('volumn');
+        $totalIms = $queryBuilder->sum('ims_equivalent');
         $valuations = $queryBuilder
             ->groupBy('generic_name_id')
             ->selectRaw('sum(value) as total_price, generic_name_id')
@@ -98,6 +99,10 @@ class MoleculeAnayController extends ApiController
             ->groupBy('generic_name_id')
             ->selectRaw('sum(volumn) as total_volumn, generic_name_id')
             ->pluck('total_volumn', 'generic_name_id');
+        $imses = $queryBuilder
+            ->groupBy('generic_name_id')
+            ->selectRaw('sum(ims_equivalent) as total_ims, generic_name_id')
+            ->pluck('total_ims', 'generic_name_id');
         $generic_names = $this->generic_name
             ->select(['id', 'name'])
             ->pluck('name','id')->all();
@@ -107,6 +112,8 @@ class MoleculeAnayController extends ApiController
             'totalValue' => $totalValue,
             'volumns' => $volumns,
             'totalVolumn' => $totalVolumn,
+            'imses' => $imses,
+            'totalIms' => $totalIms,
             'generic_names' => $generic_names
         ]);
     }

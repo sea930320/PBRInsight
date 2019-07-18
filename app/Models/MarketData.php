@@ -26,7 +26,8 @@ class MarketData extends Model
         'drug_form_id',
         'country',
         'volumn',
-        'value'
+        'value',
+        'ims_equivalent'
     ];
 
     /**
@@ -45,6 +46,7 @@ class MarketData extends Model
         'country',
         'volumn',
         'value',
+        'ims_equivalent',
 
         'brand',
         'company',

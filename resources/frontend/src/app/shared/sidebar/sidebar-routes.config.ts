@@ -32,6 +32,7 @@ export const ROUTES: RouteInfo[] = [
             { path: '/market-data-analytics/therapy-area', title: 'Therapy Area', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/market-data-analytics/brand', title: 'Brand Ana', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/market-data-analytics/molecule', title: 'Molecule(INN) Ana', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/market-data-analytics/ims', title: 'IMS Equivalent Valuation', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         ]
     },
     // {
